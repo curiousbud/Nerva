@@ -3,7 +3,7 @@
 <p align="center">
   <img src="assets/banner.jpeg" 
        alt="Nerva - Universal Script Repository" 
-       width="800" />
+     />
 </p>
 
 <p align="center"><strong>A curated collection of practical scripts across multiple programming languages.</strong></p>
