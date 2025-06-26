@@ -1,4 +1,4 @@
-# GitHub Label Setup Script (PowerShell)
+# 🚀 PowerShell GitHub Label Automation
 
 ## 📝 Description
 

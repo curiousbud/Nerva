@@ -1,4 +1,4 @@
-# GitHub Label Setup Script (Bash)
+# 🏷️ Bash GitHub Label Automation
 
 ## 📝 Description
 

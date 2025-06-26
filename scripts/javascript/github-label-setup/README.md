@@ -1,4 +1,4 @@
-# GitHub Label Setup Script (JavaScript/Node.js)
+# ⚡ Node.js GitHub Label Automation
 
 ## 📝 Description
 

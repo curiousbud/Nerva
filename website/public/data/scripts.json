@@ -25,7 +25,7 @@
           ],
           "usage": "chmod +x setup-labels.sh\n",
           "featured": false,
-          "display_name": "GitHub Label Setup Script (Bash)"
+          "display_name": "🏷️ Bash GitHub Label Automation"
         }
       ]
     },
@@ -59,7 +59,7 @@
           ],
           "usage": "node setup-labels.js\n",
           "featured": false,
-          "display_name": "GitHub Label Setup Script (JavaScript/Node.js)"
+          "display_name": "⚡ Node.js GitHub Label Automation"
         }
       ]
     },
@@ -87,7 +87,7 @@
           ],
           "usage": ".\\setup-labels.ps1\n",
           "featured": false,
-          "display_name": "GitHub Label Setup Script (PowerShell)"
+          "display_name": "🚀 PowerShell GitHub Label Automation"
         }
       ]
     },
@@ -263,7 +263,7 @@
           ],
           "usage": "chmod +x setup_labels.py\n",
           "featured": false,
-          "display_name": "GitHub Label Setup Script (Python)"
+          "display_name": "🐍 Python GitHub Label Automation"
         },
         {
           "name": "password-generator",

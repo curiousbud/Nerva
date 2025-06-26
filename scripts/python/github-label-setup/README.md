@@ -1,4 +1,4 @@
-# GitHub Label Setup Script (Python)
+# 🐍 Python GitHub Label Automation
 
 ## 📝 Description
 
