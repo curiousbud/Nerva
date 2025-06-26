@@ -13,6 +13,7 @@ import LanguageCard from "@/components/LanguageCard"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { NervaLogo } from "@/components/NervaLogo"
 import { fetchScriptsData } from '@/lib/api'
+import LoadingPage from '@/components/LoadingPage'
 
 interface Script {
   name: string
@@ -48,7 +49,11 @@ export default function HomePage() {
   useEffect(() => {
     async function loadScriptsData() {
       try {
-        const data = await fetchScriptsData()
+        // Add minimum loading time to ensure loading screen is visible
+        const [data] = await Promise.all([
+          fetchScriptsData(),
+          new Promise(resolve => setTimeout(resolve, 800)) // Minimum 800ms loading
+        ])
         setScriptsData(data)
       } catch (err) {
         console.error('Error loading scripts:', err)
@@ -131,6 +136,15 @@ export default function HomePage() {
   }, [searchQuery, featuredScripts])
 
   const totalScripts = scriptsData?.totalScripts || 0
+
+  if (loading) {
+    return (
+      <LoadingPage 
+        title="Loading Nerva Scripts"
+        subtitle="Discovering powerful automation tools for you..."
+      />
+    )
+  }
 
   return (
     <div className="min-h-screen bg-background">

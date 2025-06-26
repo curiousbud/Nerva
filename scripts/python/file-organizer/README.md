@@ -43,7 +43,7 @@ python file_organizer.py /path/to/directory --config custom_config.json
 
 ```bash
 # Clone the repository
-git clone https://github.com/curiousbud/Nerva.git
+git clone https://github.com/<your-username>/Nerva.git
 cd Nerva/scripts/python/file-organizer
 
 # No additional dependencies required

@@ -1,6 +1,6 @@
 {
   "lastUpdated": "",
-  "totalScripts": 13,
+  "totalScripts": 14,
   "languages": {
     "bash": {
       "count": 1,
@@ -92,7 +92,7 @@
       ]
     },
     "python": {
-      "count": 10,
+      "count": 11,
       "scripts": [
         {
           "name": "auto-wifi-check",
@@ -317,6 +317,43 @@
           "display_name": "Script Registry Management Tool"
         },
         {
+          "name": "system-info",
+          "path": "scripts\\python\\system-info",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "A comprehensive Python script that collects and displays detailed system information including hardware specifications, operating system details, network configuration, and performance metrics. Perfect for system administrators, developers, and anyone who needs quick access to system diagnostics.",
+          "features": [
+            "**🔧 Hardware Information**: CPU specs, cores, frequencies, and real-time usage",
+            "**💾 Memory Analysis**: RAM and swap memory usage with detailed statistics",
+            "**💿 Disk Information**: All mounted drives with usage statistics and file systems",
+            "**🌐 Network Details**: Network interfaces, IP addresses, MAC addresses, and traffic stats",
+            "**🎮 GPU Information**: NVIDIA GPU details including memory and temperature (when available)",
+            "**📊 Multiple Output Formats**: Clean table view or structured JSON export",
+            "**💾 File Export**: Save reports as text or JSON files for documentation",
+            "**⚡ Real-time Data**: Live CPU usage and current system metrics",
+            "**🎯 Cross-platform**: Works on Windows, Linux, and macOS",
+            "GPU model and name",
+            "Total and used memory",
+            "Current temperature",
+            "Multiple GPU support",
+            "All network interfaces with IP addresses",
+            "MAC addresses for each interface",
+            "Network traffic statistics (bytes sent/received)",
+            "Broadcast and netmask information",
+            "All mounted drives and partitions",
+            "File system types (NTFS, ext4, etc.)",
+            "Total, used, and free space",
+            "Usage percentages"
+          ],
+          "requirements": [
+            "Python 3.6+",
+            "psutil>=5.8.0"
+          ],
+          "usage": "# Display system information in table format\npython system_info.py\n\n# Show information in JSON format\npython system_info.py --format json\n\n# Save report to file\npython system_info.py --output system_report.txt\n\n# Save as JSON file\npython system_info.py --format json --output system_info.json\n\n# Quiet mode (no progress messages)\npython system_info.py --quiet --output report.txt\n",
+          "featured": true,
+          "display_name": "🖥️ System Information Gatherer"
+        },
+        {
           "name": "url-status-checker",
           "path": "scripts\\python\\url-status-checker",
           "category": "Utility",
@@ -441,6 +478,44 @@
       "usage": "# Main command - scan scripts and update website\npython script_manager.py build\n\n# Scan scripts only (no website update)\npython script_manager.py scan\n\n# Create a new script template\npython script_manager.py add python my-new-script\n",
       "featured": true,
       "display_name": "Script Registry Management Tool",
+      "language": "python"
+    },
+    {
+      "name": "system-info",
+      "path": "scripts\\python\\system-info",
+      "category": "Utility",
+      "difficulty": "Intermediate",
+      "description": "A comprehensive Python script that collects and displays detailed system information including hardware specifications, operating system details, network configuration, and performance metrics. Perfect for system administrators, developers, and anyone who needs quick access to system diagnostics.",
+      "features": [
+        "**🔧 Hardware Information**: CPU specs, cores, frequencies, and real-time usage",
+        "**💾 Memory Analysis**: RAM and swap memory usage with detailed statistics",
+        "**💿 Disk Information**: All mounted drives with usage statistics and file systems",
+        "**🌐 Network Details**: Network interfaces, IP addresses, MAC addresses, and traffic stats",
+        "**🎮 GPU Information**: NVIDIA GPU details including memory and temperature (when available)",
+        "**📊 Multiple Output Formats**: Clean table view or structured JSON export",
+        "**💾 File Export**: Save reports as text or JSON files for documentation",
+        "**⚡ Real-time Data**: Live CPU usage and current system metrics",
+        "**🎯 Cross-platform**: Works on Windows, Linux, and macOS",
+        "GPU model and name",
+        "Total and used memory",
+        "Current temperature",
+        "Multiple GPU support",
+        "All network interfaces with IP addresses",
+        "MAC addresses for each interface",
+        "Network traffic statistics (bytes sent/received)",
+        "Broadcast and netmask information",
+        "All mounted drives and partitions",
+        "File system types (NTFS, ext4, etc.)",
+        "Total, used, and free space",
+        "Usage percentages"
+      ],
+      "requirements": [
+        "Python 3.6+",
+        "psutil>=5.8.0"
+      ],
+      "usage": "# Display system information in table format\npython system_info.py\n\n# Show information in JSON format\npython system_info.py --format json\n\n# Save report to file\npython system_info.py --output system_report.txt\n\n# Save as JSON file\npython system_info.py --format json --output system_info.json\n\n# Quiet mode (no progress messages)\npython system_info.py --quiet --output report.txt\n",
+      "featured": true,
+      "display_name": "🖥️ System Information Gatherer",
       "language": "python"
     },
     {

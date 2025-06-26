@@ -11,6 +11,8 @@ import ScriptCard from "@/components/ScriptCard"
 import { NervaLogo } from "@/components/NervaLogo"
 import Link from "next/link"
 import { fetchScriptsData } from '@/lib/api'
+import LoadingPage from '@/components/LoadingPage'
+import ErrorPage from '@/components/ErrorPage'
 
 interface Script {
   name: string
@@ -49,7 +51,11 @@ export default function ScriptsPage() {
   useEffect(() => {
     async function loadScriptsData() {
       try {
-        const data = await fetchScriptsData()
+        // Add minimum loading time to ensure loading screen is visible
+        const [data] = await Promise.all([
+          fetchScriptsData(),
+          new Promise(resolve => setTimeout(resolve, 1000)) // Minimum 1s loading for scripts page
+        ])
         setScriptsData(data)
       } catch (err) {
         setError('Failed to load scripts. Please try again later.')
@@ -106,21 +112,22 @@ export default function ScriptsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
-        <div className="flex justify-center items-center min-h-screen">
-          <div className="text-foreground text-xl">Loading scripts...</div>
-        </div>
-      </div>
+      <LoadingPage 
+        title="Loading All Scripts"
+        subtitle="Fetching the complete script collection..."
+      />
     )
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-background">
-        <div className="flex justify-center items-center min-h-screen">
-          <div className="text-destructive text-xl">{error}</div>
-        </div>
-      </div>
+      <ErrorPage 
+        title="Failed to Load Scripts"
+        message={error}
+        showRefresh={true}
+        showHome={true}
+        showBack={false}
+      />
     )
   }
 

@@ -37,7 +37,7 @@ Nerva is an open-source collection of practical, production-ready scripts for au
 | **Bash**    | *(None yet)*                      | *Coming soon. Contributions welcome!*               | [scripts/bash/](scripts/bash/)               |
 | **PowerShell** | *(None yet)*                    | *Coming soon. Contributions welcome!*               | [scripts/powershell/](scripts/powershell/)   |
 
-> Want to add a script in your favorite language? [Open a PR!](https://github.com/curiousbud/Nerva/pulls)
+> Want to add a script in your favorite language? [Open a PR!](https://github.com/<your-username>/Nerva/pulls)
 
 ## 📁 Repository Structure
 
@@ -101,5 +101,5 @@ MIT License. See [LICENSE](LICENSE) for details.
 ---
 
 <p align="center">
-  <em>Browse all scripts and contribute at <a href="https://github.com/curiousbud/Nerva">github.com/curiousbud/Nerva</a></em>
+  <em>Browse all scripts and contribute at <a href="https://github.com/<your-username>/Nerva">github.com/<your-username>/Nerva</a></em>
 </p>

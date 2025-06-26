@@ -1,6 +1,6 @@
-# 🤝 Contributing to ScriptHub
+# 🤝 Contributing to Nerva
 
-Thank you for considering a contribution to **ScriptHub**! This project thrives on community involvement and aims to be a welcoming and inclusive space for sharing scripts across programming languages.
+Thank you for considering a contribution to **Nerva**! This project thrives on community involvement and aims to be a welcoming and inclusive space for sharing scripts across programming languages.
 
 ## 📌 What You Can Contribute
 
@@ -17,8 +17,8 @@ Thank you for considering a contribution to **ScriptHub**! This project thrives 
   
   ### 2. Clone Your Fork
   \`\`\`bash
-  git clone https://github.com/<your-username>/ScriptHub.git
-  cd ScriptHub
+  git clone https://github.com/<your-username>/Nerva.git
+  cd Nerva
   \`\`\`
   3. Create a New Branch
   \`\`\`bash

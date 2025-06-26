@@ -2,7 +2,7 @@
 
 ## Our Pledge
 
-We as members, contributors, and maintainers of ScriptHub pledge to make participation in our project and community a harassment-free experience for everyone, regardless of:
+We as members, contributors, and maintainers of Nerva pledge to make participation in our project and community a harassment-free experience for everyone, regardless of:
 
 - Age
 - Body size
