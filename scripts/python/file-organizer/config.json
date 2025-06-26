@@ -1,0 +1,14 @@
+{
+  "Documents": ["pdf", "doc", "docx", "txt", "rtf", "odt"],
+  "Images": ["jpg", "jpeg", "png", "gif", "bmp", "svg", "webp", "tiff"],
+  "Videos": ["mp4", "avi", "mkv", "mov", "wmv", "flv", "webm", "m4v"],
+  "Audio": ["mp3", "wav", "flac", "aac", "ogg", "wma", "m4a"],
+  "Archives": ["zip", "rar", "7z", "tar", "gz", "bz2", "xz"],
+  "Programming": ["py", "js", "html", "css", "java", "cpp", "c", "h", "php", "rb", "go"],
+  "Spreadsheets": ["xls", "xlsx", "csv", "ods"],
+  "Presentations": ["ppt", "pptx", "odp"],
+  "Executables": ["exe", "msi", "deb", "rpm", "dmg", "app"],
+  "Fonts": ["ttf", "otf", "woff", "woff2"],
+  "3D_Models": ["obj", "fbx", "dae", "3ds", "blend"],
+  "Ebooks": ["epub", "mobi", "azw", "azw3"]
+}

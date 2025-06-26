@@ -21,6 +21,7 @@ interface Script {
   requirements: string[]
   usage: string
   display_name: string
+  featured?: boolean
   language?: string  // Make it optional since we add it later
 }
 

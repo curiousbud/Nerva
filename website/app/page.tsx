@@ -23,11 +23,14 @@ interface Script {
   requirements: string[]
   usage: string
   display_name: string
+  featured?: boolean
+  language?: string
 }
 
 interface ScriptsData {
   lastUpdated: string
   totalScripts: number
+  featured?: (Script & { language: string })[]
   languages: {
     [key: string]: {
       count: number
@@ -101,6 +104,12 @@ export default function HomePage() {
   const featuredScripts = useMemo(() => {
     if (!scriptsData) return []
     
+    // Use the featured scripts from the API if available
+    if (scriptsData.featured && scriptsData.featured.length > 0) {
+      return scriptsData.featured
+    }
+    
+    // Fallback: get all scripts and return first 6
     const allScripts: (Script & { language: string })[] = []
     Object.entries(scriptsData.languages).forEach(([language, data]) => {
       data.scripts.forEach(script => {
@@ -108,7 +117,6 @@ export default function HomePage() {
       })
     })
     
-    // Return first 6 scripts for homepage
     return allScripts.slice(0, 6)
   }, [scriptsData])
 

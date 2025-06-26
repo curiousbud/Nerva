@@ -41,6 +41,7 @@
             "tkinter - GUI interface (built-in)"
           ],
           "usage": "# Start basic WiFi monitoring\npython wifi_monitor.py\n\n# Monitor with custom interval (in seconds)\npython wifi_monitor.py --interval 30\n\n# Enable verbose logging\npython wifi_monitor.py --verbose\n",
+          "featured": false,
           "display_name": "📶 Auto WiFi Check"
         },
         {
@@ -73,6 +74,7 @@
             "shutil - File operations"
           ],
           "usage": "# Find duplicates in current directory\npython duplicate_finder.py .\n\n# Scan specific directory recursively\npython duplicate_finder.py /path/to/directory\n\n# Find duplicates with minimum file size (1MB)\npython duplicate_finder.py . --min-size 1048576\n\n# Only check specific file types\npython duplicate_finder.py . --extensions .jpg .png .gif .mp4\n",
+          "featured": false,
           "display_name": "🔍 Advanced Duplicate File Finder"
         },
         {
@@ -105,6 +107,7 @@
             "schedule - Email scheduling functionality"
           ],
           "usage": "# Send single email\npython email_automator.py --to recipient@example.com --subject \"Test\" --body \"Hello World\"\n\n# Send bulk emails from CSV\npython email_automator.py --csv recipients.csv --template newsletter.html\n\n# Send with attachments\npython email_automator.py --csv recipients.csv --template invite.html --attach file1.pdf file2.jpg\n",
+          "featured": false,
           "display_name": "📧 Email Automation Tool"
         },
         {
@@ -131,6 +134,7 @@
             "Standard library modules (no external dependencies)"
           ],
           "usage": "# Organize files by extension in the current directory\npython file_organizer.py /path/to/directory\n\n# Preview changes without moving files\npython file_organizer.py /path/to/directory --dry-run\n",
+          "featured": true,
           "display_name": "🗂️ Advanced File Organizer"
         },
         {
@@ -152,6 +156,7 @@
             "python3 -m pip install --upgrade pip"
           ],
           "usage": "# Check a single host\npython ftp-scanner.py -t example.com\n\n# Check multiple hosts\npython ftp-scanner.py -t host1.com host2.com 192.168.1.1\n\n# Scan from file\npython ftp-scanner.py -f hosts.txt\n",
+          "featured": true,
           "display_name": "🔍 FTP Anonymous Login Scanner"
         },
         {
@@ -177,6 +182,7 @@
             "No external dependencies required (uses only built-in modules)"
           ],
           "usage": "python password_generator.py\n",
+          "featured": false,
           "display_name": "Password Generator"
         },
         {
@@ -201,6 +207,7 @@
             "Access to the main Nerva project directory"
           ],
           "usage": "# Main command - scan scripts and update website\npython script_manager.py build\n\n# Scan scripts only (no website update)\npython script_manager.py scan\n\n# Create a new script template\npython script_manager.py add python my-new-script\n",
+          "featured": true,
           "display_name": "Script Registry Management Tool"
         },
         {
@@ -224,6 +231,7 @@
             "pip install requests"
           ],
           "usage": "# Check a single URL\npython url-status.py -u https://example.com\n\n# Check multiple URLs\npython url-status.py -u example.com google.com github.com\n\n# Check URLs from file\npython url-status.py -f urls.txt\n\n# Show detailed information\npython url-status.py -u example.com --show-details\n",
+          "featured": false,
           "display_name": "🌐 URL Status Checker"
         },
         {
@@ -245,9 +253,112 @@
             "pip install pyyaml requests dnspython aiohttp"
           ],
           "usage": "",
+          "featured": true,
           "display_name": "🛡️ SHADOW - Vulnerability Scanner"
         }
       ]
     }
-  }
+  },
+  "featured": [
+    {
+      "name": "file-organizer",
+      "path": "scripts\\python\\file-organizer",
+      "category": "Utility",
+      "difficulty": "Intermediate",
+      "description": "A powerful Python tool that automatically organizes files in directories based on file extensions or creation dates. Features multiple organization modes, dry-run capability, and detailed logging.",
+      "features": [
+        "**Extension-based organization**: Sort files into folders by file type (Documents, Images, Videos, etc.)",
+        "**Date-based organization**: Organize files by creation date (Year/Month structure)",
+        "**Custom configuration**: Use JSON config files to define your own folder structures",
+        "**Dry-run mode**: Preview changes before actually moving files",
+        "**Duplicate handling**: Automatically renames files to avoid conflicts",
+        "**Comprehensive logging**: Detailed logs of all operations",
+        "**Statistics reporting**: Summary of files moved, folders created, and any errors",
+        "**Dry-run mode**: See what would happen without making changes",
+        "**Duplicate handling**: Files with same names are automatically renamed",
+        "**Error recovery**: Individual file errors don't stop the entire process",
+        "**Comprehensive logging**: Full audit trail of all operations"
+      ],
+      "requirements": [
+        "Python 3.6+",
+        "Standard library modules (no external dependencies)"
+      ],
+      "usage": "# Organize files by extension in the current directory\npython file_organizer.py /path/to/directory\n\n# Preview changes without moving files\npython file_organizer.py /path/to/directory --dry-run\n",
+      "featured": true,
+      "display_name": "🗂️ Advanced File Organizer",
+      "language": "python"
+    },
+    {
+      "name": "ftp-scanner",
+      "path": "scripts\\python\\ftp-scanner",
+      "category": "Utility",
+      "difficulty": "Intermediate",
+      "description": "A Python script to check for anonymous FTP access on single or multiple hosts. This tool is useful for security assessments and network reconnaissance.",
+      "features": [
+        "**Single & Bulk Scanning**: Check one host or scan multiple hosts from a file.",
+        "**Concurrent Scanning**: Multi-threaded scanning for faster results.",
+        "**Detailed Reporting**: Shows successful logins and file counts.",
+        "**Flexible Input**: Accept hostnames, IP addresses, or mixed lists.",
+        "**Export Results**: Save vulnerable hosts to a file.",
+        "**Timeout Control**: Configurable connection timeouts.",
+        "**Verbose Mode**: Optional detailed output for failed attempts."
+      ],
+      "requirements": [
+        "python3 -m pip install --upgrade pip"
+      ],
+      "usage": "# Check a single host\npython ftp-scanner.py -t example.com\n\n# Check multiple hosts\npython ftp-scanner.py -t host1.com host2.com 192.168.1.1\n\n# Scan from file\npython ftp-scanner.py -f hosts.txt\n",
+      "featured": true,
+      "display_name": "🔍 FTP Anonymous Login Scanner",
+      "language": "python"
+    },
+    {
+      "name": "script-manager",
+      "path": "scripts\\python\\script-manager",
+      "category": "Utility",
+      "difficulty": "Intermediate",
+      "description": "An automated tool for managing and organizing scripts in the Nerva project. This tool automatically scans your scripts, generates metadata, and updates the website with your contributions.",
+      "features": [
+        "**Automated Script Discovery**: Intelligently scans all language directories for scripts",
+        "**README Metadata Extraction**: Parses documentation to extract features, requirements, and usage",
+        "**Website Integration**: Automatically generates website data with beautiful 3D card layouts",
+        "**Registry Management**: Maintains a comprehensive database of all scripts",
+        "**Template Generation**: Creates new script templates with proper structure",
+        "**Zero Manual Work**: No need to manually edit website code or configurations",
+        "Feature 1",
+        "Feature 2"
+      ],
+      "requirements": [
+        "**Python 3.6+** (no additional packages needed)",
+        "**Windows/Linux/macOS** compatible",
+        "Access to the main Nerva project directory"
+      ],
+      "usage": "# Main command - scan scripts and update website\npython script_manager.py build\n\n# Scan scripts only (no website update)\npython script_manager.py scan\n\n# Create a new script template\npython script_manager.py add python my-new-script\n",
+      "featured": true,
+      "display_name": "Script Registry Management Tool",
+      "language": "python"
+    },
+    {
+      "name": "vulnerability-scanner",
+      "path": "scripts\\python\\vulnerability-scanner",
+      "category": "Utility",
+      "difficulty": "Intermediate",
+      "description": "An advanced Python-based vulnerability scanner that uses YAML templates to detect security issues in web applications and network services.",
+      "features": [
+        "**Template-Based Scanning**: Uses YAML templates for flexible vulnerability detection.",
+        "**Multi-Target Support**: Scan single hosts, IP ranges, or bulk targets from files.",
+        "**Async Scanning**: High-performance asynchronous HTTP requests.",
+        "**DNS Enumeration**: Built-in DNS record checking capabilities.",
+        "**Multiple Output Formats**: Text and JSON report formats.",
+        "**Severity Classification**: Categorizes vulnerabilities by severity level.",
+        "**Extensible**: Easy to add new vulnerability templates."
+      ],
+      "requirements": [
+        "pip install pyyaml requests dnspython aiohttp"
+      ],
+      "usage": "",
+      "featured": true,
+      "display_name": "🛡️ SHADOW - Vulnerability Scanner",
+      "language": "python"
+    }
+  ]
 }
