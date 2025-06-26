@@ -11,6 +11,7 @@ import ScriptCard from "@/components/ScriptCard"
 import { NervaLogo } from "@/components/NervaLogo"
 import Link from "next/link"
 import { fetchScriptsData, preloadScriptsData } from '@/lib/api'
+import { formatVersion } from '@/lib/version'
 import LoadingPage from '@/components/LoadingPage'
 import ErrorPage from '@/components/ErrorPage'
 
@@ -292,6 +293,15 @@ export default function ScriptsPage() {
           </div>
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="py-8 bg-gradient-to-b from-background to-muted/10 border-t border-border">
+        <div className="container mx-auto px-4 text-center">
+          <div className="text-muted-foreground/70 text-sm">
+            Licensed under MIT • Open Source • Community Driven • {formatVersion()}
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

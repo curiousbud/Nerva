@@ -13,6 +13,7 @@ import LanguageCard from "@/components/LanguageCard"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { NervaLogo } from "@/components/NervaLogo"
 import { fetchScriptsData, preloadScriptsData } from '@/lib/api'
+import { formatVersion } from '@/lib/version'
 import LoadingPage from '@/components/LoadingPage'
 
 interface Script {
@@ -444,7 +445,7 @@ export default function HomePage() {
             </p>
           </div>
           <div className="text-muted-foreground/70 text-sm">
-            Licensed under MIT • Open Source • Community Driven
+            Licensed under MIT • Open Source • Community Driven • {formatVersion()}
           </div>
         </div>
       </footer>
