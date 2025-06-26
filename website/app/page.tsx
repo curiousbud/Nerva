@@ -102,21 +102,34 @@ export default function HomePage() {
   const availableScripts = allScripts.filter((script) => script.status === "available")
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-[#023047] via-[#219ebc] to-[#023047]">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm">
+      <header className="border-b border-white/10 bg-black/20 backdrop-blur-xl sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Code className="h-8 w-8 text-blue-600" />
-              <h1 className="text-2xl font-bold text-gray-900">ScriptHub</h1>
+            <div className="flex items-center space-x-3 group">
+              <div className="relative">
+                <Code className="h-8 w-8 text-gradient bg-gradient-to-r from-[#8ecae6] to-[#ffb703] group-hover:scale-110 transition-transform duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#8ecae6] to-[#ffb703] blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+              </div>
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                ScriptHub
+              </h1>
             </div>
             <div className="flex items-center space-x-4">
-              <Button variant="outline" size="sm">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="border-white/20 text-white hover:bg-white/10 hover:border-white/40 backdrop-blur-sm transition-all duration-300 hover:scale-105"
+              >
                 <GitFork className="h-4 w-4 mr-2" />
                 Fork
               </Button>
-              <Button variant="outline" size="sm">
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="border-yellow-400/40 text-yellow-400 hover:bg-yellow-400/10 hover:border-yellow-400/60 backdrop-blur-sm transition-all duration-300 hover:scale-105"
+              >
                 <Star className="h-4 w-4 mr-2" />
                 Star
               </Button>
@@ -126,49 +139,109 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative py-24 overflow-hidden">
-        {/* Full Background Banner */}
+      <section className="relative py-32 overflow-hidden">
+        {/* Animated Background */}
         <div className="absolute inset-0">
           <Image 
             src="/banner.jpeg" 
             alt="ScriptHub Banner" 
             fill 
-            className="object-cover"
+            className="object-cover opacity-60"
             priority
           />
-          {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-black/40"></div>
+          {/* Gradient overlays for luxury effect */}
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/80 via-slate-900/60 to-cyan-900/80"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+          
+          {/* Floating geometric shapes */}
+          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-cyan-400/20 to-purple-600/20 rounded-full blur-xl animate-pulse"></div>
+          <div className="absolute top-40 right-20 w-48 h-48 bg-gradient-to-br from-purple-500/15 to-pink-500/15 rounded-full blur-2xl animate-bounce" style={{animationDuration: "3s"}}></div>
+          <div className="absolute bottom-20 left-1/3 w-24 h-24 bg-gradient-to-br from-yellow-400/25 to-orange-500/25 rounded-full blur-lg animate-pulse" style={{animationDelay: "1s"}}></div>
         </div>
         
-        {/* Content over banner */}
+        {/* Content */}
         <div className="relative z-10 container mx-auto px-4 text-center">
-          <h2 className="text-5xl font-bold text-white mb-6 drop-shadow-lg">A Collection of Useful Scripts</h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto drop-shadow-md">
-            Discover, share, and contribute scripts across multiple programming languages. From automation to security
-            tools, find the script you need.
+          <div className="transform hover:scale-105 transition-all duration-700">
+            <h2 className="text-7xl font-black bg-gradient-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent mb-8 drop-shadow-2xl leading-tight">
+              A Collection of<br />
+              <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
+                Powerful Scripts
+              </span>
+            </h2>
+          </div>
+          
+          <p className="text-xl text-gray-200/90 mb-12 max-w-3xl mx-auto drop-shadow-lg leading-relaxed font-light">
+            Discover, share, and contribute cutting-edge scripts across multiple programming languages. 
+            From automation to security tools, unlock the power of code.
           </p>
-          <div className="flex justify-center space-x-4">
-            <Button size="lg" className="bg-white text-black hover:bg-gray-100 font-semibold">Browse Scripts</Button>
-            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-black">
+          
+          <div className="flex justify-center space-x-6">
+            <Button 
+              size="lg" 
+              className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-bold px-8 py-4 text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 border-0"
+            >
+              <Search className="mr-2 h-5 w-5" />
+              Explore Scripts
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 backdrop-blur-md px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 shadow-xl"
+            >
+              <GitFork className="mr-2 h-5 w-5" />
               Contribute
             </Button>
+          </div>
+        </div>
+        
+        {/* Scrolling indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
       </section>
 
       {/* Language Stats */}
-      <section className="py-12 bg-white">
-        <div className="container mx-auto px-4">
-          <h3 className="text-2xl font-bold text-center mb-8">Supported Languages</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {languages.map((lang) => (
-              <Card key={lang.name} className="text-center">
-                <CardContent className="pt-6">
-                  <div className={`w-12 h-12 ${lang.color} rounded-full mx-auto mb-3 flex items-center justify-center`}>
-                    <Code className="h-6 w-6 text-white" />
+      <section className="py-20 bg-gradient-to-b from-slate-900 to-black relative overflow-hidden">
+        {/* Background decorations */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-10 w-64 h-64 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <h3 className="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            Supported Languages
+          </h3>
+          <p className="text-center text-gray-400 mb-16 text-lg">Power through multiple programming ecosystems</p>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {languages.map((lang, index) => (
+              <Card 
+                key={lang.name} 
+                className="text-center bg-gradient-to-br from-white/5 to-white/10 border border-white/20 backdrop-blur-xl hover:from-white/10 hover:to-white/20 transition-all duration-500 hover:scale-105 hover:shadow-2xl group"
+                style={{animationDelay: `${index * 200}ms`}}
+              >
+                <CardContent className="pt-8 pb-6">
+                  <div className="relative mb-6">
+                    <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center relative overflow-hidden group-hover:scale-110 transition-transform duration-300`}>
+                      <div className={`absolute inset-0 bg-gradient-to-br ${lang.color === 'bg-blue-500' ? 'from-blue-400 to-blue-600' : 
+                        lang.color === 'bg-yellow-500' ? 'from-yellow-400 to-orange-500' :
+                        lang.color === 'bg-green-500' ? 'from-green-400 to-emerald-600' :
+                        'from-purple-400 to-purple-600'} rounded-2xl`}></div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl"></div>
+                      <Code className="h-8 w-8 text-white relative z-10" />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-purple-600/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
-                  <h4 className="font-semibold text-lg">{lang.name}</h4>
-                  <p className="text-gray-600">{lang.count} scripts</p>
+                  <h4 className="font-bold text-xl text-white mb-2">{lang.name}</h4>
+                  <p className="text-gray-400 font-medium">
+                    <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                      {lang.count}
+                    </span>
+                    <span className="ml-1">scripts</span>
+                  </p>
                 </CardContent>
               </Card>
             ))}
@@ -177,81 +250,126 @@ export default function HomePage() {
       </section>
 
       {/* Search Section */}
-      <section className="py-8 bg-white">
+      <section className="py-16 bg-gradient-to-b from-black to-slate-900 relative">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-              <Input
-                type="text"
-                placeholder="Search scripts by name, language, category, or tags..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-4 py-3 text-lg"
-              />
+          <div className="max-w-3xl mx-auto">
+            <h3 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+              Find Your Perfect Script
+            </h3>
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+              <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-2">
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-6 w-6 group-hover:text-cyan-400 transition-colors duration-300" />
+                  <Input
+                    type="text"
+                    placeholder="Search scripts by name, language, category, or tags..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-12 pr-6 py-4 text-lg bg-transparent border-0 text-white placeholder-gray-400 focus:ring-2 focus:ring-cyan-500/50 rounded-xl"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Scripts Section */}
-      <section className="py-12">
+      <section className="py-20 bg-gradient-to-b from-slate-900 to-black">
         <div className="container mx-auto px-4">
-          <h3 className="text-2xl font-bold text-center mb-8">{searchQuery ? "Search Results" : "Featured Scripts"}</h3>
+          <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            {searchQuery ? "Search Results" : "Featured Scripts"}
+          </h3>
 
           {filteredScripts.length === 0 ? (
-            <div className="text-center py-12">
-              <AlertCircle className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-              <h4 className="text-xl font-semibold text-gray-600 mb-2">No scripts found</h4>
-              <p className="text-gray-500 mb-4">We couldn't find any scripts matching "{searchQuery}".</p>
-              <p className="text-sm text-gray-400">
+            <div className="text-center py-20">
+              <div className="relative inline-block mb-8">
+                <AlertCircle className="h-20 w-20 text-gray-500 mx-auto animate-pulse" />
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-purple-600/20 rounded-full blur-xl"></div>
+              </div>
+              <h4 className="text-2xl font-bold text-white mb-4">No scripts found</h4>
+              <p className="text-gray-400 mb-6 text-lg">We couldn't find any scripts matching "{searchQuery}".</p>
+              <p className="text-gray-500">
                 Try searching with different keywords or check back later as we're constantly adding new scripts!
               </p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredScripts.map((script) => (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredScripts.map((script, index) => (
                 <Card
                   key={script.name}
-                  className={`hover:shadow-lg transition-shadow ${
-                    script.status === "in-progress" ? "opacity-75 border-dashed" : ""
+                  className={`group hover:shadow-2xl transition-all duration-500 hover:scale-105 bg-gradient-to-br from-white/10 to-white/5 border border-white/20 backdrop-blur-xl hover:from-white/20 hover:to-white/10 ${
+                    script.status === "in-progress" ? "opacity-75 border-dashed border-gray-500/50" : ""
                   }`}
+                  style={{animationDelay: `${index * 150}ms`}}
                 >
-                  <CardHeader>
-                    <div className="flex justify-between items-start mb-2">
-                      <Badge variant="secondary">{script.language}</Badge>
-                    </div>
-                    <div className="flex items-start gap-2 mb-2">
-                      <CardTitle className="text-lg flex-1 min-w-0">{script.name}</CardTitle>
+                  <CardHeader className="pb-4">
+                    <div className="flex justify-between items-start mb-4">
+                      <Badge 
+                        variant="secondary" 
+                        className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 text-cyan-200 border-cyan-500/30 backdrop-blur-sm"
+                      >
+                        {script.language}
+                      </Badge>
                       {script.status === "in-progress" && (
-                        <Badge variant="secondary" className="text-xs shrink-0">
+                        <Badge 
+                          variant="secondary" 
+                          className="text-xs bg-yellow-500/20 text-yellow-200 border-yellow-500/30"
+                        >
                           In Progress
                         </Badge>
                       )}
                     </div>
-                    <CardDescription>{script.description}</CardDescription>
+                    <CardTitle className="text-xl text-white group-hover:text-cyan-300 transition-colors duration-300 mb-3">
+                      {script.name}
+                    </CardTitle>
+                    <CardDescription className="text-gray-300 leading-relaxed">
+                      {script.description}
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex flex-wrap gap-1 mb-3">
+                    <div className="flex flex-wrap gap-2 mb-6">
                       {script.tags.slice(0, 3).map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-xs">
+                        <Badge 
+                          key={tag} 
+                          variant="outline" 
+                          className="text-xs bg-white/5 text-gray-300 border-white/20 hover:bg-white/10 transition-colors duration-200"
+                        >
                           {tag}
                         </Badge>
                       ))}
                       {script.tags.length > 3 && (
-                        <Badge variant="outline" className="text-xs">
+                        <Badge 
+                          variant="outline" 
+                          className="text-xs bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-200 border-purple-500/30"
+                        >
                           +{script.tags.length - 3}
                         </Badge>
                       )}
                     </div>
                     <div className="flex justify-between items-center">
-                      <Badge variant="outline">{script.category}</Badge>
+                      <Badge 
+                        variant="outline" 
+                        className="bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 text-emerald-200 border-emerald-500/30"
+                      >
+                        {script.category}
+                      </Badge>
                       {script.status === "available" ? (
-                        <Button variant="ghost" size="sm">
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          className="text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10 transition-all duration-300"
+                        >
                           View Script
                         </Button>
                       ) : (
-                        <Button variant="ghost" size="sm" disabled>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          disabled
+                          className="text-gray-500"
+                        >
                           Coming Soon
                         </Button>
                       )}
@@ -262,9 +380,10 @@ export default function HomePage() {
             </div>
           )}
           {searchQuery && (
-            <div className="text-center mt-6">
-              <p className="text-lg font-medium text-gray-700">
-                Found {filteredScripts.length} script{filteredScripts.length !== 1 ? "s" : ""} matching "{searchQuery}"
+            <div className="text-center mt-12">
+              <p className="text-xl font-medium text-white">
+                Found <span className="text-cyan-400 font-bold">{filteredScripts.length}</span> script{filteredScripts.length !== 1 ? "s" : ""} matching 
+                <span className="text-purple-400 font-bold"> "{searchQuery}"</span>
               </p>
             </div>
           )}
@@ -272,29 +391,70 @@ export default function HomePage() {
       </section>
 
       {/* Stats */}
-      <section className="py-12 bg-slate-900 text-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="text-3xl font-bold mb-2">{availableScripts.length}</div>
-              <div className="text-slate-300">Available Scripts</div>
+      <section className="py-20 bg-gradient-to-b from-black via-slate-900 to-black relative overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: "2s"}}></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            ScriptHub by the Numbers
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+            <div className="group hover:scale-110 transition-transform duration-500">
+              <div className="relative">
+                <div className="text-6xl font-black mb-4 bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+                  {availableScripts.length}
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-purple-600/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </div>
+              <div className="text-gray-300 text-lg font-medium">Available Scripts</div>
+              <div className="text-gray-500 text-sm mt-2">Ready to use now</div>
             </div>
-            <div>
-              <div className="text-3xl font-bold mb-2">4</div>
-              <div className="text-slate-300">Languages Supported</div>
+            <div className="group hover:scale-110 transition-transform duration-500">
+              <div className="relative">
+                <div className="text-6xl font-black mb-4 bg-gradient-to-br from-emerald-400 via-cyan-500 to-blue-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+                  4
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-blue-600/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </div>
+              <div className="text-gray-300 text-lg font-medium">Languages Supported</div>
+              <div className="text-gray-500 text-sm mt-2">Cross-platform power</div>
             </div>
-            <div>
-              <div className="text-3xl font-bold mb-2">{allScripts.length - availableScripts.length}</div>
-              <div className="text-slate-300">Scripts In Development</div>
+            <div className="group hover:scale-110 transition-transform duration-500">
+              <div className="relative">
+                <div className="text-6xl font-black mb-4 bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+                  {allScripts.length - availableScripts.length}
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-400/20 to-red-500/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </div>
+              <div className="text-gray-300 text-lg font-medium">In Development</div>
+              <div className="text-gray-500 text-sm mt-2">Coming soon</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-8 bg-white border-t">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-gray-600">Made with ❤️ by the ScriptHub community. Licensed under MIT.</p>
+      <footer className="py-12 bg-gradient-to-b from-black to-slate-950 border-t border-white/10 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-purple-500/5 to-pink-500/5"></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <div className="mb-6">
+            <div className="flex items-center justify-center space-x-3 mb-4">
+              <Code className="h-8 w-8 text-cyan-400" />
+              <span className="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                ScriptHub
+              </span>
+            </div>
+            <p className="text-gray-400 text-lg">
+              Made with <span className="text-red-400 animate-pulse">❤️</span> by the ScriptHub community
+            </p>
+          </div>
+          <div className="text-gray-500 text-sm">
+            Licensed under MIT • Open Source • Community Driven
+          </div>
         </div>
       </footer>
     </div>
