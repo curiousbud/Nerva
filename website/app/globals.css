@@ -104,7 +104,9 @@ body {
 
   /* Purple-themed Script Card */
   .script-card {
-    width: 280px;
+    width: 100%;
+    min-width: 320px;
+    max-width: 380px;
     border-radius: 20px;
     background: hsl(var(--card));
     padding: 5px;
@@ -112,6 +114,7 @@ body {
     box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
     transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border: 1px solid hsl(var(--border));
+    margin: 0 auto;
   }
 
   .script-card:hover {
@@ -223,33 +226,73 @@ body {
     fill: hsl(var(--primary));
   }
 
+  /* Action button wrapper styles */
+  .script-card .top-section .icons .actions .action-button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .script-card .top-section .icons .actions .action-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+  }
+
+  .script-card .top-section .icons .actions .action-button svg {
+    height: 16px;
+    width: 16px;
+    fill: hsl(var(--card));
+    transition: all 0.3s ease;
+  }
+
+  /* Theme-specific action button hover colors */
+  .light .script-card .top-section .icons .actions .action-button:hover svg {
+    fill: hsl(var(--primary));
+    filter: drop-shadow(0 2px 4px hsla(var(--primary), 0.3));
+  }
+
+  .dark .script-card .top-section .icons .actions .action-button:hover svg {
+    fill: hsl(var(--accent));
+    filter: drop-shadow(0 2px 4px hsla(var(--accent), 0.3));
+  }
+
+  /* Default fallback for action button hover */
+  html .script-card .top-section .icons .actions .action-button:hover svg {
+    fill: hsl(var(--primary));
+  }
+
   .script-card .content-section {
-    padding: 20px 15px 15px;
+    padding: 24px 20px 18px;
     transform-style: preserve-3d;
   }
 
   .script-card .content-section .script-title {
     display: block;
-    font-size: 18px;
+    font-size: 19px;
     font-weight: bold;
     color: hsl(var(--card-foreground));
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     text-align: left;
+    line-height: 1.3;
   }
 
   .script-card .content-section .script-description {
     color: hsl(var(--muted-foreground));
-    font-size: 13px;
-    line-height: 1.4;
-    margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 18px;
     text-align: left;
   }
 
   .script-card .content-section .script-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 15px;
+    gap: 8px;
+    margin-bottom: 18px;
   }
 
   .script-card .content-section .script-tag {
@@ -263,7 +306,7 @@ body {
   }
 
   .script-card .bottom-section {
-    padding: 0 15px 15px;
+    padding: 0 20px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;

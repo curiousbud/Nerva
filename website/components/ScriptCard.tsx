@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Code, Star, GitFork, ExternalLink } from 'lucide-react';
+import LanguageIcon from '@/components/LanguageIcon';
 
 interface ScriptCardProps {
   name: string;
@@ -10,6 +11,7 @@ interface ScriptCardProps {
   tags: string[];
   category: string;
   status: 'available' | 'in-progress';
+  repoPath?: string;
   onViewScript?: () => void;
 }
 
@@ -20,6 +22,7 @@ const ScriptCard: React.FC<ScriptCardProps> = ({
   tags,
   category,
   status,
+  repoPath,
   onViewScript
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -72,6 +75,28 @@ const ScriptCard: React.FC<ScriptCardProps> = ({
     }
   };
 
+  const handleActionClick = (e: React.MouseEvent, action: string) => {
+    e.stopPropagation();
+    
+    if (!repoPath) return;
+    
+    const baseUrl = repoPath.includes('github.com') 
+      ? repoPath 
+      : `https://github.com/areeburrub/Nerva/tree/main/${repoPath}`;
+    
+    switch (action) {
+      case 'star':
+        window.open('https://github.com/areeburrub/Nerva', '_blank');
+        break;
+      case 'fork':
+        window.open('https://github.com/areeburrub/Nerva/fork', '_blank');
+        break;
+      case 'external':
+        window.open(baseUrl, '_blank');
+        break;
+    }
+  };
+
   return (
     <div 
       ref={cardRef}
@@ -93,9 +118,36 @@ const ScriptCard: React.FC<ScriptCardProps> = ({
             <Code size={20} />
           </div>
           <div className="actions">
-            <Star size={16} />
-            <GitFork size={16} />
-            <ExternalLink size={16} />
+            <div 
+              onClick={(e) => handleActionClick(e, 'star')}
+              title="Star this repository"
+              role="button"
+              tabIndex={0}
+              aria-label="Star repository"
+              className="action-button"
+            >
+              <Star size={16} />
+            </div>
+            <div 
+              onClick={(e) => handleActionClick(e, 'fork')}
+              title="Fork this repository"
+              role="button"
+              tabIndex={0}
+              aria-label="Fork repository"
+              className="action-button"
+            >
+              <GitFork size={16} />
+            </div>
+            <div 
+              onClick={(e) => handleActionClick(e, 'external')}
+              title="View source code"
+              role="button"
+              tabIndex={0}
+              aria-label="View source code"
+              className="action-button"
+            >
+              <ExternalLink size={16} />
+            </div>
           </div>
         </div>
       </div>
@@ -139,15 +191,13 @@ const ScriptCard: React.FC<ScriptCardProps> = ({
         transition: isHovered ? 'none' : 'transform 0.5s ease'
       }}>
         <div className="language-info">
-          <div 
-            className="language-dot" 
-            style={{ 
-              backgroundColor: getLanguageColor(language),
-              transform: isHovered ? 'translateZ(10px)' : 'translateZ(0px)',
-              transition: isHovered ? 'none' : 'transform 0.5s ease'
-            }}
+          <LanguageIcon 
+            language={language} 
+            size="md"
+            className="mr-1"
           />
-          <span className="language-name">{language}</span>
+          {/* Language name only visible on hover or larger screens */}
+          <span className="language-name hidden sm:inline-block">{language}</span>
         </div>
         
         <button 

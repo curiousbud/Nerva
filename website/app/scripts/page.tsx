@@ -160,7 +160,7 @@ export default function ScriptsPage() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Page Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
@@ -245,7 +245,7 @@ export default function ScriptsPage() {
             <p className="text-muted-foreground">Try adjusting your search or filter criteria</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-8 2xl:gap-10">
             {filteredScripts.map((script, index) => (
               <ScriptCard
                 key={script.name}
@@ -255,6 +255,7 @@ export default function ScriptsPage() {
                 tags={script.features || []} // Use features as tags
                 category={script.category}
                 status="available" // All our scripts are available
+                repoPath={script.path} // Add repo path for action buttons
                 onViewScript={() => {
                   if (script.path) {
                     const fullUrl = `https://github.com/curiousbud/Nerva/tree/main/${script.path.replace(/\\/g, '/')}`;

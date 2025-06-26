@@ -250,7 +250,7 @@ export default function HomePage() {
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-br from-accent to-primary rounded-full blur-3xl"></div>
         </div>
         
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4 relative z-10 max-w-7xl">
           <h3 className="text-4xl font-bold text-center mb-4 text-foreground">
             Supported Languages
           </h3>
@@ -299,7 +299,7 @@ export default function HomePage() {
 
       {/* Scripts Section */}
       <section id="scripts-section" className="py-20 bg-gradient-to-b from-muted/5 to-background">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-7xl">
           <h3 className="text-4xl font-bold text-center mb-16 text-foreground">
             {searchQuery ? "Search Results" : "Featured Scripts"}
           </h3>
@@ -317,7 +317,7 @@ export default function HomePage() {
               </p>
             </div>
           ) : (
-            <div className="script-cards-grid grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
+            <div className="script-cards-grid grid md:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-8 2xl:gap-10 justify-items-center">
               {filteredScripts.map((script, index) => (
                 <ScriptCard
                   key={script.name}
@@ -327,6 +327,7 @@ export default function HomePage() {
                   tags={script.features || []} // Use features as tags
                   category={script.category}
                   status="available" // All our scripts are available
+                  repoPath={script.path} // Add repo path for action buttons
                   onViewScript={() => {
                     if (script.path) {
                       const fullUrl = `https://github.com/curiousbud/Nerva/tree/main/${script.path.replace(/\\/g, '/')}`;

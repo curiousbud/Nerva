@@ -1,6 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { NervaLogo } from '@/components/NervaLogo';
+import { 
+  SiPython, 
+  SiJavascript, 
+  SiGnubash
+} from 'react-icons/si';
+import { VscTerminalPowershell } from 'react-icons/vsc';
 
 interface LanguageCardProps {
   name: string;
@@ -21,6 +26,29 @@ const LanguageCard: React.FC<LanguageCardProps> = ({
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+
+  // Get the appropriate icon for each language with theme-aware styling
+  const getLanguageIcon = (language: string) => {
+    const iconSize = 48;
+    const baseClasses = "transition-all duration-300";
+    
+    switch (language.toLowerCase()) {
+      case 'python':
+        return <SiPython size={iconSize} className={`${baseClasses} text-[#3776ab] hover:text-[#2d5aa0]`} />;
+      case 'javascript':
+        return <SiJavascript size={iconSize} className={`${baseClasses} text-[#f7df1e] hover:text-[#f5d914]`} />;
+      case 'bash':
+        return <SiGnubash size={iconSize} className={`${baseClasses} text-[#4eaa25] hover:text-[#3d8b1f]`} />;
+      case 'powershell':
+        return <VscTerminalPowershell size={iconSize} className={`${baseClasses} text-[#5391fe] hover:text-[#3d7bd6]`} />;
+      default:
+        return (
+          <div className="w-12 h-12 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center text-primary font-bold text-xl transition-all duration-300 hover:bg-primary/30">
+            {language.charAt(0).toUpperCase()}
+          </div>
+        );
+    }
+  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -50,25 +78,14 @@ const LanguageCard: React.FC<LanguageCardProps> = ({
     setRotateY(0);
   };
 
-  const getGradientColors = (color: string) => {
-    switch (color) {
-      case 'bg-blue-500':
-        return 'from-blue-400 to-blue-600';
-      case 'bg-yellow-500':
-        return 'from-yellow-400 to-orange-500';
-      case 'bg-green-500':
-        return 'from-green-400 to-emerald-600';
-      case 'bg-purple-500':
-        return 'from-purple-400 to-purple-600';
-      default:
-        return 'from-primary to-secondary';
-    }
+  const handleClick = () => {
+    window.open(repoPath, '_blank');
   };
 
   return (
     <Card 
       ref={cardRef}
-      className="language-card text-center bg-card border border-border backdrop-blur-xl hover:bg-card/80 transition-all duration-500 group cursor-pointer"
+      className="language-card text-center bg-card/60 backdrop-blur-xl border border-border/50 hover:bg-card/80 hover:border-border transition-all duration-500 group cursor-pointer relative overflow-hidden"
       style={{
         transform: isHovered 
           ? `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)` 
@@ -80,57 +97,70 @@ const LanguageCard: React.FC<LanguageCardProps> = ({
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={() => window.open(repoPath, '_blank')}
+      onClick={handleClick}
     >
+      {/* Gradient background effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      
       <CardContent 
-        className="pt-8 pb-6"
+        className="pt-8 pb-6 relative z-10"
         style={{
           transformStyle: 'preserve-3d',
         }}
       >
+        {/* Icon container with hover effect */}
         <div 
-          className="relative mb-6"
+          className="relative mb-6 flex flex-col items-center"
           style={{
             transform: isHovered ? 'translateZ(30px)' : 'translateZ(0px)',
             transition: isHovered ? 'none' : 'transform 0.5s ease'
           }}
         >
-          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center relative overflow-hidden group-hover:scale-110 transition-transform duration-300">
-            <div className={`absolute inset-0 bg-gradient-to-br ${getGradientColors(color)} rounded-2xl`}></div>
-            <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl"></div>
+          {/* Icon with theme-aware background */}
+          <div className="w-20 h-20 mx-auto mb-3 rounded-2xl flex items-center justify-center relative overflow-hidden group-hover:scale-110 transition-all duration-300 bg-background/60 backdrop-blur border border-border/30 group-hover:border-border/60 group-hover:bg-background/80">
             <div 
-              className="relative z-10"
+              className="relative z-10 flex items-center justify-center"
               style={{
                 transform: isHovered ? 'translateZ(20px)' : 'translateZ(0px)',
                 transition: isHovered ? 'none' : 'transform 0.5s ease'
               }}
             >
-              <NervaLogo size={32} />
+              {getLanguageIcon(name)}
+            </div>
+            
+            {/* Language name overlay on hover */}
+            <div 
+              className={`absolute inset-0 flex items-center justify-center bg-background/95 backdrop-blur-sm transition-all duration-300 ${
+                isHovered ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <span className="text-sm font-semibold text-foreground">
+                {name}
+              </span>
             </div>
           </div>
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          
+          {/* Glow effect */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
-        <h4 
-          className="font-bold text-xl text-foreground mb-2"
+
+        {/* Script count with enhanced styling */}
+        <div 
+          className="text-center"
           style={{
             transform: isHovered ? 'translateZ(25px)' : 'translateZ(0px)',
             transition: isHovered ? 'none' : 'transform 0.5s ease'
           }}
         >
-          {name}
-        </h4>
-        <p 
-          className="text-muted-foreground font-medium"
-          style={{
-            transform: isHovered ? 'translateZ(20px)' : 'translateZ(0px)',
-            transition: isHovered ? 'none' : 'transform 0.5s ease'
-          }}
-        >
-          <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            {count}
-          </span>
-          <span className="ml-1">scripts</span>
-        </p>
+          <div className="mb-2">
+            <span className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              {count}
+            </span>
+          </div>
+          <p className="text-muted-foreground font-medium text-sm">
+            {count === 1 ? 'script' : 'scripts'}
+          </p>
+        </div>
       </CardContent>
     </Card>
   );
