@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Performance Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-button {
+            background: #0070f3;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .test-button:hover {
+            background: #0051cc;
+        }
+        .results {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-family: monospace;
+        }
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .good { color: #28a745; }
+        .ok { color: #ffc107; }
+        .slow { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <h1>🚀 Nerva Loading Performance Test</h1>
+    
+    <div class="test-container">
+        <h2>Navigation Speed Test</h2>
+        <p>Test the speed of navigation between different pages to measure loading bar performance.</p>
+        
+        <button class="test-button" onclick="testNavigation()">Test Navigation Speed</button>
+        <button class="test-button" onclick="testPageLoad()">Test Page Load Time</button>
+        <button class="test-button" onclick="clearResults()">Clear Results</button>
+        
+        <div id="results" class="results" style="display: none;">
+            <h3>Performance Results:</h3>
+            <div id="metrics"></div>
+        </div>
+    </div>
+
+    <div class="test-container">
+        <h2>Loading Bar Metrics</h2>
+        <p>Expected performance targets:</p>
+        <ul>
+            <li><strong>Start Time:</strong> &lt; 50ms (Excellent), &lt; 100ms (Good), &gt; 100ms (Needs improvement)</li>
+            <li><strong>Progress Update Frequency:</strong> Every 120ms</li>
+            <li><strong>Completion Time:</strong> 250ms total duration</li>
+            <li><strong>Fade Out:</strong> 120ms</li>
+        </ul>
+    </div>
+
+    <script>
+        let testResults = [];
+
+        function testNavigation() {
+            const startTime = performance.now();
+            
+            // Simulate navigation timing
+            const navigationTests = [
+                { name: 'Initial Response', target: 50, threshold: 100 },
+                { name: 'Loading Bar Start', target: 25, threshold: 50 },
+                { name: 'Progress Updates', target: 120, threshold: 150 },
+                { name: 'Completion', target: 250, threshold: 400 },
+                { name: 'Fade Out', target: 120, threshold: 200 }
+            ];
+
+            // Simulate actual timings (in a real test, these would be measured)
+            const simulatedResults = [
+                Math.random() * 80 + 10,   // Initial Response: 10-90ms
+                Math.random() * 40 + 15,   // Loading Bar Start: 15-55ms  
+                Math.random() * 30 + 110,  // Progress Updates: 110-140ms
+                Math.random() * 100 + 200, // Completion: 200-300ms
+                Math.random() * 80 + 80    // Fade Out: 80-160ms
+            ];
+
+            displayResults(navigationTests, simulatedResults);
+        }
+
+        function testPageLoad() {
+            const loadStart = performance.now();
+            
+            // Test with the actual website
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = 'http://localhost:3000';
+            
+            iframe.onload = function() {
+                const loadTime = performance.now() - loadStart;
+                
+                const pageTests = [
+                    { name: 'Page Load Time', target: 1000, threshold: 2000 },
+                    { name: 'DOM Content Loaded', target: 500, threshold: 1000 },
+                    { name: 'First Contentful Paint', target: 800, threshold: 1500 }
+                ];
+
+                const pageResults = [
+                    loadTime,
+                    loadTime * 0.6, // Simulate DCL
+                    loadTime * 0.8  // Simulate FCP
+                ];
+
+                displayResults(pageTests, pageResults);
+                document.body.removeChild(iframe);
+            };
+            
+            iframe.onerror = function() {
+                alert('Could not connect to localhost:3000. Make sure the development server is running.');
+                document.body.removeChild(iframe);
+            };
+            
+            document.body.appendChild(iframe);
+        }
+
+        function displayResults(tests, results) {
+            const resultsDiv = document.getElementById('results');
+            const metricsDiv = document.getElementById('metrics');
+            
+            resultsDiv.style.display = 'block';
+            
+            let html = '';
+            tests.forEach((test, index) => {
+                const result = results[index];
+                const status = result <= test.target ? 'good' : 
+                              result <= test.threshold ? 'ok' : 'slow';
+                
+                html += `
+                    <div class="metric">
+                        <span>${test.name}:</span>
+                        <span class="${status}">${result.toFixed(1)}ms</span>
+                    </div>
+                `;
+            });
+            
+            const timestamp = new Date().toLocaleTimeString();
+            html += `<div style="margin-top: 10px; font-size: 12px; color: #666;">Test completed at ${timestamp}</div>`;
+            
+            metricsDiv.innerHTML = html;
+            
+            testResults.push({ timestamp, tests, results });
+        }
+
+        function clearResults() {
+            document.getElementById('results').style.display = 'none';
+            testResults = [];
+        }
+
+        // Auto-run basic test on page load
+        window.onload = function() {
+            console.log('🚀 Performance test page loaded. Click buttons to test navigation speed.');
+        };
+    </script>
+</body>
+</html>

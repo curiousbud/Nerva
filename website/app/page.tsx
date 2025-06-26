@@ -49,10 +49,10 @@ export default function HomePage() {
   useEffect(() => {
     async function loadScriptsData() {
       try {
-        // Add minimum loading time to ensure loading screen is visible
+        // Reduced minimum loading time for faster response
         const [data] = await Promise.all([
           fetchScriptsData(),
-          new Promise(resolve => setTimeout(resolve, 800)) // Minimum 800ms loading
+          new Promise(resolve => setTimeout(resolve, 300)) // Reduced to 300ms
         ])
         setScriptsData(data)
       } catch (err) {
