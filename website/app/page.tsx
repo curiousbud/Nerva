@@ -12,7 +12,7 @@ import ScriptCard from "@/components/ScriptCard"
 import LanguageCard from "@/components/LanguageCard"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { NervaLogo } from "@/components/NervaLogo"
-import { fetchScriptsData } from '@/lib/api'
+import { fetchScriptsData, preloadScriptsData } from '@/lib/api'
 import LoadingPage from '@/components/LoadingPage'
 
 interface Script {
@@ -49,10 +49,13 @@ export default function HomePage() {
   useEffect(() => {
     async function loadScriptsData() {
       try {
+        // Start preloading immediately for faster subsequent loads
+        preloadScriptsData();
+        
         // Reduced minimum loading time for faster response
         const [data] = await Promise.all([
           fetchScriptsData(),
-          new Promise(resolve => setTimeout(resolve, 300)) // Reduced to 300ms
+          new Promise(resolve => setTimeout(resolve, 200)) // Reduced to 200ms
         ])
         setScriptsData(data)
       } catch (err) {
