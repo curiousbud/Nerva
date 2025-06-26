@@ -1,9 +1,8 @@
 # ✅ ScriptHub – Universal Script Repository
 
 <p align="center">
-  <img src="assets/banner.jpeg" 
+  <img src="ScriptHub/assets/banner.jpeg" 
        alt="ScriptHub - Universal Script Repository" 
-       width="800">
 </p>
 
 <p align="center">
@@ -51,7 +50,7 @@ From security testing tools to network utilities, each script is professionally 
 
 ## 📁 Project Structure
 
-\`\`\`
+```
 ScriptHub/
 │
 ├── scripts/                    # Main scripts directory
@@ -71,7 +70,7 @@ ScriptHub/
 ├── README.md                  # This file
 ├── CONTRIBUTING.md            # Contribution guidelines
 └── CODE_OF_CONDUCT.md         # Community guidelines
-\`\`\`
+```
 
 ## 🧑‍💻 Getting Started
 
