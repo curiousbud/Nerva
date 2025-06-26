@@ -37,9 +37,19 @@ export async function fetchScriptsData() {
     const response = await fetch(getApiUrl('/data/scripts.json'), {
       headers: {
         'Cache-Control': 'public, max-age=300', // 5 minutes browser cache
-        'If-None-Match': getETag('scripts_data'), // Conditional request
       },
     });
+    
+    // Handle 304 Not Modified as success (data hasn't changed)
+    if (response.status === 304) {
+      console.log('📄 Scripts data not modified (304), using cached version');
+      // Try to get cached data since server says it's still valid
+      const fallbackData = getSessionCache('scripts_data');
+      if (fallbackData) {
+        apiCache.set(cacheKey, fallbackData, CACHE_DURATION.MEDIUM);
+        return fallbackData;
+      }
+    }
     
     if (!response.ok) {
       throw new Error(`Failed to load scripts data: ${response.status} ${response.statusText}`);
@@ -50,7 +60,6 @@ export async function fetchScriptsData() {
     // Store in multiple cache layers
     apiCache.set(cacheKey, data, CACHE_DURATION.MEDIUM);
     setSessionCache('scripts_data', data);
-    setETag('scripts_data', response.headers.get('etag') || '');
     
     console.log('✅ Scripts data fetched and cached');
     return data;
@@ -102,21 +111,6 @@ function setSessionCache(key: string, data: any): void {
     sessionStorage.setItem(`nerva_${key}`, JSON.stringify(cacheData));
   } catch (error) {
     console.warn('Failed to set session cache:', error);
-  }
-}
-
-// ETag helpers for conditional requests
-function getETag(key: string): string {
-  if (typeof window === 'undefined') return '';
-  return localStorage.getItem(`nerva_etag_${key}`) || '';
-}
-
-function setETag(key: string, etag: string): void {
-  if (typeof window === 'undefined') return;
-  try {
-    localStorage.setItem(`nerva_etag_${key}`, etag);
-  } catch (error) {
-    console.warn('Failed to set ETag:', error);
   }
 }
 

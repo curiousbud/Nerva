@@ -1,7 +1,7 @@
 {
-  "version": "1.2.0",
+  "version": "1.2.1",
   "name": "Nerva - Universal Script Repository",
-  "description": "Performance-optimized version with advanced caching system",
+  "description": "Performance-optimized version with advanced caching system and 304 fix",
   "features": [
     "Multi-layer caching system (memory + session + service worker)",
     "Optimized loading speeds (75-80% faster)",
@@ -20,6 +20,15 @@
     "bundleSize": "optimized"
   },
   "changelog": {
+    "v1.2.1": {
+      "date": "2025-06-27",
+      "type": "patch",
+      "changes": [
+        "🐛 Fixed 304 Not Modified handling in API cache system",
+        "🧹 Cleaned up unused ETag helper functions",
+        "✅ Enhanced error handling for HTTP status codes"
+      ]
+    },
     "v1.2.0": {
       "date": "2025-06-27",
       "type": "minor",
