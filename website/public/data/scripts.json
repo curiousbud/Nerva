@@ -1,21 +1,98 @@
 {
   "lastUpdated": "",
-  "totalScripts": 9,
+  "totalScripts": 13,
   "languages": {
     "bash": {
-      "count": 0,
-      "scripts": []
+      "count": 1,
+      "scripts": [
+        {
+          "name": "github-label-setup",
+          "path": "scripts\\bash\\github-label-setup",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "A Bash script that automatically creates all necessary GitHub labels for the Nerva repository to help organize issues and pull requests efficiently.",
+          "features": [
+            "🏷️ Creates 25+ organized labels for different categories",
+            "🔍 Checks for GitHub CLI installation and authentication",
+            "🎨 Uses consistent color scheme following GitHub conventions",
+            "⚡ Fast batch creation with progress feedback",
+            "🛡️ Safe execution with error handling"
+          ],
+          "requirements": [
+            "gh",
+            "Bash shell (Linux/macOS/WSL)",
+            "Repository access permissions"
+          ],
+          "usage": "chmod +x setup-labels.sh\n",
+          "featured": false,
+          "display_name": "GitHub Label Setup Script (Bash)"
+        }
+      ]
     },
     "javascript": {
-      "count": 0,
-      "scripts": []
+      "count": 1,
+      "scripts": [
+        {
+          "name": "github-label-setup",
+          "path": "scripts\\javascript\\github-label-setup",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "A Node.js script that automatically creates all necessary GitHub labels for the Nerva repository to help organize issues and pull requests efficiently.",
+          "features": [
+            "🏷️ Creates 25+ organized labels for different categories",
+            "🔍 Comprehensive GitHub CLI installation and authentication checks",
+            "🎨 Uses consistent color scheme following GitHub conventions",
+            "⚡ Fast batch creation with colorful progress feedback",
+            "🛡️ Modern JavaScript with proper error handling",
+            "📊 Success rate reporting",
+            "🌈 Beautiful colored console output",
+            "**Modern JavaScript**: Uses ES6+ features and best practices",
+            "**Colored Output**: Beautiful console output with ANSI colors",
+            "**Error Handling**: Comprehensive try-catch blocks",
+            "**Synchronous Execution**: Uses `execSync` for reliable command execution",
+            "**Cross-platform**: Works on Windows, macOS, and Linux"
+          ],
+          "requirements": [
+            "Node.js 12+",
+            "gh",
+            "Repository access permissions"
+          ],
+          "usage": "node setup-labels.js\n",
+          "featured": false,
+          "display_name": "GitHub Label Setup Script (JavaScript/Node.js)"
+        }
+      ]
     },
     "powershell": {
-      "count": 0,
-      "scripts": []
+      "count": 1,
+      "scripts": [
+        {
+          "name": "github-label-setup",
+          "path": "scripts\\powershell\\github-label-setup",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "A PowerShell script that automatically creates all necessary GitHub labels for the Nerva repository to help organize issues and pull requests efficiently.",
+          "features": [
+            "🏷️ Creates 25+ organized labels for different categories",
+            "🔍 Comprehensive GitHub CLI installation and authentication checks",
+            "🎨 Uses consistent color scheme following GitHub conventions",
+            "⚡ Fast batch creation with detailed progress feedback",
+            "🛡️ Robust error handling and user-friendly messages",
+            "📊 Success rate reporting"
+          ],
+          "requirements": [
+            "gh",
+            "PowerShell 5.1 or PowerShell Core 6+",
+            "Repository access permissions"
+          ],
+          "usage": ".\\setup-labels.ps1\n",
+          "featured": false,
+          "display_name": "GitHub Label Setup Script (PowerShell)"
+        }
+      ]
     },
     "python": {
-      "count": 9,
+      "count": 10,
       "scripts": [
         {
           "name": "auto-wifi-check",
@@ -158,6 +235,35 @@
           "usage": "# Check a single host\npython ftp-scanner.py -t example.com\n\n# Check multiple hosts\npython ftp-scanner.py -t host1.com host2.com 192.168.1.1\n\n# Scan from file\npython ftp-scanner.py -f hosts.txt\n",
           "featured": true,
           "display_name": "🔍 FTP Anonymous Login Scanner"
+        },
+        {
+          "name": "github-label-setup",
+          "path": "scripts\\python\\github-label-setup",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "A Python script that automatically creates all necessary GitHub labels for the Nerva repository to help organize issues and pull requests efficiently.",
+          "features": [
+            "🏷️ Creates 25+ organized labels for different categories",
+            "🔍 Comprehensive GitHub CLI installation and authentication checks",
+            "🎨 Uses consistent color scheme following GitHub conventions",
+            "⚡ Fast batch creation with detailed progress feedback",
+            "🛡️ Type hints and robust error handling",
+            "📊 Success rate reporting",
+            "🐍 Cross-platform Python compatibility",
+            "**Type Hints**: Full type annotations for better code clarity",
+            "**Error Handling**: Comprehensive exception handling",
+            "**Subprocess Management**: Safe subprocess execution",
+            "**Cross-platform**: Works on Windows, macOS, and Linux",
+            "**Clean Code**: Well-documented and maintainable"
+          ],
+          "requirements": [
+            "Python 3.6+",
+            "gh",
+            "Repository access permissions"
+          ],
+          "usage": "chmod +x setup_labels.py\n",
+          "featured": false,
+          "display_name": "GitHub Label Setup Script (Python)"
         },
         {
           "name": "password-generator",
