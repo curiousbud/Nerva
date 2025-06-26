@@ -1,6 +1,6 @@
 # 🟨 JavaScript Scripts Collection
 
-Welcome to the JavaScript scripts section of ScriptHub! This directory will contain Node.js tools and utilities.
+Welcome to the JavaScript scripts section of Nerva! This directory will contain Node.js tools and utilities.
 
 ## 📋 Available Scripts
 

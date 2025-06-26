@@ -1,19 +1,19 @@
 {
-  "name": "ScriptHub - A Collection of Powerful Scripts",
-  "short_name": "ScriptHub",
+  "name": "Nerva - A Collection of Powerful Scripts",
+  "short_name": "Nerva",
   "description": "Discover, share, and contribute cutting-edge scripts across multiple programming languages.",
-  "start_url": "/",
+  "start_url": "/Nerva/",
   "display": "standalone",
   "background_color": "#1a0b2e",
   "theme_color": "#8b5cf6",
   "icons": [
     {
-      "src": "/placeholder-logo.png",
+      "src": "/Nerva/placeholder-logo.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/placeholder-logo.png",
+      "src": "/Nerva/placeholder-logo.png",
       "sizes": "512x512",
       "type": "image/png"
     }

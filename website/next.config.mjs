@@ -11,8 +11,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: process.env.NODE_ENV === 'production' ? '/Script-Hub' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/Script-Hub/' : '',
+  basePath: process.env.NODE_ENV === 'production' ? '/Nerva' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/Nerva/' : '',
   // Ensure static files are served correctly on GitHub Pages
   distDir: 'out',
 }

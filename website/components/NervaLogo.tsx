@@ -1,11 +1,11 @@
 import React from 'react'
 
-interface ScriptHubLogoProps {
+interface NervaLogoProps {
   className?: string
   size?: number
 }
 
-export const ScriptHubLogo: React.FC<ScriptHubLogoProps> = ({ 
+export const NervaLogo: React.FC<NervaLogoProps> = ({ 
   className = "", 
   size = 32 
 }) => {
@@ -54,7 +54,7 @@ export const ScriptHubLogo: React.FC<ScriptHubLogoProps> = ({
         strokeLinecap="round"
       />
       
-      {/* Network nodes (representing hub) */}
+      {/* Neural network nodes around the perimeter */}
       <circle cx="24" cy="16" r="2" fill="white" opacity="0.8" />
       <circle cx="40" cy="16" r="2" fill="white" opacity="0.8" />
       <circle cx="48" cy="32" r="2" fill="white" opacity="0.8" />
@@ -62,15 +62,15 @@ export const ScriptHubLogo: React.FC<ScriptHubLogoProps> = ({
       <circle cx="24" cy="48" r="2" fill="white" opacity="0.8" />
       <circle cx="16" cy="32" r="2" fill="white" opacity="0.8" />
       
-      {/* Connection lines (subtle) */}
+      {/* Connection lines between nodes */}
       <path
         d="M24 16L32 24M40 16L32 24M48 32L40 32M40 48L32 40M24 48L32 40M16 32L24 32"
         stroke="white"
         strokeWidth="1"
         opacity="0.3"
       />
-
-      {/* Gradient definitions */}
+      
+      {/* Gradients */}
       <defs>
         <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#8b5cf6" />
@@ -85,3 +85,5 @@ export const ScriptHubLogo: React.FC<ScriptHubLogoProps> = ({
     </svg>
   )
 }
+
+export default NervaLogo

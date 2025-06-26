@@ -1,8 +1,8 @@
-# ✅ ScriptHub – Universal Script Repository
+# ✅ Nerva – Universal Script Repository
 
 <p align="center">
   <img src="assets/banner.jpeg" 
-       alt="ScriptHub - Universal Script Repository" 
+       alt="Nerva - Universal Script Repository" 
        width="800" />
 </p>
 
@@ -18,7 +18,7 @@
 
 ## 🌐 Overview
 
-ScriptHub is an open-source collection of practical, production-ready scripts for automation, security testing, networking, and more—across multiple programming languages.
+Nerva is an open-source collection of practical, production-ready scripts for automation, security testing, networking, and more—across multiple programming languages.
 
 ## 📊 Script Collection
 
@@ -31,12 +31,12 @@ ScriptHub is an open-source collection of practical, production-ready scripts fo
 | **Bash**    | *(None yet)*                      | *Coming soon. Contributions welcome!*               | [scripts/bash/](scripts/bash/)               |
 | **PowerShell** | *(None yet)*                    | *Coming soon. Contributions welcome!*               | [scripts/powershell/](scripts/powershell/)   |
 
-> Want to add a script in your favorite language? [Open a PR!](https://github.com/curiousbud/Script-Hub/pulls)
+> Want to add a script in your favorite language? [Open a PR!](https://github.com/curiousbud/Nerva/pulls)
 
 ## 📁 Repository Structure
 
 ```
-ScriptHub/
+Nerva/
 ├── scripts/
 │   ├── python/
 │   │   ├── ftp-scanner/
@@ -67,5 +67,5 @@ MIT License. See [LICENSE](LICENSE) for details.
 ---
 
 <p align="center">
-  <em>Browse all scripts and contribute at <a href="https://github.com/curiousbud/Script-Hub">github.com/curiousbud/Script-Hub</a></em>
+  <em>Browse all scripts and contribute at <a href="https://github.com/curiousbud/Nerva">github.com/curiousbud/Nerva</a></em>
 </p>

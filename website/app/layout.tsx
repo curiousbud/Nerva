@@ -3,24 +3,25 @@ import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 
 export const metadata: Metadata = {
-  title: 'ScriptHub - A Collection of Powerful Scripts',
-  description: 'Discover, share, and contribute cutting-edge scripts across multiple programming languages. From automation to security tools, unlock the power of code with ScriptHub.',
-  keywords: 'scripts, automation, programming, python, javascript, bash, powershell, security tools, code repository, open source',
-  authors: [{ name: 'ScriptHub Team' }],
-  creator: 'ScriptHub',
-  publisher: 'ScriptHub',
+  metadataBase: new URL('https://curiousbud.github.io/Nerva'),
+  title: 'Nerva - A Collection of Powerful Scripts',
+  description: 'Discover, share, and contribute cutting-edge scripts across multiple programming languages. From automation to security tools, unlock the power of code with Nerva.',
+  keywords: 'scripts, automation, programming, python, javascript, bash, powershell, security tools, code repository, open source, nerva',
+  authors: [{ name: 'Nerva Team' }],
+  creator: 'Nerva',
+  publisher: 'Nerva',
   robots: 'index, follow',
   openGraph: {
-    title: 'ScriptHub - A Collection of Powerful Scripts',
+    title: 'Nerva - A Collection of Powerful Scripts',
     description: 'Discover, share, and contribute cutting-edge scripts across multiple programming languages.',
-    url: 'https://scripthub.dev',
-    siteName: 'ScriptHub',
+    url: 'https://curiousbud.github.io/Nerva',
+    siteName: 'Nerva',
     images: [
       {
-        url: '/banner.jpeg',
+        url: '/Nerva/banner.jpeg',
         width: 1200,
         height: 630,
-        alt: 'ScriptHub - Collection of Powerful Scripts',
+        alt: 'Nerva - Collection of Powerful Scripts',
       },
     ],
     locale: 'en_US',
@@ -28,10 +29,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ScriptHub - A Collection of Powerful Scripts',
+    title: 'Nerva - A Collection of Powerful Scripts',
     description: 'Discover, share, and contribute cutting-edge scripts across multiple programming languages.',
-    images: ['/banner.jpeg'],
-    creator: '@scripthub',
+    images: ['/Nerva/banner.jpeg'],
+    creator: '@nerva',
   },
 }
 
@@ -51,11 +52,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
-      </head>
       <body className="min-h-screen bg-background font-sans antialiased">
         <ThemeProvider
           attribute="class"

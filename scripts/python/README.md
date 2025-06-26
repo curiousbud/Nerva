@@ -1,6 +1,6 @@
 # 🐍 Python Scripts Collection
 
-Welcome to the Python scripts section of ScriptHub! This directory contains various Python tools and utilities for different use cases.
+Welcome to the Python scripts section of Nerva! This directory contains various Python tools and utilities for different use cases.
 
 ## 📋 Available Scripts
 

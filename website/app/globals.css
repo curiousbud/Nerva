@@ -11,7 +11,7 @@ body {
     text-wrap: balance;
   }
   
-  /* ScriptHub custom utilities */
+  /* Nerva custom utilities */
   .gradient-text {
     background: linear-gradient(to right, #22d3ee, #a855f7, #ec4899);
     background-clip: text;
@@ -198,16 +198,34 @@ body {
     height: 16px;
     width: 16px;
     fill: hsl(var(--card));
-    transition: fill 0.3s ease;
+    transition: all 0.3s ease;
     cursor: pointer;
   }
 
   .script-card .top-section .icons .actions svg:hover {
-    fill: white;
+    transition: all 0.3s ease;
+    transform: scale(1.1);
+  }
+
+  /* Theme-specific icon hover colors with better contrast */
+  .light .script-card .top-section .icons .actions svg:hover {
+    fill: hsl(var(--primary));
+    filter: drop-shadow(0 2px 4px hsla(var(--primary), 0.3));
+  }
+
+  .dark .script-card .top-section .icons .actions svg:hover {
+    fill: hsl(var(--accent));
+    filter: drop-shadow(0 2px 4px hsla(var(--accent), 0.3));
+  }
+
+  /* Default fallback with primary color */
+  html .script-card .top-section .icons .actions svg:hover {
+    fill: hsl(var(--primary));
   }
 
   .script-card .content-section {
     padding: 20px 15px 15px;
+    transform-style: preserve-3d;
   }
 
   .script-card .content-section .script-title {
@@ -249,6 +267,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transform-style: preserve-3d;
   }
 
   .script-card .bottom-section .language-info {
@@ -271,8 +290,8 @@ body {
   }
 
   .script-card .bottom-section .view-button {
-    background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
-    color: white;
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.9) 100%);
+    color: hsl(var(--primary-foreground));
     border: none;
     padding: 8px 16px;
     border-radius: 8px;
@@ -280,12 +299,14 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 8px hsla(var(--primary), 0.25);
   }
 
   .script-card .bottom-section .view-button:hover {
-    background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.9) 0%, hsl(var(--primary) / 0.8) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px hsla(var(--primary), 0.4);
+    color: hsl(var(--primary-foreground));
   }
 
   .script-card .bottom-section .view-button:disabled {
@@ -337,22 +358,236 @@ body {
     box-shadow: 0 8px 25px hsla(var(--primary), 0.2);
   }
 
-  /* Theme-aware card backgrounds */
-  .theme-card {
+  /* Enhanced Script Card with 3D mouse-following effects */
+  .script-card {
+    width: 280px;
+    border-radius: 20px;
     background: hsl(var(--card));
     border: 1px solid hsl(var(--border));
-    color: hsl(var(--card-foreground));
+    padding: 5px;
+    overflow: visible; /* Changed from hidden to visible for 3D effects */
+    box-shadow: 0 7px 20px hsla(var(--foreground), 0.1);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+    cursor: pointer;
   }
 
-  .theme-card:hover {
-    background: hsl(var(--card) / 0.8);
-    border-color: hsl(var(--border) / 0.8);
+  .script-card:hover {
+    box-shadow: 0 25px 50px hsla(var(--primary), 0.4);
+  }
+
+  .script-card .top-section {
+    height: 150px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(45deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+    position: relative;
+    transform-style: preserve-3d;
+  }
+
+  .script-card .content-section {
+    padding: 15px;
+    transform-style: preserve-3d;
+  }
+
+  .script-card .bottom-section {
+    padding: 0 15px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transform-style: preserve-3d;
+  }
+
+  .script-card .top-section .border {
+    border-bottom-right-radius: 10px;
+    height: 30px;
+    width: 130px;
+    background: hsl(var(--card));
+    position: relative;
+    transform: skew(-40deg);
+    box-shadow: -10px -10px 0 0 hsl(var(--card));
+  }
+
+  .script-card .top-section .border::before {
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: 0;
+    right: -15px;
+    background: rgba(255, 255, 255, 0);
+    border-top-left-radius: 10px;
+    box-shadow: -5px -5px 0 2px hsl(var(--card));
+  }
+
+  .script-card .top-section::before {
+    content: "";
+    position: absolute;
+    top: 30px;
+    left: 0;
+    background: rgba(255, 255, 255, 0);
+    height: 15px;
+    width: 15px;
+    border-top-left-radius: 15px;
+    box-shadow: -5px -5px 0 2px hsl(var(--card));
+  }
+
+  .script-card .content-section {
+    padding: 20px 15px 15px;
+  }
+
+  .script-card .content-section .script-title {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    color: hsl(var(--foreground));
+    margin-bottom: 8px;
+    text-align: left;
+  }
+
+  .script-card .content-section .script-description {
+    color: hsl(var(--muted-foreground));
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 15px;
+    text-align: left;
+  }
+
+  .script-card .content-section .script-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 15px;
+  }
+
+  .script-card .content-section .script-tag {
+    background: hsl(var(--primary) / 0.2);
+    color: hsl(var(--primary));
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 500;
+    border: 1px solid hsl(var(--primary) / 0.3);
+  }
+
+  .script-card .bottom-section {
+    padding: 0 15px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .script-card .bottom-section .language-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .script-card .bottom-section .language-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: hsl(var(--primary));
+  }
+
+  .script-card .bottom-section .language-name {
+    color: hsl(var(--muted-foreground));
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .script-card .bottom-section .view-button {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.9) 100%);
+    color: hsl(var(--primary-foreground));
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px hsla(var(--primary), 0.25);
+  }
+
+  .script-card .bottom-section .view-button:hover {
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.9) 0%, hsl(var(--primary) / 0.8) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px hsla(var(--primary), 0.4);
+    color: hsl(var(--primary-foreground));
+  }
+
+  /* Enhanced 3D Card Effects */
+  .script-card {
+    will-change: transform;
+  }
+
+  .script-card .content-section *,
+  .script-card .bottom-section * {
+    transform-style: preserve-3d;
+  }
+
+  .script-card .bottom-section .view-button {
+    position: relative;
+    z-index: 10;
+    will-change: transform;
+  }
+
+  .script-card .bottom-section .view-button:hover {
+    transform: translateY(-2px) translateZ(10px) !important;
+  }
+
+  .script-card .content-section .script-tag {
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  .script-card .language-dot {
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  /* Mouse interaction improvements */
+  @media (hover: hover) {
+    .script-card:hover .top-section {
+      background: linear-gradient(45deg, hsl(var(--primary) / 1.1) 0%, hsl(var(--secondary) / 1.1) 100%);
+    }
+    
+    .script-card:hover .content-section .script-title {
+      color: hsl(var(--primary));
+      text-shadow: 0 2px 8px hsla(var(--primary), 0.3);
+    }
+  }
+
+  /* Enhanced Language Card 3D Effects */
+  .language-card {
+    will-change: transform;
+    transform-style: preserve-3d;
+    overflow: visible;
+  }
+
+  .language-card:hover {
+    box-shadow: 0 25px 50px hsla(var(--primary), 0.4);
+  }
+
+  .language-card .language-card-content * {
+    transform-style: preserve-3d;
+  }
+
+  /* Language card grid container */
+  .language-cards-grid {
+    perspective: 2000px;
+    perspective-origin: center center;
+  }
+
+  .language-cards-grid .language-card {
+    margin: 20px;
   }
 }
 
 @layer base {
   :root {
-    /* ScriptHub Light Theme - Clean & Professional */
+    /* Nerva Light Theme - Clean & Professional */
     --background: 0 0% 100%; /* Pure white background */
     --foreground: 270 100% 6%; /* Very dark purple text */
     --card: 0 0% 100%; /* White cards */
@@ -388,7 +623,7 @@ body {
     --sidebar-ring: 282 94% 35%;
   }
   .dark {
-    /* ScriptHub Dark Theme - Deep Purple */
+    /* Nerva Dark Theme - Deep Purple */
     --background: 282 94% 6%; /* russian-violet */
     --foreground: 270 100% 98%; /* Light text */
     --card: 282 94% 10%; /* A slightly lighter dark purple for cards */
@@ -439,4 +674,19 @@ body {
   --gradient-primary: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
   --gradient-secondary: linear-gradient(135deg, #1e293b 0%, #000000 100%);
   --gradient-accent: linear-gradient(135deg, #22d3ee 0%, #a855f7 50%, #ec4899 100%);
+}
+
+/* Grid container for 3D cards */
+.script-cards-grid {
+  perspective: 2000px;
+  perspective-origin: center center;
+}
+
+.script-cards-grid .script-card {
+  margin: 20px; /* Add margin to prevent clipping of 3D effects */
+}
+
+/* Container adjustments for 3D perspective */
+.grid {
+  transform-style: preserve-3d;
 }

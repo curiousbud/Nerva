@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Code, GitFork, Star, Search, AlertCircle } from "lucide-react"
 import ScriptCard from "@/components/ScriptCard"
+import LanguageCard from "@/components/LanguageCard"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { ScriptHubLogo } from "@/components/ScriptHubLogo"
+import { NervaLogo } from "@/components/NervaLogo"
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -19,25 +20,25 @@ export default function HomePage() {
       name: "Python", 
       count: 3, 
       color: "bg-blue-500",
-      repoPath: "https://github.com/your-username/Script-Hub/tree/main/scripts/python"
+      repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/python"
     },
     { 
       name: "JavaScript", 
       count: 0, 
       color: "bg-yellow-500",
-      repoPath: "https://github.com/your-username/Script-Hub/tree/main/scripts/javascript"
+      repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/javascript"
     },
     { 
       name: "Bash", 
       count: 0, 
       color: "bg-green-500",
-      repoPath: "https://github.com/your-username/Script-Hub/tree/main/scripts/bash"
+      repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/bash"
     },
     { 
       name: "PowerShell", 
       count: 0, 
       color: "bg-purple-500",
-      repoPath: "https://github.com/your-username/Script-Hub/tree/main/scripts/powershell"
+      repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/powershell"
     },
   ]
 
@@ -132,11 +133,11 @@ export default function HomePage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3 group">
               <div className="relative">
-                <ScriptHubLogo size={40} className="group-hover:scale-110 transition-transform duration-300" />
+                <NervaLogo size={40} className="group-hover:scale-110 transition-transform duration-300" />
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300 rounded-full"></div>
               </div>
               <h1 className="text-2xl font-bold text-foreground">
-                ScriptHub
+                Nerva
               </h1>
             </div>
             <div className="flex items-center space-x-4">
@@ -145,7 +146,7 @@ export default function HomePage() {
                 variant="outline" 
                 size="sm" 
                 className="btn-purple-outline"
-                onClick={() => window.open('https://github.com/your-username/Script-Hub', '_blank')}
+                onClick={() => window.open('https://github.com/curiousbud/Nerva', '_blank')}
               >
                 <GitFork className="h-4 w-4 mr-2" />
                 Fork
@@ -153,7 +154,7 @@ export default function HomePage() {
               <Button 
                 size="sm"
                 className="btn-purple"
-                onClick={() => window.open('https://github.com/your-username/Script-Hub', '_blank')}
+                onClick={() => window.open('https://github.com/curiousbud/Nerva', '_blank')}
               >
                 <Star className="h-4 w-4 mr-2" />
                 Star
@@ -205,7 +206,7 @@ export default function HomePage() {
               variant="outline" 
               size="lg" 
               className="btn-purple-outline px-8 py-4 text-lg font-semibold"
-              onClick={() => window.open('https://github.com/your-username/Script-Hub', '_blank')}
+              onClick={() => window.open('https://github.com/curiousbud/Nerva', '_blank')}
             >
               <GitFork className="mr-2 h-5 w-5" />
               Contribute
@@ -235,35 +236,16 @@ export default function HomePage() {
           </h3>
           <p className="text-center text-muted-foreground mb-16 text-lg">Power through multiple programming ecosystems</p>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="language-cards-grid grid grid-cols-2 md:grid-cols-4 gap-8">
             {languages.map((lang, index) => (
-              <Card 
-                key={lang.name} 
-                className="text-center bg-card border border-border backdrop-blur-xl hover:bg-card/80 transition-all duration-500 hover:scale-105 hover:shadow-2xl group cursor-pointer"
-                style={{animationDelay: `${index * 200}ms`}}
-                onClick={() => window.open(lang.repoPath, '_blank')}
-              >
-                <CardContent className="pt-8 pb-6">
-                  <div className="relative mb-6">
-                    <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center relative overflow-hidden group-hover:scale-110 transition-transform duration-300`}>
-                      <div className={`absolute inset-0 bg-gradient-to-br ${lang.color === 'bg-blue-500' ? 'from-blue-400 to-blue-600' : 
-                        lang.color === 'bg-yellow-500' ? 'from-yellow-400 to-orange-500' :
-                        lang.color === 'bg-green-500' ? 'from-green-400 to-emerald-600' :
-                        'from-purple-400 to-purple-600'} rounded-2xl`}></div>
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl"></div>
-                      <ScriptHubLogo size={32} className="relative z-10" />
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </div>
-                  <h4 className="font-bold text-xl text-foreground mb-2">{lang.name}</h4>
-                  <p className="text-muted-foreground font-medium">
-                    <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                      {lang.count}
-                    </span>
-                    <span className="ml-1">scripts</span>
-                  </p>
-                </CardContent>
-              </Card>
+              <LanguageCard
+                key={lang.name}
+                name={lang.name}
+                count={lang.count}
+                color={lang.color}
+                repoPath={lang.repoPath}
+                index={index}
+              />
             ))}
           </div>
         </div>
@@ -315,7 +297,7 @@ export default function HomePage() {
               </p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
+            <div className="script-cards-grid grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
               {filteredScripts.map((script, index) => (
                 <ScriptCard
                   key={script.name}
@@ -326,8 +308,11 @@ export default function HomePage() {
                   category={script.category}
                   status={script.status as "available" | "in-progress"}
                   onViewScript={() => {
-                    if (script.status === "available") {
-                      window.open(script.path, '_blank');
+                    if (script.status === "available" && script.path) {
+                      const fullUrl = script.path.startsWith('http') 
+                        ? script.path 
+                        : `https://github.com/curiousbud/Nerva/tree/main/${script.path}`;
+                      window.open(fullUrl, '_blank');
                     }
                   }}
                 />
@@ -355,7 +340,7 @@ export default function HomePage() {
         
         <div className="container mx-auto px-4 relative z-10">
           <h3 className="text-4xl font-bold text-center mb-16 text-foreground">
-            ScriptHub by the Numbers
+            Nerva by the Numbers
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
             <div className="group hover:scale-110 transition-transform duration-500">
@@ -398,13 +383,13 @@ export default function HomePage() {
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="mb-6">
             <div className="flex items-center justify-center space-x-3 mb-4">
-              <ScriptHubLogo size={32} className="text-primary" />
+              <NervaLogo size={32} className="text-primary" />
               <span className="text-2xl font-bold text-foreground">
-                ScriptHub
+                Nerva
               </span>
             </div>
             <p className="text-muted-foreground text-lg">
-              Made with <span className="text-red-400 animate-pulse">❤️</span> by the ScriptHub community
+              Made with <span className="text-red-400 animate-pulse">❤️</span> by the Nerva community
             </p>
           </div>
           <div className="text-muted-foreground/70 text-sm">
