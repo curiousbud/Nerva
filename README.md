@@ -1,8 +1,9 @@
 # ✅ ScriptHub – Universal Script Repository
 
 <p align="center">
-  <img src="ScriptHub/assets/banner.jpeg" 
+  <img src="assets/banner.jpeg" 
        alt="ScriptHub - Universal Script Repository" 
+       width="800" />
 </p>
 
 <p align="center">
@@ -14,7 +15,21 @@
   <img src="https://img.shields.io/badge/Scripts-3-green?style=flat-square" alt="Scripts">
   <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/Contributions-Welcome-orange?style=flat-square" alt="Contributions">
+  <img src="https://img.shields.io/badge/Website-Live-brightgreen?style=flat-square" alt="Website">
 </p>
+
+---
+
+## 📋 Table of Contents
+
+- [🌐 Overview](#-overview)
+- [📁 Repository Structure](#-repository-structure)
+- [🚀 Quick Navigation](#-quick-navigation)
+- [📊 Script Categories](#-script-categories)
+- [🧑‍💻 Getting Started](#-getting-started)
+- [💻 Website & Documentation](#-website--documentation)
+- [🤝 Contributing](#-contributing)
+- [📈 Statistics](#-statistics)
 
 ## 🌐 Overview
 
@@ -48,69 +63,175 @@ From security testing tools to network utilities, each script is professionally 
 ### 💙 PowerShell Scripts (0)
 - *Coming soon - contributions welcome!*
 
-## 📁 Project Structure
+## 📁 Repository Structure
 
 ```
 ScriptHub/
+├── 📜 scripts/                     # 🎯 Main Scripts Collection
+│   ├── 🐍 python/                 #   Python Scripts & Tools
+│   │   ├── 🔍 ftp-scanner/        #     Anonymous FTP Scanner
+│   │   ├── 🛡️ vulnerability-scanner/ #  Web Vulnerability Scanner
+│   │   └── 🌐 url-status-checker/ #     URL Status Checker
+│   ├── 🟨 javascript/             #   JavaScript/Node.js Scripts
+│   ├── 🐚 bash/                   #   Bash Shell Scripts  
+│   └── 💙 powershell/             #   PowerShell Scripts
 │
-├── scripts/                    # Main scripts directory
-│   ├── python/                # Python scripts
-│   │   ├── ftp-scanner/       # FTP security scanner
-│   │   ├── vulnerability-scanner/  # Web vulnerability scanner
-│   │   └── url-status-checker/     # URL availability checker
-│   ├── javascript/            # JavaScript/Node.js scripts
-│   ├── bash/                  # Bash shell scripts
-│   └── powershell/            # PowerShell scripts
+├── 🌐 website/                    # 📱 Web Interface & Documentation
+│   ├── app/                       #   Next.js App Router
+│   ├── components/                #   React Components
+│   ├── public/                    #   Static Assets
+│   └── styles/                    #   Styling Files
 │
-├── assets/                    # Project assets (images, etc.)
-├── docs/                      # Documentation (if needed)
-├── app/                       # Web interface for the repository
-├── components/                # UI components
-├── LICENSE                    # MIT License
-├── README.md                  # This file
-├── CONTRIBUTING.md            # Contribution guidelines
-└── CODE_OF_CONDUCT.md         # Community guidelines
+├── 📚 docs/                       # 📖 Project Documentation
+├── 🎨 assets/                     # 🖼️ Images & Media
+├── ⚙️ .github/                    # 🤖 GitHub Actions & Templates
+├── 📄 README.md                   # 📋 This File
+├── 📜 LICENSE                     # ⚖️ MIT License
+├── 🤝 CONTRIBUTING.md             # 🛠️ Contribution Guidelines
+└── 📋 CODE_OF_CONDUCT.md          # 🌟 Community Guidelines
 ```
+
+## 🚀 Quick Navigation
+
+### 🎯 Find Scripts by Category
+
+| Category | Language | Count | Quick Access |
+|----------|----------|-------|--------------|
+| 🔒 **Security** | Python | 2 | [`ftp-scanner`](scripts/python/ftp-scanner/) • [`vulnerability-scanner`](scripts/python/vulnerability-scanner/) |
+| 🌐 **Networking** | Python | 1 | [`url-status-checker`](scripts/python/url-status-checker/) |
+| 🟨 **JavaScript** | Node.js | 0 | *Coming Soon* |
+| 🐚 **System Admin** | Bash | 0 | *Coming Soon* |
+| 💙 **Automation** | PowerShell | 0 | *Coming Soon* |
+
+### 🔍 Browse by Language
+
+<details>
+<summary>🐍 <strong>Python Scripts</strong> (3 available)</summary>
+
+| Script | Description | Difficulty | Use Case |
+|--------|-------------|------------|----------|
+| [🔍 FTP Scanner](scripts/python/ftp-scanner/) | Multi-threaded anonymous FTP scanner | 🟡 Intermediate | Security Testing |
+| [🛡️ SHADOW Scanner](scripts/python/vulnerability-scanner/) | Template-based web vulnerability scanner | 🔴 Advanced | Penetration Testing |
+| [🌐 URL Checker](scripts/python/url-status-checker/) | Bulk URL status validation tool | 🟢 Beginner | Web Monitoring |
+
+</details>
+
+<details>
+<summary>🟨 <strong>JavaScript Scripts</strong> (0 available)</summary>
+
+*No scripts available yet. [Contribute your first JavaScript script!](CONTRIBUTING.md)*
+
+</details>
+
+<details>
+<summary>🐚 <strong>Bash Scripts</strong> (0 available)</summary>
+
+*No scripts available yet. [Contribute your first Bash script!](CONTRIBUTING.md)*
+
+</details>
+
+<details>
+<summary>💙 <strong>PowerShell Scripts</strong> (0 available)</summary>
+
+*No scripts available yet. [Contribute your first PowerShell script!](CONTRIBUTING.md)*
+
+</details>
+
+### 📊 Script Categories
+
+| 🏷️ Category | 📝 Description | 📊 Count | 🔗 Examples |
+|-------------|---------------|----------|-------------|
+| 🔒 **Security** | Penetration testing, vulnerability scanning | 2 | FTP Scanner, SHADOW Scanner |
+| 🌐 **Networking** | URL validation, connectivity testing | 1 | URL Status Checker |
+| 🛠️ **System Admin** | Server monitoring, automation | 0 | *Coming Soon* |
+| 📊 **Data Processing** | File manipulation, analysis | 0 | *Coming Soon* |
+| ⚡ **Automation** | Workflow automation, scripting | 0 | *Coming Soon* |
 
 ## 🧑‍💻 Getting Started
 
-### Quick Start
+### 🚀 Quick Start Guide
 
-1. **Clone the repository**
-   \`\`\`bash
-   git clone https://github.com/your-username/ScriptHub.git
-   cd ScriptHub
-   \`\`\`
+**Option 1: Browse Online**
+```bash
+# Visit our website for an interactive experience
+🌐 https://your-username.github.io/ScriptHub
+```
 
-2. **Browse available scripts**
-   \`\`\`bash
-   # View all Python scripts
-   ls scripts/python/
-   
-   # Check out a specific script
-   cd scripts/python/ftp-scanner/
-   cat README.md
-   \`\`\`
+**Option 2: Clone Repository**
+```bash
+# Clone the entire repository
+git clone https://github.com/your-username/ScriptHub.git
+cd ScriptHub
 
-3. **Run a script**
-   \`\`\`bash
-   # Example: Run the FTP scanner
-   cd scripts/python/ftp-scanner/
-   python ftp-scanner.py -t example.com -v
-   
-   # Example: Check URL status
-   cd scripts/python/url-status-checker/
-   python url-status.py -u https://example.com --show-details
-   \`\`\`
+# Browse available scripts
+ls scripts/                 # View all languages
+ls scripts/python/          # View Python scripts
+ls scripts/javascript/      # View JavaScript scripts
+```
 
-### Prerequisites
+**Option 3: Direct Script Access**
+```bash
+# Navigate directly to a specific script
+cd scripts/python/ftp-scanner/
+cat README.md               # Read documentation
+python ftp-scanner.py --help   # Get usage info
+```
 
-Different scripts may have different requirements:
+### 🎯 Running Scripts
 
-- **Python scripts**: Python 3.6+ and specific packages (see individual README files)
-- **JavaScript scripts**: Node.js 14+ and npm packages
-- **Bash scripts**: Bash 4.0+ and standard Unix utilities
-- **PowerShell scripts**: PowerShell 5.1+ or PowerShell Core 7+
+Each script includes comprehensive documentation and examples:
+
+```bash
+# Example: FTP Scanner
+cd scripts/python/ftp-scanner/
+pip install -r requirements.txt
+python ftp-scanner.py -t example.com -v
+
+# Example: URL Status Checker  
+cd scripts/python/url-status-checker/
+python url-status.py -u https://example.com --show-details
+
+# Example: Vulnerability Scanner
+cd scripts/python/vulnerability-scanner/
+python shadow.py -u https://target.com --template basic
+```
+
+### 📚 Script Documentation
+
+Every script includes:
+- 📖 **README.md** - Detailed usage guide
+- ⚙️ **requirements.txt** - Dependencies (Python)
+- 🔧 **config files** - Configuration examples  
+- 💡 **examples/** - Usage examples and demos
+
+## 💻 Website & Documentation
+
+### 🌐 Interactive Web Interface
+
+Visit our **live website** for an enhanced browsing experience:
+
+- 🎯 **Script Browser** - Filter and search scripts
+- 📖 **Documentation** - Comprehensive guides
+- 🔍 **Live Demos** - Try scripts online
+- 📊 **Statistics** - Repository insights
+- 🤝 **Community** - Contribution portal
+
+```bash
+# To run the website locally:
+cd website/
+npm install
+npm run dev
+# Visit: http://localhost:3000
+```
+
+### 📱 Features
+
+- ✨ **Responsive Design** - Works on all devices
+- 🔍 **Advanced Search** - Find scripts quickly
+- 🏷️ **Smart Filtering** - By language, category, difficulty
+- 📊 **Analytics** - Usage statistics and trends
+- 🌙 **Dark Mode** - Easy on the eyes
+- ⚡ **Fast Performance** - Optimized loading
 
 ## 🎯 Use Cases
 
@@ -190,24 +311,51 @@ High-performance URL availability checker with smart fallback, redirect tracking
 
 ## 📈 Statistics
 
-- **Total Scripts**: 3
-- **Languages Supported**: 4
-- **Contributors**: 1 (growing!)
-- **Lines of Code**: 1000+
-- **Documentation Pages**: 10+
+<div align="center">
 
-## 🔗 Related Projects
+| 📊 Metric | 📈 Count | 🎯 Goal |
+|-----------|----------|---------|
+| 📜 **Total Scripts** | 3 | 50+ |
+| 🌐 **Languages** | 4 | 8+ |
+| 👥 **Contributors** | 1 | 20+ |
+| 📝 **Lines of Code** | 1,000+ | 10,000+ |
+| 📖 **Documentation** | 10+ pages | 100+ |
+| ⭐ **GitHub Stars** | 0 | 100+ |
 
-- [Awesome Scripts](https://github.com/topics/awesome-scripts) - Curated list of useful scripts
-- [DevOps Scripts](https://github.com/topics/devops-scripts) - Infrastructure automation scripts
-- [Security Tools](https://github.com/topics/security-tools) - Cybersecurity utilities
+</div>
 
-## 📞 Support
+### � Language Distribution
 
-- 📖 **Documentation**: Check individual script README files
-- 🐛 **Issues**: Report bugs or request features via GitHub Issues
-- 💬 **Discussions**: Join our GitHub Discussions for questions and ideas
-- 📧 **Contact**: Reach out to maintainers for collaboration
+```
+Python      ████████████████████░  85% (3 scripts)
+JavaScript  ░░░░░░░░░░░░░░░░░░░░░   0% (0 scripts) 
+Bash        ░░░░░░░░░░░░░░░░░░░░░   0% (0 scripts)
+PowerShell  ░░░░░░░░░░░░░░░░░░░░░   0% (0 scripts)
+```
+
+### 🏆 Featured Contributors
+
+- 👨‍💻 **Project Creator** - Initial scripts and architecture
+- 🤝 **Contributors Welcome** - [Join us!](CONTRIBUTING.md)
+
+---
+
+<div align="center">
+
+## � Ready to Get Started?
+
+| 🎯 **I want to...** | 🔗 **Quick Link** |
+|---------------------|-------------------|
+| 🔍 Browse scripts | [`scripts/`](scripts/) |
+| 🌐 View website | [Live Demo](https://your-username.github.io/ScriptHub) |
+| 🤝 Contribute | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
+| 📖 Read docs | [`docs/`](docs/) |
+| 🐛 Report issue | [GitHub Issues](../../issues) |
+| 💬 Ask questions | [GitHub Discussions](../../discussions) |
+
+</div>
+
+---
 
 ## 📜 License
 
@@ -221,13 +369,31 @@ This project is licensed under the [MIT License](./LICENSE) — see the LICENSE 
 
 ---
 
+<div align="center">
+
+## 📚 Documentation & Links
+
+| 📖 **Resource** | 🔗 **Link** | 📝 **Description** |
+|-----------------|-------------|-------------------|
+| 🏠 Main Repository | [GitHub](../../) | Source code and issues |
+| 🌐 Live Website | [GitHub Pages](https://your-username.github.io/ScriptHub) | Interactive documentation |
+| 📁 Organization Guide | [`docs/ORGANIZATION.md`](docs/ORGANIZATION.md) | Project structure details |
+| 🤝 Contributing | [`CONTRIBUTING.md`](CONTRIBUTING.md) | How to contribute |
+| 📋 Code of Conduct | [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) | Community guidelines |
+
+</div>
+
+---
+
 <p align="center">
-  <strong>Made with ❤️ by the ScriptHub community</strong>
+  <strong>Made with ❤️ by the ScriptHub community</strong><br>
+  <em>🚀 Empowering developers with practical, ready-to-use scripts</em>
 </p>
 
 <p align="center">
-  <a href="#-overview">Overview</a> •
-  <a href="#-getting-started">Getting Started</a> •
-  <a href="#-contributing">Contributing</a> •
-  <a href="#-license">License</a>
+  <a href="#-overview">🌐 Overview</a> •
+  <a href="#-quick-navigation">🧭 Navigation</a> •
+  <a href="#-getting-started">🚀 Getting Started</a> •
+  <a href="#-contributing">🤝 Contributing</a> •
+  <a href="#-statistics">📊 Statistics</a>
 </p>

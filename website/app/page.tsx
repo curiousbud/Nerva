@@ -126,19 +126,30 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 text-center">
-          <div className="relative mx-auto mb-8 h-32 w-full max-w-2xl">
-            <Image src="/assets/banner.jpeg" alt="ScriptHub Banner" fill className="rounded-lg object-cover" />
-          </div>
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">A Collection of Useful Scripts</h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+      <section className="relative py-24 overflow-hidden">
+        {/* Full Background Banner */}
+        <div className="absolute inset-0">
+          <Image 
+            src="/banner.jpeg" 
+            alt="ScriptHub Banner" 
+            fill 
+            className="object-cover"
+            priority
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/40"></div>
+        </div>
+        
+        {/* Content over banner */}
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <h2 className="text-5xl font-bold text-white mb-6 drop-shadow-lg">A Collection of Useful Scripts</h2>
+          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto drop-shadow-md">
             Discover, share, and contribute scripts across multiple programming languages. From automation to security
             tools, find the script you need.
           </p>
           <div className="flex justify-center space-x-4">
-            <Button size="lg">Browse Scripts</Button>
-            <Button variant="outline" size="lg">
+            <Button size="lg" className="bg-white text-black hover:bg-gray-100 font-semibold">Browse Scripts</Button>
+            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-black">
               Contribute
             </Button>
           </div>
