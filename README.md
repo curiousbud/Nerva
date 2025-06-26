@@ -16,15 +16,6 @@
 
 ---
 
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [Script Collection](#script-collection)
-- [Repository Structure](#repository-structure)
-- [Getting Started](#getting-started)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## 🌐 Overview
 
 ScriptHub is an open-source collection of practical, production-ready scripts for automation, security testing, networking, and more—across multiple programming languages.
