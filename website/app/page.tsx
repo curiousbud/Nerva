@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Code, GitFork, Star, Search, AlertCircle } from "lucide-react"
+import ScriptCard from "@/components/ScriptCard"
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -120,15 +121,14 @@ export default function HomePage() {
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="border-white/20 text-white hover:bg-white/10 hover:border-white/40 backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                className="btn-purple-outline"
               >
                 <GitFork className="h-4 w-4 mr-2" />
                 Fork
               </Button>
               <Button 
-                variant="outline" 
                 size="sm"
-                className="border-yellow-400/40 text-yellow-400 hover:bg-yellow-400/10 hover:border-yellow-400/60 backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                className="btn-purple"
               >
                 <Star className="h-4 w-4 mr-2" />
                 Star
@@ -178,7 +178,7 @@ export default function HomePage() {
           <div className="flex justify-center space-x-6">
             <Button 
               size="lg" 
-              className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-bold px-8 py-4 text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 border-0"
+              className="btn-purple px-8 py-4 text-lg font-bold"
             >
               <Search className="mr-2 h-5 w-5" />
               Explore Scripts
@@ -186,7 +186,7 @@ export default function HomePage() {
             <Button 
               variant="outline" 
               size="lg" 
-              className="border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 backdrop-blur-md px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 shadow-xl"
+              className="btn-purple-outline px-8 py-4 text-lg font-semibold"
             >
               <GitFork className="mr-2 h-5 w-5" />
               Contribute
@@ -295,87 +295,22 @@ export default function HomePage() {
               </p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
               {filteredScripts.map((script, index) => (
-                <Card
+                <ScriptCard
                   key={script.name}
-                  className={`group hover:shadow-2xl transition-all duration-500 hover:scale-105 bg-gradient-to-br from-white/10 to-white/5 border border-white/20 backdrop-blur-xl hover:from-white/20 hover:to-white/10 ${
-                    script.status === "in-progress" ? "opacity-75 border-dashed border-gray-500/50" : ""
-                  }`}
-                  style={{animationDelay: `${index * 150}ms`}}
-                >
-                  <CardHeader className="pb-4">
-                    <div className="flex justify-between items-start mb-4">
-                      <Badge 
-                        variant="secondary" 
-                        className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 text-cyan-200 border-cyan-500/30 backdrop-blur-sm"
-                      >
-                        {script.language}
-                      </Badge>
-                      {script.status === "in-progress" && (
-                        <Badge 
-                          variant="secondary" 
-                          className="text-xs bg-yellow-500/20 text-yellow-200 border-yellow-500/30"
-                        >
-                          In Progress
-                        </Badge>
-                      )}
-                    </div>
-                    <CardTitle className="text-xl text-white group-hover:text-cyan-300 transition-colors duration-300 mb-3">
-                      {script.name}
-                    </CardTitle>
-                    <CardDescription className="text-gray-300 leading-relaxed">
-                      {script.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {script.tags.slice(0, 3).map((tag) => (
-                        <Badge 
-                          key={tag} 
-                          variant="outline" 
-                          className="text-xs bg-white/5 text-gray-300 border-white/20 hover:bg-white/10 transition-colors duration-200"
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                      {script.tags.length > 3 && (
-                        <Badge 
-                          variant="outline" 
-                          className="text-xs bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-200 border-purple-500/30"
-                        >
-                          +{script.tags.length - 3}
-                        </Badge>
-                      )}
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <Badge 
-                        variant="outline" 
-                        className="bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 text-emerald-200 border-emerald-500/30"
-                      >
-                        {script.category}
-                      </Badge>
-                      {script.status === "available" ? (
-                        <Button 
-                          variant="ghost" 
-                          size="sm"
-                          className="text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10 transition-all duration-300"
-                        >
-                          View Script
-                        </Button>
-                      ) : (
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          disabled
-                          className="text-gray-500"
-                        >
-                          Coming Soon
-                        </Button>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
+                  name={script.name}
+                  description={script.description}
+                  language={script.language}
+                  tags={script.tags}
+                  category={script.category}
+                  status={script.status as "available" | "in-progress"}
+                  onViewScript={() => {
+                    if (script.status === "available") {
+                      window.open(script.path, '_blank');
+                    }
+                  }}
+                />
               ))}
             </div>
           )}
