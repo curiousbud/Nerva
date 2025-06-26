@@ -106,17 +106,17 @@ body {
   .script-card {
     width: 280px;
     border-radius: 20px;
-    background: #1a1b2e;
+    background: hsl(var(--card));
     padding: 5px;
     overflow: hidden;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 20px 0px;
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
     transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(139, 92, 246, 0.2);
+    border: 1px solid hsl(var(--border));
   }
 
   .script-card:hover {
     transform: scale(1.05);
-    box-shadow: rgba(139, 92, 246, 0.3) 0px 15px 35px 0px;
+    box-shadow: 0 15px 35px rgba(139, 92, 246, 0.25);
   }
 
   .script-card .top-section {
@@ -124,7 +124,7 @@ body {
     border-radius: 15px;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(45deg, rgb(139, 92, 246) 0%, rgb(192, 132, 252) 100%);
+    background: linear-gradient(45deg, #8b5cf6 0%, #c084fc 100%);
     position: relative;
   }
 
@@ -132,10 +132,10 @@ body {
     border-bottom-right-radius: 10px;
     height: 30px;
     width: 130px;
-    background: #1a1b2e;
+    background: hsl(var(--card));
     position: relative;
     transform: skew(-40deg);
-    box-shadow: -10px -10px 0 0 #1a1b2e;
+    box-shadow: -10px -10px 0 0 hsl(var(--card));
   }
 
   .script-card .top-section .border::before {
@@ -147,7 +147,7 @@ body {
     right: -15px;
     background: rgba(255, 255, 255, 0);
     border-top-left-radius: 10px;
-    box-shadow: -5px -5px 0 2px #1a1b2e;
+    box-shadow: -5px -5px 0 2px hsl(var(--card));
   }
 
   .script-card .top-section::before {
@@ -159,7 +159,7 @@ body {
     height: 15px;
     width: 15px;
     border-top-left-radius: 15px;
-    box-shadow: -5px -5px 0 2px #1a1b2e;
+    box-shadow: -5px -5px 0 2px hsl(var(--card));
   }
 
   .script-card .top-section .icons {
@@ -183,7 +183,7 @@ body {
   .script-card .top-section .icons .logo svg {
     height: 20px;
     width: 20px;
-    fill: #1a1b2e;
+    fill: hsl(var(--card));
   }
 
   .script-card .top-section .icons .actions {
@@ -197,7 +197,7 @@ body {
   .script-card .top-section .icons .actions svg {
     height: 16px;
     width: 16px;
-    fill: #1a1b2e;
+    fill: hsl(var(--card));
     transition: fill 0.3s ease;
     cursor: pointer;
   }
@@ -214,13 +214,13 @@ body {
     display: block;
     font-size: 18px;
     font-weight: bold;
-    color: white;
+    color: hsl(var(--card-foreground));
     margin-bottom: 8px;
     text-align: left;
   }
 
   .script-card .content-section .script-description {
-    color: rgba(255, 255, 255, 0.7);
+    color: hsl(var(--muted-foreground));
     font-size: 13px;
     line-height: 1.4;
     margin-bottom: 15px;
@@ -235,13 +235,13 @@ body {
   }
 
   .script-card .content-section .script-tag {
-    background: rgba(139, 92, 246, 0.2);
-    color: #c084fc;
+    background: hsl(var(--accent) / 0.2);
+    color: hsl(var(--accent-foreground));
     padding: 4px 8px;
     border-radius: 12px;
     font-size: 10px;
     font-weight: 500;
-    border: 1px solid rgba(139, 92, 246, 0.3);
+    border: 1px solid hsl(var(--accent) / 0.3);
   }
 
   .script-card .bottom-section {
@@ -265,7 +265,7 @@ body {
   }
 
   .script-card .bottom-section .language-name {
-    color: rgba(255, 255, 255, 0.8);
+    color: hsl(var(--muted-foreground));
     font-size: 12px;
     font-weight: 500;
   }
@@ -288,29 +288,40 @@ body {
     box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
   }
 
-  /* Purple-themed Button */
+  .script-card .bottom-section .view-button:disabled {
+    background: hsl(var(--muted));
+    color: hsl(var(--muted-foreground));
+    cursor: not-allowed;
+  }
+
+  .script-card .bottom-section .view-button:disabled:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Enhanced theme-aware purple buttons */
   .btn-purple {
-    background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
-    color: white;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
     border: none;
     padding: 12px 24px;
     border-radius: 12px;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+    box-shadow: 0 4px 15px hsla(var(--primary), 0.2);
   }
 
   .btn-purple:hover {
-    background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+    background: hsl(var(--primary) / 0.9);
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
-    color: white;
+    box-shadow: 0 8px 25px hsla(var(--primary), 0.4);
+    color: hsl(var(--primary-foreground));
   }
 
   .btn-purple-outline {
     background: transparent;
-    color: #8b5cf6;
-    border: 2px solid #8b5cf6;
+    color: hsl(var(--primary));
+    border: 2px solid hsl(var(--primary));
     padding: 10px 22px;
     border-radius: 12px;
     font-weight: 600;
@@ -319,107 +330,65 @@ body {
   }
 
   .btn-purple-outline:hover {
-    background: rgba(139, 92, 246, 0.1);
-    border-color: #a855f7;
-    color: #a855f7;
+    background: hsl(var(--primary) / 0.1);
+    border-color: hsl(var(--primary) / 0.8);
+    color: hsl(var(--primary));
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
+    box-shadow: 0 8px 25px hsla(var(--primary), 0.2);
+  }
+
+  /* Theme-aware card backgrounds */
+  .theme-card {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    color: hsl(var(--card-foreground));
+  }
+
+  .theme-card:hover {
+    background: hsl(var(--card) / 0.8);
+    border-color: hsl(var(--border) / 0.8);
   }
 }
 
 @layer base {
   :root {
-<<<<<<< HEAD
-    /* ScriptHub Light Theme - Modern Tech Colors */
-    --background: 0 0% 100%;                /* Pure white background */
-    --foreground: 222.2 84% 4.9%;          /* Dark text */
-    --card: 0 0% 100%;                     /* White cards */
-    --card-foreground: 222.2 84% 4.9%;     /* Dark text on cards */
+    /* ScriptHub Light Theme - Clean & Professional */
+    --background: 0 0% 100%; /* Pure white background */
+    --foreground: 270 100% 6%; /* Very dark purple text */
+    --card: 0 0% 100%; /* White cards */
+    --card-foreground: 270 100% 6%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 191 91% 36%;                /* Cyan primary - good contrast */
-    --primary-foreground: 0 0% 100%;       /* White text on primary buttons */
-    --secondary: 210 40% 96%;              /* Light gray secondary */
-    --secondary-foreground: 222.2 84% 4.9%; /* Dark text on secondary */
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 262.1 83.3% 57.8%;          /* Purple accent */
-    --accent-foreground: 0 0% 100%;        /* White text on accent */
+    --popover-foreground: 270 100% 6%;
+    --primary: 282 94% 35%; /* Medium purple for good contrast */
+    --primary-foreground: 0 0% 100%; /* White text on primary buttons */
+    --secondary: 270 100% 96%; /* Very light purple secondary */
+    --secondary-foreground: 270 100% 6%;
+    --muted: 270 100% 96%; /* Light purple muted */
+    --muted-foreground: 270 20% 40%; /* Medium purple muted text */
+    --accent: 282 94% 60%; /* Vibrant purple accent */
+    --accent-foreground: 0 0% 100%; /* White text on accent */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 191 91% 36%;
-=======
-    --background: 270 100% 95%; /* A very light purple/mauve */
-    --foreground: 270 100% 6%; /* A very dark purple */
-    --card: 270 100% 98%; /* A very light, almost white purple for cards */
-    --card-foreground: 270 100% 6%;
-    --popover: 270 100% 98%;
-    --popover-foreground: 270 100% 6%;
-    --primary: 282 94% 23%; /* russian-violet-2 */
-    --primary-foreground: 270 100% 98%; /* Light text for primary buttons */
-    --secondary: 282 94% 40%; /* persian-indigo */
-    --secondary-foreground: 270 100% 98%;
-    --muted: 282 94% 60%; /* french-violet */
-    --muted-foreground: 270 100% 20%; /* Darker muted text */
-    --accent: 282 94% 60%; /* french-violet */
-    --accent-foreground: 270 100% 6%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 282 94% 80%; /* Lighter purple border */
-    --input: 282 94% 80%;
-    --ring: 282 94% 23%; /* russian-violet-2 for ring */
->>>>>>> 1d97d5156b8b88011e2cd438214a24e69cd04750
+    --border: 270 100% 90%; /* Light purple border */
+    --input: 270 100% 95%; /* Very light purple input background */
+    --ring: 282 94% 35%; /* Medium purple for focus rings */
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-<<<<<<< HEAD
     --radius: 0.75rem;
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 215.4 16.3% 46.9%;
-    --sidebar-primary: 191 91% 36%;
+    --sidebar-foreground: 270 20% 40%;
+    --sidebar-primary: 282 94% 35%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 40% 94%;
-    --sidebar-accent-foreground: 222.2 84% 4.9%;
-    --sidebar-border: 214.3 31.8% 91.4%;
-    --sidebar-ring: 191 91% 36%;
+    --sidebar-accent: 270 100% 95%;
+    --sidebar-accent-foreground: 270 100% 6%;
+    --sidebar-border: 270 100% 90%;
+    --sidebar-ring: 282 94% 35%;
   }
   .dark {
-    /* ScriptHub Dark Theme - Deep Ocean Tech Colors */
-    --background: 222.2 84% 4.9%;          /* Dark navy */
-    --foreground: 210 40% 98%;             /* Light text */
-    --card: 217.2 32.6% 17.5%;             /* Darker cards */
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 191 91% 50%;                /* Brighter cyan for dark mode */
-    --primary-foreground: 222.2 84% 4.9%;  /* Dark text on primary */
-    --secondary: 217.2 32.6% 17.5%;        /* Darker secondary */
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 262.1 83.3% 67.8%;           /* Brighter purple accent */
-    --accent-foreground: 222.2 84% 4.9%;   /* Dark text on accent */
-    --destructive: 0 72.2% 60.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 191 91% 50%;
-=======
-    --radius: 0.5rem;
-    --sidebar-background: 270 100% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-  .dark {
+    /* ScriptHub Dark Theme - Deep Purple */
     --background: 282 94% 6%; /* russian-violet */
     --foreground: 270 100% 98%; /* Light text */
     --card: 282 94% 10%; /* A slightly lighter dark purple for cards */
@@ -439,31 +408,19 @@ body {
     --border: 282 94% 23%; /* russian-violet-2 border */
     --input: 282 94% 23%;
     --ring: 282 94% 60%; /* french-violet for ring */
->>>>>>> 1d97d5156b8b88011e2cd438214a24e69cd04750
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-<<<<<<< HEAD
-    --sidebar-background: 222.2 84% 4.9%;
-    --sidebar-foreground: 215 20.2% 65.1%;
-    --sidebar-primary: 191 91% 50%;
-    --sidebar-primary-foreground: 222.2 84% 4.9%;
-    --sidebar-accent: 217.2 32.6% 17.5%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217.2 32.6% 17.5%;
-    --sidebar-ring: 191 91% 50%;
-=======
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-background: 282 94% 6%;
+    --sidebar-foreground: 270 100% 80%;
     --sidebar-primary: 282 94% 60%;
-    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-primary-foreground: 270 100% 6%;
     --sidebar-accent: 282 94% 23%;
     --sidebar-accent-foreground: 270 100% 98%;
     --sidebar-border: 282 94% 23%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
->>>>>>> 1d97d5156b8b88011e2cd438214a24e69cd04750
+    --sidebar-ring: 282 94% 60%;
   }
 }
 

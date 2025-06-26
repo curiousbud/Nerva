@@ -8,15 +8,37 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Code, GitFork, Star, Search, AlertCircle } from "lucide-react"
 import ScriptCard from "@/components/ScriptCard"
+import { ThemeToggle } from "@/components/theme-toggle"
+import { ScriptHubLogo } from "@/components/ScriptHubLogo"
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("")
 
   const languages = [
-    { name: "Python", count: 3, color: "bg-blue-500" },
-    { name: "JavaScript", count: 0, color: "bg-yellow-500" },
-    { name: "Bash", count: 0, color: "bg-green-500" },
-    { name: "PowerShell", count: 0, color: "bg-purple-500" },
+    { 
+      name: "Python", 
+      count: 3, 
+      color: "bg-blue-500",
+      repoPath: "https://github.com/your-username/Script-Hub/tree/main/scripts/python"
+    },
+    { 
+      name: "JavaScript", 
+      count: 0, 
+      color: "bg-yellow-500",
+      repoPath: "https://github.com/your-username/Script-Hub/tree/main/scripts/javascript"
+    },
+    { 
+      name: "Bash", 
+      count: 0, 
+      color: "bg-green-500",
+      repoPath: "https://github.com/your-username/Script-Hub/tree/main/scripts/bash"
+    },
+    { 
+      name: "PowerShell", 
+      count: 0, 
+      color: "bg-purple-500",
+      repoPath: "https://github.com/your-username/Script-Hub/tree/main/scripts/powershell"
+    },
   ]
 
   const allScripts = [
@@ -103,25 +125,27 @@ export default function HomePage() {
   const availableScripts = allScripts.filter((script) => script.status === "available")
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#023047] via-[#219ebc] to-[#023047]">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-white/10 bg-black/20 backdrop-blur-xl sticky top-0 z-50">
+      <header className="border-b border-border bg-background/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3 group">
               <div className="relative">
-                <Code className="h-8 w-8 text-gradient bg-gradient-to-r from-[#8ecae6] to-[#ffb703] group-hover:scale-110 transition-transform duration-300" />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#8ecae6] to-[#ffb703] blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+                <ScriptHubLogo size={40} className="group-hover:scale-110 transition-transform duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300 rounded-full"></div>
               </div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold text-foreground">
                 ScriptHub
               </h1>
             </div>
             <div className="flex items-center space-x-4">
+              <ThemeToggle />
               <Button 
                 variant="outline" 
                 size="sm" 
                 className="btn-purple-outline"
+                onClick={() => window.open('https://github.com/your-username/Script-Hub', '_blank')}
               >
                 <GitFork className="h-4 w-4 mr-2" />
                 Fork
@@ -129,6 +153,7 @@ export default function HomePage() {
               <Button 
                 size="sm"
                 className="btn-purple"
+                onClick={() => window.open('https://github.com/your-username/Script-Hub', '_blank')}
               >
                 <Star className="h-4 w-4 mr-2" />
                 Star
@@ -139,38 +164,30 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative py-32 overflow-hidden">
+      <section className="relative py-32 overflow-hidden bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10">
         {/* Animated Background */}
         <div className="absolute inset-0">
-          <Image 
-            src="/banner.jpeg" 
-            alt="ScriptHub Banner" 
-            fill 
-            className="object-cover opacity-60"
-            priority
-          />
-          {/* Gradient overlays for luxury effect */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/80 via-slate-900/60 to-cyan-900/80"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background/40 to-secondary/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent"></div>
           
           {/* Floating geometric shapes */}
-          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-cyan-400/20 to-purple-600/20 rounded-full blur-xl animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-48 h-48 bg-gradient-to-br from-purple-500/15 to-pink-500/15 rounded-full blur-2xl animate-bounce" style={{animationDuration: "3s"}}></div>
-          <div className="absolute bottom-20 left-1/3 w-24 h-24 bg-gradient-to-br from-yellow-400/25 to-orange-500/25 rounded-full blur-lg animate-pulse" style={{animationDelay: "1s"}}></div>
+          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-xl animate-pulse"></div>
+          <div className="absolute top-40 right-20 w-48 h-48 bg-gradient-to-br from-accent/15 to-primary/15 rounded-full blur-2xl animate-bounce" style={{animationDuration: "3s"}}></div>
+          <div className="absolute bottom-20 left-1/3 w-24 h-24 bg-gradient-to-br from-secondary/25 to-accent/25 rounded-full blur-lg animate-pulse" style={{animationDelay: "1s"}}></div>
         </div>
         
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4 text-center">
           <div className="transform hover:scale-105 transition-all duration-700">
-            <h2 className="text-7xl font-black bg-gradient-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent mb-8 drop-shadow-2xl leading-tight">
+            <h2 className="text-7xl font-black bg-gradient-to-r from-foreground via-primary to-secondary bg-clip-text text-transparent mb-8 drop-shadow-2xl leading-tight">
               A Collection of<br />
-              <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
+              <span className="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent animate-pulse">
                 Powerful Scripts
               </span>
             </h2>
           </div>
           
-          <p className="text-xl text-gray-200/90 mb-12 max-w-3xl mx-auto drop-shadow-lg leading-relaxed font-light">
+          <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto drop-shadow-lg leading-relaxed font-light">
             Discover, share, and contribute cutting-edge scripts across multiple programming languages. 
             From automation to security tools, unlock the power of code.
           </p>
@@ -179,6 +196,7 @@ export default function HomePage() {
             <Button 
               size="lg" 
               className="btn-purple px-8 py-4 text-lg font-bold"
+              onClick={() => document.getElementById('scripts-section')?.scrollIntoView({ behavior: 'smooth' })}
             >
               <Search className="mr-2 h-5 w-5" />
               Explore Scripts
@@ -187,6 +205,7 @@ export default function HomePage() {
               variant="outline" 
               size="lg" 
               className="btn-purple-outline px-8 py-4 text-lg font-semibold"
+              onClick={() => window.open('https://github.com/your-username/Script-Hub', '_blank')}
             >
               <GitFork className="mr-2 h-5 w-5" />
               Contribute
@@ -196,32 +215,33 @@ export default function HomePage() {
         
         {/* Scrolling indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-pulse"></div>
+          <div className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-muted-foreground/60 rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
       </section>
 
       {/* Language Stats */}
-      <section className="py-20 bg-gradient-to-b from-slate-900 to-black relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-b from-muted/10 to-background relative overflow-hidden">
         {/* Background decorations */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-64 h-64 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-3xl"></div>
+          <div className="absolute top-10 left-10 w-64 h-64 bg-gradient-to-br from-primary to-secondary rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-br from-accent to-primary rounded-full blur-3xl"></div>
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <h3 className="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+          <h3 className="text-4xl font-bold text-center mb-4 text-foreground">
             Supported Languages
           </h3>
-          <p className="text-center text-gray-400 mb-16 text-lg">Power through multiple programming ecosystems</p>
+          <p className="text-center text-muted-foreground mb-16 text-lg">Power through multiple programming ecosystems</p>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {languages.map((lang, index) => (
               <Card 
                 key={lang.name} 
-                className="text-center bg-gradient-to-br from-white/5 to-white/10 border border-white/20 backdrop-blur-xl hover:from-white/10 hover:to-white/20 transition-all duration-500 hover:scale-105 hover:shadow-2xl group"
+                className="text-center bg-card border border-border backdrop-blur-xl hover:bg-card/80 transition-all duration-500 hover:scale-105 hover:shadow-2xl group cursor-pointer"
                 style={{animationDelay: `${index * 200}ms`}}
+                onClick={() => window.open(lang.repoPath, '_blank')}
               >
                 <CardContent className="pt-8 pb-6">
                   <div className="relative mb-6">
@@ -231,13 +251,13 @@ export default function HomePage() {
                         lang.color === 'bg-green-500' ? 'from-green-400 to-emerald-600' :
                         'from-purple-400 to-purple-600'} rounded-2xl`}></div>
                       <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl"></div>
-                      <Code className="h-8 w-8 text-white relative z-10" />
+                      <ScriptHubLogo size={32} className="relative z-10" />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-purple-600/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
-                  <h4 className="font-bold text-xl text-white mb-2">{lang.name}</h4>
-                  <p className="text-gray-400 font-medium">
-                    <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                  <h4 className="font-bold text-xl text-foreground mb-2">{lang.name}</h4>
+                  <p className="text-muted-foreground font-medium">
+                    <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                       {lang.count}
                     </span>
                     <span className="ml-1">scripts</span>
@@ -250,23 +270,23 @@ export default function HomePage() {
       </section>
 
       {/* Search Section */}
-      <section className="py-16 bg-gradient-to-b from-black to-slate-900 relative">
+      <section className="py-16 bg-gradient-to-b from-background to-muted/5 relative">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h3 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            <h3 className="text-3xl font-bold text-center mb-8 text-foreground">
               Find Your Perfect Script
             </h3>
             <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
-              <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-2">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+              <div className="relative bg-card/50 backdrop-blur-xl border border-border rounded-2xl p-2">
                 <div className="relative">
-                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-6 w-6 group-hover:text-cyan-400 transition-colors duration-300" />
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-6 w-6 group-hover:text-primary transition-colors duration-300" />
                   <Input
                     type="text"
                     placeholder="Search scripts by name, language, category, or tags..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-12 pr-6 py-4 text-lg bg-transparent border-0 text-white placeholder-gray-400 focus:ring-2 focus:ring-cyan-500/50 rounded-xl"
+                    className="pl-12 pr-6 py-4 text-lg bg-transparent border-0 text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary/50 rounded-xl"
                   />
                 </div>
               </div>
@@ -276,21 +296,21 @@ export default function HomePage() {
       </section>
 
       {/* Scripts Section */}
-      <section className="py-20 bg-gradient-to-b from-slate-900 to-black">
+      <section id="scripts-section" className="py-20 bg-gradient-to-b from-muted/5 to-background">
         <div className="container mx-auto px-4">
-          <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+          <h3 className="text-4xl font-bold text-center mb-16 text-foreground">
             {searchQuery ? "Search Results" : "Featured Scripts"}
           </h3>
 
           {filteredScripts.length === 0 ? (
             <div className="text-center py-20">
               <div className="relative inline-block mb-8">
-                <AlertCircle className="h-20 w-20 text-gray-500 mx-auto animate-pulse" />
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-purple-600/20 rounded-full blur-xl"></div>
+                <AlertCircle className="h-20 w-20 text-muted-foreground mx-auto animate-pulse" />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full blur-xl"></div>
               </div>
-              <h4 className="text-2xl font-bold text-white mb-4">No scripts found</h4>
-              <p className="text-gray-400 mb-6 text-lg">We couldn't find any scripts matching "{searchQuery}".</p>
-              <p className="text-gray-500">
+              <h4 className="text-2xl font-bold text-foreground mb-4">No scripts found</h4>
+              <p className="text-muted-foreground mb-6 text-lg">We couldn't find any scripts matching "{searchQuery}".</p>
+              <p className="text-muted-foreground/70">
                 Try searching with different keywords or check back later as we're constantly adding new scripts!
               </p>
             </div>
@@ -316,9 +336,9 @@ export default function HomePage() {
           )}
           {searchQuery && (
             <div className="text-center mt-12">
-              <p className="text-xl font-medium text-white">
-                Found <span className="text-cyan-400 font-bold">{filteredScripts.length}</span> script{filteredScripts.length !== 1 ? "s" : ""} matching 
-                <span className="text-purple-400 font-bold"> "{searchQuery}"</span>
+              <p className="text-xl font-medium text-foreground">
+                Found <span className="text-primary font-bold">{filteredScripts.length}</span> script{filteredScripts.length !== 1 ? "s" : ""} matching 
+                <span className="text-secondary font-bold"> "{searchQuery}"</span>
               </p>
             </div>
           )}
@@ -326,68 +346,68 @@ export default function HomePage() {
       </section>
 
       {/* Stats */}
-      <section className="py-20 bg-gradient-to-b from-black via-slate-900 to-black relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-b from-background via-muted/5 to-background relative overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: "2s"}}></div>
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-accent/10 to-primary/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: "2s"}}></div>
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <h3 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+          <h3 className="text-4xl font-bold text-center mb-16 text-foreground">
             ScriptHub by the Numbers
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
             <div className="group hover:scale-110 transition-transform duration-500">
               <div className="relative">
-                <div className="text-6xl font-black mb-4 bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+                <div className="text-6xl font-black mb-4 bg-gradient-to-br from-primary via-secondary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                   {availableScripts.length}
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-purple-600/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
-              <div className="text-gray-300 text-lg font-medium">Available Scripts</div>
-              <div className="text-gray-500 text-sm mt-2">Ready to use now</div>
+              <div className="text-foreground text-lg font-medium">Available Scripts</div>
+              <div className="text-muted-foreground text-sm mt-2">Ready to use now</div>
             </div>
             <div className="group hover:scale-110 transition-transform duration-500">
               <div className="relative">
-                <div className="text-6xl font-black mb-4 bg-gradient-to-br from-emerald-400 via-cyan-500 to-blue-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+                <div className="text-6xl font-black mb-4 bg-gradient-to-br from-secondary via-accent to-primary bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                   4
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-blue-600/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-secondary/20 to-primary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
-              <div className="text-gray-300 text-lg font-medium">Languages Supported</div>
-              <div className="text-gray-500 text-sm mt-2">Cross-platform power</div>
+              <div className="text-foreground text-lg font-medium">Languages Supported</div>
+              <div className="text-muted-foreground text-sm mt-2">Cross-platform power</div>
             </div>
             <div className="group hover:scale-110 transition-transform duration-500">
               <div className="relative">
-                <div className="text-6xl font-black mb-4 bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+                <div className="text-6xl font-black mb-4 bg-gradient-to-br from-accent via-primary to-secondary bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                   {allScripts.length - availableScripts.length}
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-400/20 to-red-500/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-secondary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
-              <div className="text-gray-300 text-lg font-medium">In Development</div>
-              <div className="text-gray-500 text-sm mt-2">Coming soon</div>
+              <div className="text-foreground text-lg font-medium">In Development</div>
+              <div className="text-muted-foreground text-sm mt-2">Coming soon</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 bg-gradient-to-b from-black to-slate-950 border-t border-white/10 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-purple-500/5 to-pink-500/5"></div>
+      <footer className="py-12 bg-gradient-to-b from-background to-muted/10 border-t border-border relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="mb-6">
             <div className="flex items-center justify-center space-x-3 mb-4">
-              <Code className="h-8 w-8 text-cyan-400" />
-              <span className="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+              <ScriptHubLogo size={32} className="text-primary" />
+              <span className="text-2xl font-bold text-foreground">
                 ScriptHub
               </span>
             </div>
-            <p className="text-gray-400 text-lg">
+            <p className="text-muted-foreground text-lg">
               Made with <span className="text-red-400 animate-pulse">❤️</span> by the ScriptHub community
             </p>
           </div>
-          <div className="text-gray-500 text-sm">
+          <div className="text-muted-foreground/70 text-sm">
             Licensed under MIT • Open Source • Community Driven
           </div>
         </div>
