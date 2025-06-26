@@ -12,6 +12,7 @@ import ScriptCard from "@/components/ScriptCard"
 import LanguageCard from "@/components/LanguageCard"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { NervaLogo } from "@/components/NervaLogo"
+import { fetchScriptsData } from '@/lib/api'
 
 interface Script {
   name: string
@@ -47,11 +48,7 @@ export default function HomePage() {
   useEffect(() => {
     async function loadScriptsData() {
       try {
-        const response = await fetch('/data/scripts.json')
-        if (!response.ok) {
-          throw new Error('Failed to load scripts data')
-        }
-        const data = await response.json()
+        const data = await fetchScriptsData()
         setScriptsData(data)
       } catch (err) {
         console.error('Error loading scripts:', err)
