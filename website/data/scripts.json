@@ -1,0 +1,196 @@
+{
+  "lastUpdated": "",
+  "totalScripts": 8,
+  "languages": {
+    "bash": {
+      "count": 0,
+      "scripts": []
+    },
+    "javascript": {
+      "count": 0,
+      "scripts": []
+    },
+    "powershell": {
+      "count": 0,
+      "scripts": []
+    },
+    "python": {
+      "count": 8,
+      "scripts": [
+        {
+          "name": "auto-wifi-check",
+          "path": "scripts\\python\\auto-wifi-check",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "Brief description of what this script does.",
+          "features": [
+            "Feature 1",
+            "Feature 2",
+            "Feature 3"
+          ],
+          "requirements": [
+            "Python 3.6+",
+            "Required packages (add to requirements.txt)"
+          ],
+          "usage": "# Basic usage example\npython auto-wifi-check.py --help\n",
+          "display_name": "Auto Wifi Check"
+        },
+        {
+          "name": "duplicate-finder",
+          "path": "scripts\\python\\duplicate-finder",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "Brief description of what this script does.",
+          "features": [
+            "Feature 1",
+            "Feature 2",
+            "Feature 3"
+          ],
+          "requirements": [
+            "Python 3.6+",
+            "Required packages (add to requirements.txt)"
+          ],
+          "usage": "# Basic usage example\npython duplicate-finder.py --help\n",
+          "display_name": "Duplicate Finder"
+        },
+        {
+          "name": "email-automation",
+          "path": "scripts\\python\\email-automation",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "Brief description of what this script does.",
+          "features": [
+            "Feature 1",
+            "Feature 2",
+            "Feature 3"
+          ],
+          "requirements": [
+            "Python 3.6+",
+            "Required packages (add to requirements.txt)"
+          ],
+          "usage": "# Basic usage example\npython email-automation.py --help\n",
+          "display_name": "Email Automation"
+        },
+        {
+          "name": "file-organizer",
+          "path": "scripts\\python\\file-organizer",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "A powerful Python tool that automatically organizes files in directories based on file extensions or creation dates. Features multiple organization modes, dry-run capability, and detailed logging.",
+          "features": [
+            "**Extension-based organization**: Sort files into folders by file type (Documents, Images, Videos, etc.)",
+            "**Date-based organization**: Organize files by creation date (Year/Month structure)",
+            "**Custom configuration**: Use JSON config files to define your own folder structures",
+            "**Dry-run mode**: Preview changes before actually moving files",
+            "**Duplicate handling**: Automatically renames files to avoid conflicts",
+            "**Comprehensive logging**: Detailed logs of all operations",
+            "**Statistics reporting**: Summary of files moved, folders created, and any errors",
+            "**Dry-run mode**: See what would happen without making changes",
+            "**Duplicate handling**: Files with same names are automatically renamed",
+            "**Error recovery**: Individual file errors don't stop the entire process",
+            "**Comprehensive logging**: Full audit trail of all operations"
+          ],
+          "requirements": [
+            "Python 3.6+",
+            "Standard library modules (no external dependencies)"
+          ],
+          "usage": "# Organize files by extension in the current directory\npython file_organizer.py /path/to/directory\n\n# Preview changes without moving files\npython file_organizer.py /path/to/directory --dry-run\n",
+          "display_name": "🗂️ Advanced File Organizer"
+        },
+        {
+          "name": "ftp-scanner",
+          "path": "scripts\\python\\ftp-scanner",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "A Python script to check for anonymous FTP access on single or multiple hosts. This tool is useful for security assessments and network reconnaissance.",
+          "features": [
+            "**Single & Bulk Scanning**: Check one host or scan multiple hosts from a file.",
+            "**Concurrent Scanning**: Multi-threaded scanning for faster results.",
+            "**Detailed Reporting**: Shows successful logins and file counts.",
+            "**Flexible Input**: Accept hostnames, IP addresses, or mixed lists.",
+            "**Export Results**: Save vulnerable hosts to a file.",
+            "**Timeout Control**: Configurable connection timeouts.",
+            "**Verbose Mode**: Optional detailed output for failed attempts."
+          ],
+          "requirements": [],
+          "usage": "# Check a single host\npython ftp-scanner.py -t example.com\n\n# Check multiple hosts\npython ftp-scanner.py -t host1.com host2.com 192.168.1.1\n\n# Scan from file\npython ftp-scanner.py -f hosts.txt\n",
+          "display_name": "🔍 FTP Anonymous Login Scanner"
+        },
+        {
+          "name": "password-generator",
+          "path": "scripts\\python\\password-generator",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "A simple Python script that generates secure, random passwords with customizable length and character composition.",
+          "features": [
+            "Generates random passwords with a mix of uppercase, lowercase, numbers, and special characters",
+            "Ensures at least one character from each type for security",
+            "Customizable password length (minimum 4 characters)",
+            "Multiple shuffling for enhanced randomness",
+            "Colored terminal output for better visualization",
+            "Detailed summary of character composition",
+            "Minimum length validation (4 characters)",
+            "Guaranteed inclusion of all character types",
+            "Multiple randomization passes",
+            "Cryptographically secure random character selection",
+            "**Uppercase**: A-Z",
+            "**Lowercase**: a-z",
+            "**Numbers**: 0-9",
+            "**Special Characters**: @, #, $, %, &, ?"
+          ],
+          "requirements": [
+            "Python 3.x",
+            "No external dependencies required (uses only built-in modules)"
+          ],
+          "usage": "python password_generator.py\n",
+          "display_name": "Password Generator"
+        },
+        {
+          "name": "url-status-checker",
+          "path": "scripts\\python\\url-status-checker",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "A comprehensive Python tool for checking the status of URLs in bulk. Perfect for monitoring website availability, validating link lists, and performing health checks on web services.",
+          "features": [
+            "**Bulk URL Checking**: Check hundreds of URLs concurrently.",
+            "**Smart URL Handling**: Automatically tries HTTP/HTTPS for URLs without schemes.",
+            "**Detailed Reporting**: Response times, content types, server information.",
+            "**Multiple Output Formats**: Table, summary, JSON, and CSV export.",
+            "**Concurrent Processing**: Multi-threaded for fast execution.",
+            "**Redirect Handling**: Optional redirect following with count tracking.",
+            "**Error Classification**: Detailed error categorization and reporting.",
+            "**Progress Tracking**: Real-time progress indication.",
+            "**Flexible Input**: Command line URLs or file-based input."
+          ],
+          "requirements": [],
+          "usage": "# Check a single URL\npython url-status.py -u https://example.com\n\n# Check multiple URLs\npython url-status.py -u example.com google.com github.com\n\n# Check URLs from file\npython url-status.py -f urls.txt\n\n# Show detailed information\npython url-status.py -u example.com --show-details\n",
+          "display_name": "🌐 URL Status Checker"
+        },
+        {
+          "name": "vulnerability-scanner",
+          "path": "scripts\\python\\vulnerability-scanner",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "An advanced Python-based vulnerability scanner that uses YAML templates to detect security issues in web applications and network services.",
+          "features": [
+            "**Template-Based Scanning**: Uses YAML templates for flexible vulnerability detection.",
+            "**Multi-Target Support**: Scan single hosts, IP ranges, or bulk targets from files.",
+            "**Async Scanning**: High-performance asynchronous HTTP requests.",
+            "**DNS Enumeration**: Built-in DNS record checking capabilities.",
+            "**Multiple Output Formats**: Text and JSON report formats.",
+            "**Severity Classification**: Categorizes vulnerabilities by severity level.",
+            "**Extensible**: Easy to add new vulnerability templates."
+          ],
+          "requirements": [
+            "method: 'GET'",
+            "status: 200",
+            "type: 'A'",
+            "type: 'MX'"
+          ],
+          "usage": "",
+          "display_name": "🛡️ SHADOW - Vulnerability Scanner"
+        }
+      ]
+    }
+  }
+}

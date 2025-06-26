@@ -1,129 +1,131 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Code, GitFork, Star, Search, AlertCircle } from "lucide-react"
+import { Code, GitFork, Star, Search, AlertCircle, ArrowRight, Eye } from "lucide-react"
 import ScriptCard from "@/components/ScriptCard"
 import LanguageCard from "@/components/LanguageCard"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { NervaLogo } from "@/components/NervaLogo"
 
+interface Script {
+  name: string
+  path: string
+  category: string
+  difficulty: string
+  description: string
+  features: string[]
+  requirements: string[]
+  usage: string
+  display_name: string
+}
+
+interface ScriptsData {
+  lastUpdated: string
+  totalScripts: number
+  languages: {
+    [key: string]: {
+      count: number
+      scripts: Script[]
+    }
+  }
+}
+
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("")
+  const [scriptsData, setScriptsData] = useState<ScriptsData | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  const languages = [
-    { 
-      name: "Python", 
-      count: 3, 
-      color: "bg-blue-500",
-      repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/python"
-    },
-    { 
-      name: "JavaScript", 
-      count: 0, 
-      color: "bg-yellow-500",
-      repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/javascript"
-    },
-    { 
-      name: "Bash", 
-      count: 0, 
-      color: "bg-green-500",
-      repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/bash"
-    },
-    { 
-      name: "PowerShell", 
-      count: 0, 
-      color: "bg-purple-500",
-      repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/powershell"
-    },
-  ]
+  useEffect(() => {
+    async function loadScriptsData() {
+      try {
+        const response = await fetch('/data/scripts.json')
+        if (!response.ok) {
+          throw new Error('Failed to load scripts data')
+        }
+        const data = await response.json()
+        setScriptsData(data)
+      } catch (err) {
+        console.error('Error loading scripts:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
 
-  const allScripts = [
-    {
-      name: "FTP Scanner",
-      language: "Python",
-      description: "Anonymous FTP login scanner for security testing",
-      category: "Security",
-      status: "available",
-      path: "scripts/python/ftp-scanner/",
-      tags: ["security", "ftp", "scanner", "network", "penetration-testing"],
-    },
-    {
-      name: "SHADOW Vulnerability Scanner",
-      language: "Python",
-      description: "Advanced vulnerability scanner with template support",
-      category: "Security",
-      status: "available",
-      path: "scripts/python/vulnerability-scanner/",
-      tags: ["security", "vulnerability", "scanner", "web", "templates", "async"],
-    },
-    {
-      name: "URL Status Checker",
-      language: "Python",
-      description: "Bulk URL status checker with timeout support",
-      category: "Networking",
-      status: "available",
-      path: "scripts/python/url-status-checker/",
-      tags: ["networking", "url", "status", "checker", "monitoring", "bulk"],
-    },
-    // Placeholder scripts for demonstration
-    {
-      name: "File Organizer",
-      language: "Python",
-      description: "Automatically organize files by type and date",
-      category: "Automation",
-      status: "in-progress",
-      path: "",
-      tags: ["automation", "files", "organization", "sorting"],
-    },
-    {
-      name: "API Rate Limiter",
-      language: "JavaScript",
-      description: "Express middleware for API rate limiting",
-      category: "Web Development",
-      status: "in-progress",
-      path: "",
-      tags: ["javascript", "api", "rate-limiting", "express", "middleware"],
-    },
-    {
-      name: "System Monitor",
-      language: "Bash",
-      description: "Monitor system resources and send alerts",
-      category: "System Administration",
-      status: "in-progress",
-      path: "",
-      tags: ["bash", "monitoring", "system", "alerts", "resources"],
-    },
-    {
-      name: "Log Analyzer",
-      language: "PowerShell",
-      description: "Parse and analyze Windows event logs",
-      category: "System Administration",
-      status: "in-progress",
-      path: "",
-      tags: ["powershell", "logs", "analysis", "windows", "events"],
-    },
-  ]
+    loadScriptsData()
+  }, [])
+
+  const languages = useMemo(() => {
+    if (!scriptsData) {
+      return [
+        { name: "Python", count: 0, color: "bg-blue-500", repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/python" },
+        { name: "JavaScript", count: 0, color: "bg-yellow-500", repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/javascript" },
+        { name: "Bash", count: 0, color: "bg-green-500", repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/bash" },
+        { name: "PowerShell", count: 0, color: "bg-purple-500", repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/powershell" },
+      ]
+    }
+
+    return [
+      { 
+        name: "Python", 
+        count: scriptsData.languages.python?.count || 0, 
+        color: "bg-blue-500",
+        repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/python"
+      },
+      { 
+        name: "JavaScript", 
+        count: scriptsData.languages.javascript?.count || 0, 
+        color: "bg-yellow-500",
+        repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/javascript"
+      },
+      { 
+        name: "Bash", 
+        count: scriptsData.languages.bash?.count || 0, 
+        color: "bg-green-500",
+        repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/bash"
+      },
+      { 
+        name: "PowerShell", 
+        count: scriptsData.languages.powershell?.count || 0, 
+        color: "bg-purple-500",
+        repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/powershell"
+      },
+    ]
+  }, [scriptsData])
+
+  const featuredScripts = useMemo(() => {
+    if (!scriptsData) return []
+    
+    const allScripts: (Script & { language: string })[] = []
+    Object.entries(scriptsData.languages).forEach(([language, data]) => {
+      data.scripts.forEach(script => {
+        allScripts.push({ ...script, language })
+      })
+    })
+    
+    // Return first 6 scripts for homepage
+    return allScripts.slice(0, 6)
+  }, [scriptsData])
 
   const filteredScripts = useMemo(() => {
-    if (!searchQuery.trim()) return allScripts.slice(0, 6) // Show first 6 by default
+    if (!searchQuery.trim()) return featuredScripts // Show featured scripts by default
 
     const query = searchQuery.toLowerCase()
-    return allScripts.filter(
+    return featuredScripts.filter(
       (script) =>
-        script.name.toLowerCase().includes(query) ||
+        script.display_name.toLowerCase().includes(query) ||
         script.description.toLowerCase().includes(query) ||
         script.language.toLowerCase().includes(query) ||
-        script.category.toLowerCase().includes(query) ||
-        script.tags.some((tag) => tag.toLowerCase().includes(query)),
+        script.category.toLowerCase().includes(query)
     )
-  }, [searchQuery])
+  }, [searchQuery, featuredScripts])
 
-  const availableScripts = allScripts.filter((script) => script.status === "available")
+  const totalScripts = scriptsData?.totalScripts || 0
 
   return (
     <div className="min-h-screen bg-background">
@@ -140,25 +142,35 @@ export default function HomePage() {
                 Nerva
               </h1>
             </div>
-            <div className="flex items-center space-x-4">
-              <ThemeToggle />
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="btn-purple-outline"
-                onClick={() => window.open('https://github.com/curiousbud/Nerva', '_blank')}
-              >
-                <GitFork className="h-4 w-4 mr-2" />
-                Fork
-              </Button>
-              <Button 
-                size="sm"
-                className="btn-purple"
-                onClick={() => window.open('https://github.com/curiousbud/Nerva', '_blank')}
-              >
-                <Star className="h-4 w-4 mr-2" />
-                Star
-              </Button>
+            <div className="flex items-center space-x-6">
+              <nav className="hidden md:flex items-center space-x-6">
+                <Link href="/" className="text-foreground hover:text-primary transition-colors">
+                  Home
+                </Link>
+                <Link href="/scripts" className="text-foreground hover:text-primary transition-colors">
+                  All Scripts
+                </Link>
+              </nav>
+              <div className="flex items-center space-x-4">
+                <ThemeToggle />
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="btn-purple-outline"
+                  onClick={() => window.open('https://github.com/curiousbud/Nerva', '_blank')}
+                >
+                  <GitFork className="h-4 w-4 mr-2" />
+                  Fork
+                </Button>
+                <Button 
+                  size="sm"
+                  className="btn-purple"
+                  onClick={() => window.open('https://github.com/curiousbud/Nerva', '_blank')}
+                >
+                  <Star className="h-4 w-4 mr-2" />
+                  Star
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -301,17 +313,15 @@ export default function HomePage() {
               {filteredScripts.map((script, index) => (
                 <ScriptCard
                   key={script.name}
-                  name={script.name}
+                  name={script.display_name}
                   description={script.description}
                   language={script.language}
-                  tags={script.tags}
+                  tags={script.features || []} // Use features as tags
                   category={script.category}
-                  status={script.status as "available" | "in-progress"}
+                  status="available" // All our scripts are available
                   onViewScript={() => {
-                    if (script.status === "available" && script.path) {
-                      const fullUrl = script.path.startsWith('http') 
-                        ? script.path 
-                        : `https://github.com/curiousbud/Nerva/tree/main/${script.path}`;
+                    if (script.path) {
+                      const fullUrl = `https://github.com/curiousbud/Nerva/tree/main/${script.path.replace(/\\/g, '/')}`;
                       window.open(fullUrl, '_blank');
                     }
                   }}
@@ -319,6 +329,24 @@ export default function HomePage() {
               ))}
             </div>
           )}
+          
+          {/* View All Scripts Button */}
+          {!searchQuery && (
+            <div className="text-center mt-12">
+              <Button 
+                size="lg" 
+                className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3"
+                asChild
+              >
+                <Link href="/scripts">
+                  <Eye className="h-4 w-4 mr-2" />
+                  View All {totalScripts} Scripts
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Link>
+              </Button>
+            </div>
+          )}
+          
           {searchQuery && (
             <div className="text-center mt-12">
               <p className="text-xl font-medium text-foreground">
@@ -346,7 +374,7 @@ export default function HomePage() {
             <div className="group hover:scale-110 transition-transform duration-500">
               <div className="relative">
                 <div className="text-6xl font-black mb-4 bg-gradient-to-br from-primary via-secondary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
-                  {availableScripts.length}
+                  {totalScripts}
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
@@ -366,7 +394,7 @@ export default function HomePage() {
             <div className="group hover:scale-110 transition-transform duration-500">
               <div className="relative">
                 <div className="text-6xl font-black mb-4 bg-gradient-to-br from-accent via-primary to-secondary bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
-                  {allScripts.length - availableScripts.length}
+                  0
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-secondary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>

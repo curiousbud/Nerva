@@ -1,0 +1,253 @@
+{
+  "lastUpdated": "",
+  "totalScripts": 9,
+  "languages": {
+    "bash": {
+      "count": 0,
+      "scripts": []
+    },
+    "javascript": {
+      "count": 0,
+      "scripts": []
+    },
+    "powershell": {
+      "count": 0,
+      "scripts": []
+    },
+    "python": {
+      "count": 9,
+      "scripts": [
+        {
+          "name": "auto-wifi-check",
+          "path": "scripts\\python\\auto-wifi-check",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "A Python script that monitors WiFi connectivity and automatically performs network diagnostics when connection issues are detected. Perfect for troubleshooting network problems and maintaining stable internet connections.",
+          "features": [
+            "**Continuous WiFi Monitoring**: Automatically checks internet connectivity at regular intervals",
+            "**Smart Diagnostics**: Runs comprehensive network tests when issues are detected",
+            "**Automatic Recovery**: Attempts to restore connectivity through various methods",
+            "**Detailed Logging**: Comprehensive logs of network status and actions taken",
+            "**Cross-Platform**: Works on Windows, macOS, and Linux",
+            "**Customizable Intervals**: Configure monitoring frequency and timeout settings",
+            "**Email Notifications**: Optional email alerts for connectivity issues",
+            "**Visual Interface**: Optional GUI for real-time monitoring"
+          ],
+          "requirements": [
+            "pip install -r requirements.txt",
+            "psutil - System and process monitoring",
+            "requests - HTTP connectivity testing",
+            "smtplib - Email notifications (built-in)",
+            "tkinter - GUI interface (built-in)"
+          ],
+          "usage": "# Start basic WiFi monitoring\npython wifi_monitor.py\n\n# Monitor with custom interval (in seconds)\npython wifi_monitor.py --interval 30\n\n# Enable verbose logging\npython wifi_monitor.py --verbose\n",
+          "display_name": "📶 Auto WiFi Check"
+        },
+        {
+          "name": "duplicate-finder",
+          "path": "scripts\\python\\duplicate-finder",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "A powerful Python script that efficiently finds and manages duplicate files using MD5 hashing. Perfect for cleaning up storage, organizing files, and identifying redundant content across your filesystem.",
+          "features": [
+            "**Fast MD5 Hashing**: Efficiently identifies duplicates using cryptographic hashing",
+            "**Flexible Scanning**: Recursive directory scanning with size and extension filters",
+            "**Multiple Actions**: List, delete, or move duplicate files",
+            "**Smart Preservation**: Keeps original files while removing duplicates",
+            "**Detailed Reporting**: Comprehensive statistics and exportable reports",
+            "**Dry Run Mode**: Preview actions before making changes",
+            "**Progress Tracking**: Real-time scanning progress with file counts",
+            "**Logging Support**: Detailed logs for audit trails and troubleshooting",
+            "**Cross-Platform**: Works on Windows, macOS, and Linux",
+            "**Dry Run Mode**: Test operations before execution",
+            "**Smart Preservation**: Always keeps at least one copy",
+            "**Detailed Logging**: All operations logged to `duplicate_finder.log`",
+            "**Error Handling**: Graceful handling of permission errors and corrupted files",
+            "**Confirmation Prompts**: Interactive confirmation for destructive operations"
+          ],
+          "requirements": [
+            "hashlib - MD5 hash calculation",
+            "pathlib - Modern path handling",
+            "argparse - Command-line interface",
+            "logging - Comprehensive logging",
+            "shutil - File operations"
+          ],
+          "usage": "# Find duplicates in current directory\npython duplicate_finder.py .\n\n# Scan specific directory recursively\npython duplicate_finder.py /path/to/directory\n\n# Find duplicates with minimum file size (1MB)\npython duplicate_finder.py . --min-size 1048576\n\n# Only check specific file types\npython duplicate_finder.py . --extensions .jpg .png .gif .mp4\n",
+          "display_name": "🔍 Advanced Duplicate File Finder"
+        },
+        {
+          "name": "email-automation",
+          "path": "scripts\\python\\email-automation",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "A comprehensive Python script for automating email tasks including bulk sending, personalized messages, and scheduled email campaigns. Perfect for newsletters, notifications, and automated email workflows.",
+          "features": [
+            "**Bulk Email Sending**: Send personalized emails to multiple recipients",
+            "**Template Support**: HTML and text email templates with variable substitution",
+            "**CSV Integration**: Import recipient lists from CSV files",
+            "**Attachment Support**: Send files and documents automatically",
+            "**SMTP Flexibility**: Works with Gmail, Outlook, and custom SMTP servers",
+            "**Scheduling**: Send emails at specific times or intervals",
+            "**Error Handling**: Robust error handling with retry mechanisms",
+            "**Progress Tracking**: Real-time sending progress with detailed logs",
+            "**Personalization**: Dynamic content insertion based on recipient data",
+            "**App Passwords**: Supports Gmail app passwords for secure authentication",
+            "**TLS Encryption**: Secure email transmission",
+            "**Credential Protection**: Environment variable support for sensitive data",
+            "**Rate Limiting**: Configurable delays to respect email provider limits"
+          ],
+          "requirements": [
+            "pip install -r requirements.txt",
+            "smtplib - Email sending (built-in)",
+            "email - Email message formatting (built-in)",
+            "pandas - CSV file processing",
+            "jinja2 - Template engine for dynamic content",
+            "schedule - Email scheduling functionality"
+          ],
+          "usage": "# Send single email\npython email_automator.py --to recipient@example.com --subject \"Test\" --body \"Hello World\"\n\n# Send bulk emails from CSV\npython email_automator.py --csv recipients.csv --template newsletter.html\n\n# Send with attachments\npython email_automator.py --csv recipients.csv --template invite.html --attach file1.pdf file2.jpg\n",
+          "display_name": "📧 Email Automation Tool"
+        },
+        {
+          "name": "file-organizer",
+          "path": "scripts\\python\\file-organizer",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "A powerful Python tool that automatically organizes files in directories based on file extensions or creation dates. Features multiple organization modes, dry-run capability, and detailed logging.",
+          "features": [
+            "**Extension-based organization**: Sort files into folders by file type (Documents, Images, Videos, etc.)",
+            "**Date-based organization**: Organize files by creation date (Year/Month structure)",
+            "**Custom configuration**: Use JSON config files to define your own folder structures",
+            "**Dry-run mode**: Preview changes before actually moving files",
+            "**Duplicate handling**: Automatically renames files to avoid conflicts",
+            "**Comprehensive logging**: Detailed logs of all operations",
+            "**Statistics reporting**: Summary of files moved, folders created, and any errors",
+            "**Dry-run mode**: See what would happen without making changes",
+            "**Duplicate handling**: Files with same names are automatically renamed",
+            "**Error recovery**: Individual file errors don't stop the entire process",
+            "**Comprehensive logging**: Full audit trail of all operations"
+          ],
+          "requirements": [
+            "Python 3.6+",
+            "Standard library modules (no external dependencies)"
+          ],
+          "usage": "# Organize files by extension in the current directory\npython file_organizer.py /path/to/directory\n\n# Preview changes without moving files\npython file_organizer.py /path/to/directory --dry-run\n",
+          "display_name": "🗂️ Advanced File Organizer"
+        },
+        {
+          "name": "ftp-scanner",
+          "path": "scripts\\python\\ftp-scanner",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "A Python script to check for anonymous FTP access on single or multiple hosts. This tool is useful for security assessments and network reconnaissance.",
+          "features": [
+            "**Single & Bulk Scanning**: Check one host or scan multiple hosts from a file.",
+            "**Concurrent Scanning**: Multi-threaded scanning for faster results.",
+            "**Detailed Reporting**: Shows successful logins and file counts.",
+            "**Flexible Input**: Accept hostnames, IP addresses, or mixed lists.",
+            "**Export Results**: Save vulnerable hosts to a file.",
+            "**Timeout Control**: Configurable connection timeouts.",
+            "**Verbose Mode**: Optional detailed output for failed attempts."
+          ],
+          "requirements": [
+            "python3 -m pip install --upgrade pip"
+          ],
+          "usage": "# Check a single host\npython ftp-scanner.py -t example.com\n\n# Check multiple hosts\npython ftp-scanner.py -t host1.com host2.com 192.168.1.1\n\n# Scan from file\npython ftp-scanner.py -f hosts.txt\n",
+          "display_name": "🔍 FTP Anonymous Login Scanner"
+        },
+        {
+          "name": "password-generator",
+          "path": "scripts\\python\\password-generator",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "A simple Python script that generates secure, random passwords with customizable length and character composition.",
+          "features": [
+            "Generates random passwords with a mix of uppercase, lowercase, numbers, and special characters",
+            "Ensures at least one character from each type for security",
+            "Customizable password length (minimum 4 characters)",
+            "Multiple shuffling for enhanced randomness",
+            "Colored terminal output for better visualization",
+            "Detailed summary of character composition",
+            "Minimum length validation (4 characters)",
+            "Guaranteed inclusion of all character types",
+            "Multiple randomization passes",
+            "Cryptographically secure random character selection"
+          ],
+          "requirements": [
+            "Python 3.x",
+            "No external dependencies required (uses only built-in modules)"
+          ],
+          "usage": "python password_generator.py\n",
+          "display_name": "Password Generator"
+        },
+        {
+          "name": "script-manager",
+          "path": "scripts\\python\\script-manager",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "An automated tool for managing and organizing scripts in the Nerva project. This tool automatically scans your scripts, generates metadata, and updates the website with your contributions.",
+          "features": [
+            "**Automated Script Discovery**: Intelligently scans all language directories for scripts",
+            "**README Metadata Extraction**: Parses documentation to extract features, requirements, and usage",
+            "**Website Integration**: Automatically generates website data with beautiful 3D card layouts",
+            "**Registry Management**: Maintains a comprehensive database of all scripts",
+            "**Template Generation**: Creates new script templates with proper structure",
+            "**Zero Manual Work**: No need to manually edit website code or configurations",
+            "Feature 1",
+            "Feature 2"
+          ],
+          "requirements": [
+            "**Python 3.6+** (no additional packages needed)",
+            "**Windows/Linux/macOS** compatible",
+            "Access to the main Nerva project directory"
+          ],
+          "usage": "# Main command - scan scripts and update website\npython script_manager.py build\n\n# Scan scripts only (no website update)\npython script_manager.py scan\n\n# Create a new script template\npython script_manager.py add python my-new-script\n",
+          "display_name": "Script Registry Management Tool"
+        },
+        {
+          "name": "url-status-checker",
+          "path": "scripts\\python\\url-status-checker",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "A comprehensive Python tool for checking the status of URLs in bulk. Perfect for monitoring website availability, validating link lists, and performing health checks on web services.",
+          "features": [
+            "**Bulk URL Checking**: Check hundreds of URLs concurrently.",
+            "**Smart URL Handling**: Automatically tries HTTP/HTTPS for URLs without schemes.",
+            "**Detailed Reporting**: Response times, content types, server information.",
+            "**Multiple Output Formats**: Table, summary, JSON, and CSV export.",
+            "**Concurrent Processing**: Multi-threaded for fast execution.",
+            "**Redirect Handling**: Optional redirect following with count tracking.",
+            "**Error Classification**: Detailed error categorization and reporting.",
+            "**Progress Tracking**: Real-time progress indication.",
+            "**Flexible Input**: Command line URLs or file-based input."
+          ],
+          "requirements": [
+            "pip install requests"
+          ],
+          "usage": "# Check a single URL\npython url-status.py -u https://example.com\n\n# Check multiple URLs\npython url-status.py -u example.com google.com github.com\n\n# Check URLs from file\npython url-status.py -f urls.txt\n\n# Show detailed information\npython url-status.py -u example.com --show-details\n",
+          "display_name": "🌐 URL Status Checker"
+        },
+        {
+          "name": "vulnerability-scanner",
+          "path": "scripts\\python\\vulnerability-scanner",
+          "category": "Utility",
+          "difficulty": "Intermediate",
+          "description": "An advanced Python-based vulnerability scanner that uses YAML templates to detect security issues in web applications and network services.",
+          "features": [
+            "**Template-Based Scanning**: Uses YAML templates for flexible vulnerability detection.",
+            "**Multi-Target Support**: Scan single hosts, IP ranges, or bulk targets from files.",
+            "**Async Scanning**: High-performance asynchronous HTTP requests.",
+            "**DNS Enumeration**: Built-in DNS record checking capabilities.",
+            "**Multiple Output Formats**: Text and JSON report formats.",
+            "**Severity Classification**: Categorizes vulnerabilities by severity level.",
+            "**Extensible**: Easy to add new vulnerability templates."
+          ],
+          "requirements": [
+            "pip install pyyaml requests dnspython aiohttp"
+          ],
+          "usage": "",
+          "display_name": "🛡️ SHADOW - Vulnerability Scanner"
+        }
+      ]
+    }
+  }
+}
