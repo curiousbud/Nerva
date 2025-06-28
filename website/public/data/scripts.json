@@ -58,7 +58,7 @@
             "Repository access permissions"
           ],
           "usage": "node setup-labels.js\n",
-          "featured": true,
+          "featured": false,
           "display_name": "⚡ Node.js GitHub Label Automation"
         }
       ]
@@ -396,7 +396,7 @@
             "pip install pyyaml requests dnspython aiohttp"
           ],
           "usage": "",
-          "featured": false,
+          "featured": true,
           "display_name": "🛡️ SHADOW - Vulnerability Scanner"
         }
       ]
