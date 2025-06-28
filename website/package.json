@@ -1,6 +1,6 @@
 {
   "name": "nerva",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A curated collection of practical scripts with advanced caching and performance optimizations",
   "private": true,
   "scripts": {
