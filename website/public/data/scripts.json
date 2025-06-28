@@ -58,7 +58,7 @@
             "Repository access permissions"
           ],
           "usage": "node setup-labels.js\n",
-          "featured": false,
+          "featured": true,
           "display_name": "⚡ Node.js GitHub Label Automation"
         }
       ]
