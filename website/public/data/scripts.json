@@ -24,7 +24,7 @@
             "Repository access permissions"
           ],
           "usage": "chmod +x setup-labels.sh\n",
-          "featured": true,
+          "featured": false,
           "display_name": "🏷️ Bash GitHub Label Automation"
         }
       ]
@@ -86,7 +86,7 @@
             "Repository access permissions"
           ],
           "usage": ".\\setup-labels.ps1\n",
-          "featured": false,
+          "featured": true,
           "display_name": "🚀 PowerShell GitHub Label Automation"
         }
       ]
