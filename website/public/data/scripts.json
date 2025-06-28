@@ -24,7 +24,7 @@
             "Repository access permissions"
           ],
           "usage": "chmod +x setup-labels.sh\n",
-          "featured": false,
+          "featured": true,
           "display_name": "🏷️ Bash GitHub Label Automation"
         }
       ]
@@ -58,7 +58,7 @@
             "Repository access permissions"
           ],
           "usage": "node setup-labels.js\n",
-          "featured": false,
+          "featured": true,
           "display_name": "⚡ Node.js GitHub Label Automation"
         }
       ]
@@ -86,7 +86,7 @@
             "Repository access permissions"
           ],
           "usage": ".\\setup-labels.ps1\n",
-          "featured": false,
+          "featured": true,
           "display_name": "🚀 PowerShell GitHub Label Automation"
         }
       ]
@@ -233,7 +233,7 @@
             "python3 -m pip install --upgrade pip"
           ],
           "usage": "# Check a single host\npython ftp-scanner.py -t example.com\n\n# Check multiple hosts\npython ftp-scanner.py -t host1.com host2.com 192.168.1.1\n\n# Scan from file\npython ftp-scanner.py -f hosts.txt\n",
-          "featured": true,
+          "featured": false,
           "display_name": "🔍 FTP Anonymous Login Scanner"
         },
         {
@@ -313,7 +313,7 @@
             "Access to the main Nerva project directory"
           ],
           "usage": "# Main command - scan scripts and update website\npython script_manager.py build\n\n# Scan scripts only (no website update)\npython script_manager.py scan\n\n# Create a new script template\npython script_manager.py add python my-new-script\n",
-          "featured": true,
+          "featured": false,
           "display_name": "Script Registry Management Tool"
         },
         {
@@ -350,7 +350,7 @@
             "psutil>=5.8.0"
           ],
           "usage": "# Display system information in table format\npython system_info.py\n\n# Show information in JSON format\npython system_info.py --format json\n\n# Save report to file\npython system_info.py --output system_report.txt\n\n# Save as JSON file\npython system_info.py --format json --output system_info.json\n\n# Quiet mode (no progress messages)\npython system_info.py --quiet --output report.txt\n",
-          "featured": true,
+          "featured": false,
           "display_name": "🖥️ System Information Gatherer"
         },
         {
@@ -396,7 +396,7 @@
             "pip install pyyaml requests dnspython aiohttp"
           ],
           "usage": "",
-          "featured": true,
+          "featured": false,
           "display_name": "🛡️ SHADOW - Vulnerability Scanner"
         }
       ]
