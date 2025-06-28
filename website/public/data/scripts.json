@@ -86,7 +86,7 @@
             "Repository access permissions"
           ],
           "usage": ".\\setup-labels.ps1\n",
-          "featured": true,
+          "featured": false,
           "display_name": "🚀 PowerShell GitHub Label Automation"
         }
       ]
@@ -350,7 +350,7 @@
             "psutil>=5.8.0"
           ],
           "usage": "# Display system information in table format\npython system_info.py\n\n# Show information in JSON format\npython system_info.py --format json\n\n# Save report to file\npython system_info.py --output system_report.txt\n\n# Save as JSON file\npython system_info.py --format json --output system_info.json\n\n# Quiet mode (no progress messages)\npython system_info.py --quiet --output report.txt\n",
-          "featured": false,
+          "featured": true,
           "display_name": "🖥️ System Information Gatherer"
         },
         {
