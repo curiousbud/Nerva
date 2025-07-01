@@ -8,10 +8,12 @@
 
 <p align="center"><strong>A curated collection of practical scripts across multiple programming languages.</strong></p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Languages-4-blue?style=flat-square" alt="Languages">
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="License">
-  <img src="https://img.shields.io/badge/Contributions-Welcome-orange?style=flat-square" alt="Contributions">
+
+
+<p align = "center">
+  
+  ![GitHub Repo stars](https://img.shields.io/github/stars/curiousbud/Nerva) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/curiousbud/Nerva) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/curiousbud/Nerva) ![GitHub Created At](https://img.shields.io/github/created-at/curiousbud/Nerva) ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/curiousbud/Nerva) ![GitHub last commit](https://img.shields.io/github/last-commit/curiousbud/Nerva) ![GitHub License](https://img.shields.io/github/license/curiousbud/Nerva)
+  
 </p>
 
 ---
