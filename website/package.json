@@ -4,10 +4,23 @@
   "description": "A curated collection of practical scripts with advanced caching and performance optimizations",
   "private": true,
   "scripts": {
+    "// Scripts for development and deployment": "",
     "build": "next build",
+    "// ↑ Builds static export for production deployment (outputs to 'out' directory)": "",
     "dev": "next dev",
+    "// ↑ Starts development server with hot reload on http://localhost:3000": "",
     "lint": "next lint",
-    "start": "next start"
+    "// ↑ Runs ESLint to check for code quality issues": "",
+    "start": "npx serve out -p 3000",
+    "// ↑ Serves the production build on port 3000 (works in all shells)": "",
+    "start:next": "next start",
+    "// ↑ Original Next.js start command (doesn't work with static export)": "",
+    "serve": "npx serve out",
+    "// ↑ Serves production build on auto-selected port": "",
+    "preview": "npm run build; npm run serve",
+    "// ↑ Builds and serves in sequence (PowerShell compatible)": "",
+    "build:static": "next build",
+    "// ↑ Alias for build command (for clarity)": ""
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
