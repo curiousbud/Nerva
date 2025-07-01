@@ -11,8 +11,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: process.env.NODE_ENV === 'production' ? '/Nerva' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/Nerva/' : '',
+  // For Netlify deployment - remove basePath and assetPrefix
+  // basePath: process.env.NODE_ENV === 'production' ? '/Nerva' : '',
+  // assetPrefix: process.env.NODE_ENV === 'production' ? '/Nerva/' : '',
   // Ensure static files are served correctly on GitHub Pages
   distDir: 'out',
 }
