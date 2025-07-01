@@ -6,7 +6,7 @@ export default function ServiceWorkerRegistration() {
   useEffect(() => {
     if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
       navigator.serviceWorker
-        .register('/Nerva/sw.js')
+        .register('/sw.js') // Updated for Netlify deployment
         .then((registration) => {
           console.log('🚀 Service Worker registered successfully:', registration.scope);
         })

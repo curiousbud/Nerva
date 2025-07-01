@@ -2,7 +2,9 @@
 import { apiCache, CACHE_KEYS, CACHE_DURATION } from './cache';
 
 export const getBasePath = () => {
-  return process.env.NODE_ENV === 'production' ? '/Nerva' : '';
+  // For Netlify deployment - no base path needed
+  return '';
+  // return process.env.NODE_ENV === 'production' ? '/Nerva' : '';
 };
 
 export const getApiUrl = (path: string) => {
