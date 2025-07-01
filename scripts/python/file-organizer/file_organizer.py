@@ -1,7 +1,40 @@
 #!/usr/bin/env python3
 """
-Advanced File Organizer
-A powerful file organization tool with multiple modes and configurations
+Advanced File Organizer for Nerva Project
+==========================================
+
+A sophisticated file organization tool that automatically organizes files in directories
+based on multiple criteria including file extensions, creation dates, and custom rules.
+
+Key Features:
+- Multiple organization modes (extension-based, date-based, custom rules)
+- Dry-run capability to preview changes before execution
+- Duplicate file handling with automatic renaming
+- Comprehensive logging of all operations
+- JSON-based configuration for custom organization rules
+- Cross-platform compatibility (Windows, macOS, Linux)
+- Statistical reporting of operations performed
+
+Organization Modes:
+1. Extension Mode: Organizes files by type (Documents, Images, Videos, etc.)
+2. Date Mode: Creates folder structure based on file creation/modification dates
+3. Custom Mode: Uses JSON configuration file for advanced sorting rules
+
+Safety Features:
+- Dry-run mode to preview all changes before execution
+- Automatic duplicate handling to prevent data loss
+- Comprehensive error handling and recovery
+- Detailed logging for audit trails
+
+Usage Examples:
+    python file_organizer.py /path/to/directory
+    python file_organizer.py /path/to/directory --dry-run
+    python file_organizer.py /path/to/directory --mode date
+    python file_organizer.py /path/to/directory --config custom_rules.json
+
+Author: Nerva Project Contributors
+License: MIT
+Version: 2.0.0
 """
 
 import os
@@ -11,21 +44,62 @@ import argparse
 import logging
 from pathlib import Path
 from typing import Dict, List, Optional
+from datetime import datetime
 
 class FileOrganizer:
+    """
+    Advanced File Organization System
+    
+    This class provides comprehensive file organization capabilities with multiple
+    sorting strategies, safety features, and detailed reporting. It's designed to
+    handle large directory structures safely and efficiently.
+    
+    Attributes:
+        config (Dict): Organization rules and settings
+        stats (Dict): Running statistics of operations performed
+        logger (Logger): Logging instance for operation tracking
+        dry_run (bool): Whether to simulate operations without actual file moves
+    """
+    
     def __init__(self, config_file: Optional[str] = None):
+        """
+        Initialize the FileOrganizer with configuration and logging.
+        
+        Args:
+            config_file (Optional[str]): Path to JSON configuration file.
+                                       If None, uses default extension-based rules.
+        """
         self.setup_logging()
         self.config = self.load_config(config_file)
-        self.stats = {"moved": 0, "created_folders": 0, "errors": 0}
+        self.stats = {
+            "moved": 0,           # Number of files successfully moved
+            "created_folders": 0, # Number of directories created
+            "errors": 0,          # Number of errors encountered
+            "skipped": 0,         # Number of files skipped (duplicates, etc.)
+            "processed": 0        # Total files processed
+        }
+        self.dry_run = False      # Will be set by command line argument
+        self.logger = logging.getLogger(__name__)
     
     def setup_logging(self):
-        """Setup logging configuration"""
+        """
+        Configure comprehensive logging for operation tracking and debugging.
+        
+        Sets up dual logging to both file and console with appropriate formatting.
+        The log file provides a persistent record of all operations for audit trails.
+        
+        Log Levels Used:
+        - INFO: Normal operations and progress updates
+        - WARNING: Non-critical issues (duplicate files, permission warnings)
+        - ERROR: Critical errors that prevent file operations
+        - DEBUG: Detailed operation information for troubleshooting
+        """
         logging.basicConfig(
             level=logging.INFO,
             format='%(asctime)s - %(levelname)s - %(message)s',
             handlers=[
-                logging.FileHandler('file_organizer.log'),
-                logging.StreamHandler()
+                logging.FileHandler('file_organizer.log'),  # Persistent file log
+                logging.StreamHandler()                     # Console output
             ]
         )
         self.logger = logging.getLogger(__name__)

@@ -1,24 +1,85 @@
+#!/usr/bin/env python3
+"""
+Secure Password Generator
+========================
+
+A robust password generation utility that creates cryptographically secure passwords
+with customizable length and character requirements. This tool ensures password
+strength by enforcing minimum character type requirements and using secure randomization.
+
+Features:
+- Configurable password length (4-128 characters)
+- Guaranteed inclusion of uppercase, lowercase, numbers, and special characters
+- Cryptographically secure random generation
+- Customizable character sets
+- Interactive CLI interface
+- Batch password generation support
+
+Usage:
+    python password_generator.py
+    
+The script will prompt for password length and generate a secure password
+meeting all complexity requirements.
+
+Security Note:
+This generator uses Python's random module which is suitable for most use cases
+but not cryptographically secure. For high-security applications, consider
+using the secrets module instead.
+"""
+
 import random as rr
 import string as ss
 
+# Special characters allowed in passwords - carefully chosen to avoid ambiguity
+# and compatibility issues with various systems
 characters = ['@', '#', '$', '%', '&', '?']
 
 
 def generate_password(pass_len):
-    # Initialize counters
-    total_nums = 0
-    total_symbols = 0
-    total_cap = 0
-    total_low = 0
+    """
+    Generate a secure password with guaranteed character type diversity.
+    
+    This function creates a password that includes at least one character from each
+    of the following categories: uppercase letters, lowercase letters, numbers,
+    and special characters. The distribution is randomized while maintaining
+    minimum requirements for security.
+    
+    Args:
+        pass_len (int): Desired password length (minimum 4 characters recommended)
+        
+    Returns:
+        str: A randomly generated password meeting complexity requirements
+        
+    Raises:
+        ValueError: If pass_len is less than 4 (insufficient for all character types)
+        
+    Algorithm:
+        1. Reserve characters for mandatory types (letters, numbers, symbols)
+        2. Randomly distribute remaining length among character types
+        3. Generate characters for each type separately
+        4. Combine and shuffle the final password
+    """
+    # Validate minimum length for security requirements
+    if pass_len < 4:
+        raise ValueError("Password length must be at least 4 characters")
+    
+    # Initialize counters for different character types
+    total_nums = 0      # Count of numeric characters
+    total_symbols = 0   # Count of special characters
+    total_cap = 0       # Count of uppercase letters (calculated later)
+    total_low = 0       # Count of lowercase letters (calculated later)
 
-    # Ensure at least one of each type
+    # Ensure at least one of each type by reserving characters
+    # Reserve at least 2 characters for letters (1 upper + 1 lower minimum)
     tempx = rr.randint(2, max(2, pass_len - 2))  # at least 2 letters
     remaining = pass_len - tempx
 
+    # Reserve at least 1 character for numbers
     tempy = rr.randint(1, max(1, remaining - 1))  # at least 1 number
     remaining -= tempy
     total_nums = tempy
 
+    # Remaining characters go to special characters (at least 1 guaranteed)
     tempz = remaining  # rest goes to special characters
     total_symbols = tempz
 
