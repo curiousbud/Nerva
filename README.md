@@ -20,28 +20,40 @@
 
 ## 🌐 Overview
 
-Nerva is an open-source collection of practical, production-ready scripts for automation, security testing, networking, and more—across multiple programming languages.
+Nerva is an open-source repository of ready-to-use scripts for:
 
-## 📊 Script Collection
+* ✅ Automation
+* 🔐 Security Testing
+* 🌐 Networking
+* 📁 File Management
+* and more!
 
-| Language    | Script Name                        | Description                                         | Location                                     |
-|-------------|------------------------------------|-----------------------------------------------------|----------------------------------------------|
-| **Python**  | 🤖 Script Manager                | **Automated script registry and website management** | [scripts/python/script-manager/](scripts/python/script-manager/) |
-|             | 🔒 FTP Scanner                    | Anonymous FTP login scanner for security testing    | [scripts/python/ftp-scanner/](scripts/python/ftp-scanner/) |
-|             | 🛡️ SHADOW Vulnerability Scanner   | Template-based web vulnerability scanner            | [scripts/python/vulnerability-scanner/](scripts/python/vulnerability-scanner/) |
-|             | 🌐 URL Status Checker             | Bulk URL availability checker with reporting        | [scripts/python/url-status-checker/](scripts/python/url-status-checker/) |
-|             | 📁 File Organizer                 | Smart file organization by type and date            | [scripts/python/file-organizer/](scripts/python/file-organizer/) |
-|             | 🔍 Duplicate Finder               | Find and manage duplicate files efficiently          | [scripts/python/duplicate-finder/](scripts/python/duplicate-finder/) |
-|             | 📧 Email Automation               | Send automated emails with templates                | [scripts/python/email-automation/](scripts/python/email-automation/) |
-|             | 🔐 Password Generator             | Generate secure random passwords                     | [scripts/python/password-generator/](scripts/python/password-generator/) |
-|             | 📶 Auto WiFi Check                | Monitor and reconnect WiFi automatically            | [scripts/python/auto-wifi-check/](scripts/python/auto-wifi-check/) |
-| **JavaScript** | *(None yet)*                    | *Coming soon. Contributions welcome!*               | [scripts/javascript/](scripts/javascript/)   |
-| **Bash**    | *(None yet)*                      | *Coming soon. Contributions welcome!*               | [scripts/bash/](scripts/bash/)               |
-| **PowerShell** | *(None yet)*                    | *Coming soon. Contributions welcome!*               | [scripts/powershell/](scripts/powershell/)   |
+All scripts are organized by programming language and come with documentation to help you get started fast.
 
-> Want to add a script in your favorite language? [Open a PR!](https://github.com/<your-username>/Nerva/pulls)
+---
 
-## 📁 Repository Structure
+## 📚 Available Scripts
+
+| Language       | Script Name                      | Description                              | Location                                                              |
+| -------------- | -------------------------------- | ---------------------------------------- | --------------------------------------------------------------------- |
+| **Python**     | 🤖 Script Manager                | Manage this repo & generate web views    | [python/script-manager](scripts/python/script-manager/)               |
+|                | 🔒 FTP Scanner                   | Scan for anonymous FTP logins            | [python/ftp-scanner](scripts/python/ftp-scanner/)                     |
+|                | 🛡️ SHADOW Vulnerability Scanner | Scan websites using template-based rules | [python/vulnerability-scanner](scripts/python/vulnerability-scanner/) |
+|                | 🌐 URL Status Checker            | Check availability of multiple URLs      | [python/url-status-checker](scripts/python/url-status-checker/)       |
+|                | 📁 File Organizer                | Organize files by type and date          | [python/file-organizer](scripts/python/file-organizer/)               |
+|                | 🔍 Duplicate Finder              | Find and handle duplicate files easily   | [python/duplicate-finder](scripts/python/duplicate-finder/)           |
+|                | 📧 Email Automation              | Send automated emails using templates    | [python/email-automation](scripts/python/email-automation/)           |
+|                | 🔐 Password Generator            | Create strong, random passwords          | [python/password-generator](scripts/python/password-generator/)       |
+|                | 📶 Auto WiFi Check               | Reconnect WiFi automatically             | [python/auto-wifi-check](scripts/python/auto-wifi-check/)             |
+| **JavaScript** | *(Empty)*                        | Add your script!                         | [javascript](scripts/javascript/)                                     |
+| **Bash**       | *(Empty)*                        | Add your script!                         | [bash](scripts/bash/)                                                 |
+| **PowerShell** | *(Empty)*                        | Add your script!                         | [powershell](scripts/powershell/)                                     |
+
+> 💡 **Want to contribute?** Just fork the repo and open a PR. It’s that easy!
+
+---
+
+## 🗂️ Folder Structure
 
 ```
 Nerva/
@@ -54,54 +66,74 @@ Nerva/
 │   ├── bash/
 │   └── powershell/
 ├── assets/
+├── script_manager.py
 └── README.md
 ```
 
-## 🧑‍💻 Getting Started
+---
 
-1. ** Want to use scripts?** Browse to any language directory and follow the README instructions.
-2. **📚 Need help?** Check language-specific README files in each directory for best practices.
-3. **🚀 Want to contribute?** See the Contributing section below!
+## 🚀 Getting Started
+
+### To Use a Script:
+
+1. Go to the folder for your preferred language
+2. Pick a script
+3. Follow the `README.md` inside the script folder
+
+### To Add a Script:
+
+1. **Fork this repo**
+2. **Create a new script** inside the appropriate folder
+3. **Add a README** using our [template](scripts/python/script-manager/README.md)
+4. Run this command:
+
+   ```bash
+   python script_manager.py build
+   ```
+5. **Create a Pull Request**
+
+> ✅ The `script_manager.py` tool takes care of linking, organizing, and updating the website view!
+
+---
+
+## 🧠 Script Manager
+
+Our **Script Manager** automates the entire process of:
+
+* Generating index pages
+* Keeping structure and metadata updated
+* Showing scripts on a dynamic website with 3D cards!
+
+### Key Commands:
+
+| Command                                      | What it does                    | When to use                   |
+| -------------------------------------------- | ------------------------------- | ----------------------------- |
+| `python script_manager.py build`             | 🔄 Rebuild everything           | After adding/changing scripts |
+| `python script_manager.py scan`              | 📋 List existing scripts        | To preview structure          |
+| `python script_manager.py add <lang> <name>` | 🆕 Create a new script template | Starting from scratch         |
+
+> 💡 **The manager is beginner-friendly** and includes inline help.
+
+---
 
 ## 🤝 Contributing
 
-**Ready to contribute? It's super easy with our Script Manager!**
+We welcome your scripts! Start by reading our [Contributing Guide](CONTRIBUTING.md).
 
-1. 🍴 **Fork this repo**
-2. 📝 **Add your script** in the appropriate language folder  
-3. 📖 **Write a README** following our [template guide](scripts/python/script-manager/README.md)
-4. 🚀 **Run `python script_manager.py build`** to update everything automatically
-5. 📤 **Submit a pull request**
+* Scripts must be functional and tested.
+* File names should be descriptive.
+* Follow language best practices (e.g., PEP8 for Python).
+* Add a `README.md` for your script.
 
-The Script Manager handles all the tedious parts - you just focus on writing awesome code! 🎉
-
-## � Script Management System
-
-**🎯 For Contributors: The Easiest Way to Share Your Scripts**
-
-Our automated script management system eliminates all the tedious work of adding scripts to the repository! Just write your script and README, run one command, and watch it appear on the website with beautiful 3D cards. 
-
-### ⚡ Essential Commands
-
-| Command | Purpose | Use Case |
-|---------|---------|----------|
-| `python script_manager.py build` | **⭐ MAIN COMMAND** - Scan & update everything | After adding/editing any script |
-| `python script_manager.py scan` | Scan and save registry only | Check what scripts exist |
-| `python script_manager.py add <lang> <name>` | Create new script template | Starting a brand new script |
-
-### 💡 Pro Tips
-
-- 🛠️ **The script manager itself is a featured script!** Check [`scripts/python/script-manager/`](scripts/python/script-manager/) for the **complete beginner-friendly guide**
-- 🎯 **Always run `build` after changes** - it's fast and ensures everything stays in sync
-- 📚 **Follow the README template** for best results on the website
-- 🤝 **No website coding knowledge needed** - just focus on your awesome scripts!
+---
 
 ## 📄 License
 
-MIT License. See [LICENSE](LICENSE) for details.
+This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
 
 ---
 
 <p align="center">
+  🙌 Star this repo to support open-source scripting! <br>
   <em>Browse all scripts and contribute at <a href="https://github.com/<your-username>/Nerva">github.com/<your-username>/Nerva</a></em>
 </p>
