@@ -21,6 +21,30 @@
  * - Pages: Network-first with cache fallback
  */
 
+// Custom logging function to avoid cluttering the console in production
+// Detect if we're running in a production environment based on hostname
+// This is a simple heuristic since service workers don't have access to process.env
+const isProd = self.location.hostname !== 'localhost' && 
+               !self.location.hostname.includes('127.0.0.1') && 
+               !self.location.hostname.includes('.local');
+
+const log = (message, ...args) => {
+  if (!isProd) {
+    console.log(message, ...args);
+  }
+};
+
+const warn = (message, ...args) => {
+  if (!isProd) {
+    console.warn(message, ...args);
+  }
+};
+
+const error = (message, ...args) => {
+  // Always log errors, even in production
+  console.error(message, ...args);
+};
+
 // Cache version identifiers - increment when cache strategy changes
 const CACHE_NAME = 'nerva-cache-v2';           // Static assets (HTML, CSS, JS, images)
 const API_CACHE_NAME = 'nerva-api-cache-v2';   // Dynamic API responses (scripts.json)
@@ -49,31 +73,31 @@ const STATIC_ASSETS = [
  * until all critical assets are cached, preventing broken offline experiences.
  */
 self.addEventListener('install', (event) => {
-  console.log('[SW] Service Worker: Installing and caching static assets...');
+  log('[SW] Service Worker: Installing and caching static assets...');
   
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(async (cache) => {
-        console.log('[SW] Service Worker: Caching static assets');
+        log('[SW] Service Worker: Caching static assets');
         
         // Cache assets individually to handle failures gracefully
         const cachePromises = STATIC_ASSETS.map(async (asset) => {
           try {
             await cache.add(asset);
-            console.log(`[SW] Successfully cached: ${asset}`);
-          } catch (error) {
-            console.warn(`[SW] Failed to cache asset: ${asset}`, error);
+            log(`[SW] Successfully cached: ${asset}`);
+          } catch (err) {
+            warn(`[SW] Failed to cache asset: ${asset}`, err);
           }
         });
         
         await Promise.allSettled(cachePromises);
-        console.log('[SW] Service Worker: Static assets caching completed');
+        log('[SW] Service Worker: Static assets caching completed');
         
         // Force this service worker to become active immediately
         return self.skipWaiting();
       })
-      .catch((error) => {
-        console.error('[SW] Service Worker: Failed to open cache', error);
+      .catch((err) => {
+        error('[SW] Service Worker: Failed to open cache', err);
       })
   );
 });
@@ -88,7 +112,7 @@ self.addEventListener('install', (event) => {
  * get updated content when the application is updated.
  */
 self.addEventListener('activate', (event) => {
-  console.log('[SW] Service Worker: Activating and cleaning up old caches...');
+  log('[SW] Service Worker: Activating and cleaning up old caches...');
   
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -96,7 +120,7 @@ self.addEventListener('activate', (event) => {
         cacheNames.map((cacheName) => {
           // Delete caches that don't match current version
           if (cacheName !== CACHE_NAME && cacheName !== API_CACHE_NAME) {
-            console.log('[SW] Service Worker: Deleting old cache', cacheName);
+            log('[SW] Service Worker: Deleting old cache', cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -153,17 +177,17 @@ async function networkFirstStrategy(request, cacheName) {
       // Update cache with fresh data
       const cache = await caches.open(cacheName);
       cache.put(request, networkResponse.clone());
-      console.log('[SW] Service Worker: API data fetched and cached');
+      log('[SW] Service Worker: API data fetched and cached');
     }
     
     return networkResponse;
-  } catch (error) {
+  } catch (err) {
     // Network failed, try cache
-    console.log('[SW] Service Worker: Network failed, trying cache');
+    log('[SW] Service Worker: Network failed, trying cache');
     const cachedResponse = await caches.match(request);
     
     if (cachedResponse) {
-      console.log('[SW] Service Worker: Serving from cache');
+      log('[SW] Service Worker: Serving from cache');
       return cachedResponse;
     }
     
@@ -178,7 +202,7 @@ async function cacheFirstStrategy(request, cacheName) {
   const cachedResponse = await caches.match(request);
   
   if (cachedResponse) {
-    console.log('[SW] Service Worker: Serving static asset from cache');
+    log('[SW] Service Worker: Serving static asset from cache');
     return cachedResponse;
   }
   
@@ -190,12 +214,12 @@ async function cacheFirstStrategy(request, cacheName) {
       // Cache the response
       const cache = await caches.open(cacheName);
       cache.put(request, networkResponse.clone());
-      console.log('[SW] Service Worker: Static asset fetched and cached');
+      log('[SW] Service Worker: Static asset fetched and cached');
     }
     
     return networkResponse;
-  } catch (error) {
-    console.error('Service Worker: Failed to fetch', request.url, error);
-    throw error;
+  } catch (err) {
+    error('Service Worker: Failed to fetch', request.url, err);
+    throw err;
   }
 }

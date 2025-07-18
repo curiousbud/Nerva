@@ -256,7 +256,7 @@ export default function ScriptsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-8 2xl:gap-10">
             {filteredScripts.map((script, index) => (
               <ScriptCard
-                key={script.name}
+                key={`${script.language}-${script.name}-${index}`}
                 name={script.display_name}
                 description={script.description}
                 language={script.language || 'unknown'}

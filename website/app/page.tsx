@@ -1,6 +1,19 @@
 "use client"
 
 import { useState, useMemo, useEffect } from "react"
+
+// Custom logger that only shows messages in development
+const logger = {
+  log: (message: string, ...args: any[]) => {
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(message, ...args);
+    }
+  },
+  error: (message: string, ...args: any[]) => {
+    // Always log errors, even in production
+    console.error(message, ...args);
+  }
+};
 import Image from "next/image"
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -63,7 +76,7 @@ export default function HomePage() {
           setLoading(false);
         }, 2000);
       } catch (err) {
-        console.error('Error loading scripts:', err);
+        logger.error('Error loading scripts:', err);
         // Set loading to false immediately on error
         setLoading(false);
       }
@@ -74,7 +87,7 @@ export default function HomePage() {
     // Fallback to ensure loading is set to false after 3 seconds no matter what
     const timer = setTimeout(() => {
       if (loading) {
-        console.log('Forcing loading state to false after timeout');
+        logger.log('Forcing loading state to false after timeout');
         setLoading(false);
       }
     }, 3000);
@@ -348,7 +361,7 @@ export default function HomePage() {
             <div className="script-cards-grid grid md:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-8 2xl:gap-10 justify-items-center">
               {filteredScripts.map((script, index) => (
                 <ScriptCard
-                  key={script.name}
+                  key={`${script.language}-${script.name}-${index}`}
                   name={script.display_name}
                   description={script.description}
                   language={script.language}
