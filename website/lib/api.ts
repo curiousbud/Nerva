@@ -69,7 +69,7 @@ export async function fetchScriptsData() {
     // Fastest access, but lost on page refresh
     const cachedData = apiCache.get(cacheKey);
     if (cachedData) {
-      console.log('📦 Scripts data loaded from memory cache');
+      console.log('[API] Scripts data loaded from memory cache');
       return cachedData;
     }
 
@@ -77,62 +77,78 @@ export async function fetchScriptsData() {
     // Survives page refreshes, lost on tab close
     const sessionData = getSessionCache('scripts_data');
     if (sessionData) {
-      console.log('💾 Scripts data loaded from session cache');
+      console.log('[API] Scripts data loaded from session cache');
       // Re-populate memory cache for faster subsequent access
       apiCache.set(cacheKey, sessionData, CACHE_DURATION.MEDIUM);
       return sessionData;
     }
 
-    console.log('🌐 Fetching fresh scripts data...');
+    console.log('[API] Fetching fresh scripts data...');
     
     // === TIER 3: NETWORK FETCH ===
-    // Fetch fresh data from the server
-    const response = await fetch(getApiUrl('/data/scripts.json'), {
-      headers: {
-        'Cache-Control': 'public, max-age=300', // 5 minutes browser cache
-      },
-    });
+    // Add a timeout to prevent hanging forever
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
     
-    // Handle 304 Not Modified as success (data hasn't changed)
-    if (response.status === 304) {
-      console.log('📄 Scripts data not modified (304), using cached version');
-      // Try to get cached data since server says it's still valid
-      const fallbackData = getSessionCache('scripts_data');
-      if (fallbackData) {
-        apiCache.set(cacheKey, fallbackData, CACHE_DURATION.MEDIUM);
-        return fallbackData;
+    try {
+      const response = await fetch(getApiUrl('/data/scripts.json'), {
+        signal: controller.signal,
+        headers: {
+          'Cache-Control': 'public, max-age=300', // 5 minutes browser cache
+        }
+      });
+      
+      clearTimeout(timeoutId);
+      
+      // Handle 304 Not Modified
+      if (response.status === 304) {
+        console.log('[API] Scripts data not modified (304), using cached version');
+        const fallbackData = getSessionCache('scripts_data');
+        if (fallbackData) {
+          apiCache.set(cacheKey, fallbackData, CACHE_DURATION.MEDIUM);
+          return fallbackData;
+        }
       }
+      
+      // Check if response is successful
+      if (!response.ok) {
+        throw new Error(`Failed to load scripts data: ${response.status} ${response.statusText}`);
+      }
+      
+      // Parse JSON response
+      const data = await response.json();
+      
+      // Cache the fresh data
+      apiCache.set(cacheKey, data, CACHE_DURATION.MEDIUM);
+      setSessionCache('scripts_data', data);
+      
+      console.log('[API] Scripts data fetched and cached');
+      return data;
+      
+    } catch (fetchError) {
+      console.error('[API] Fetch error:', fetchError);
+      clearTimeout(timeoutId);
+      throw fetchError;
     }
-    
-    // Check if the response is successful
-    if (!response.ok) {
-      throw new Error(`Failed to load scripts data: ${response.status} ${response.statusText}`);
-    }
-    
-    // Parse the JSON response
-    const data = await response.json();
-    
-    // === CACHE THE FRESH DATA ===
-    // Store in both memory and session storage for future requests
-    apiCache.set(cacheKey, data, CACHE_DURATION.MEDIUM);
-    setSessionCache('scripts_data', data);
-    
-    console.log('✅ Scripts data fetched and cached');
-    return data;
     
   } catch (error) {
-    console.error('❌ Error loading scripts:', error);
+    console.error('[API] Error loading scripts:', error);
     
     // === FALLBACK: USE STALE CACHE ===
     // If all else fails, try to return any cached data (even if stale)
     const staleData = apiCache.get(cacheKey) || getSessionCache('scripts_data');
     if (staleData) {
-      console.warn('⚠️ Using stale cached data due to fetch error');
+      console.warn('[API] Using stale cached data due to fetch error');
       return staleData;
     }
     
-    // If no cache available, re-throw the error
-    throw error;
+    // Last resort: return empty data structure
+    console.warn('[API] No cached data available, returning empty structure');
+    return {
+      lastUpdated: "",
+      totalScripts: 0,
+      languages: {}
+    };
   }
 }
 

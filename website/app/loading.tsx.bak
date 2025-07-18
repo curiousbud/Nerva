@@ -1,0 +1,40 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import LoadingPage from '@/components/LoadingPage'
+
+export default function Loading() {
+  const [loadingFailed, setLoadingFailed] = useState(false);
+  
+  // Add a timeout to avoid getting stuck in loading state
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log('Loading timeout reached, showing retry option');
+      setLoadingFailed(true);
+    }, 5000);
+    
+    return () => clearTimeout(timer);
+  }, []);
+  
+  if (loadingFailed) {
+    return (
+      <div className="min-h-screen flex items-center justify-center flex-col p-4">
+        <h2 className="text-xl font-bold mb-4">Loading took too long</h2>
+        <p className="text-muted-foreground mb-4">There might be a connection issue.</p>
+        <button 
+          className="px-4 py-2 bg-primary text-primary-foreground rounded-md"
+          onClick={() => window.location.reload()}
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+  
+  return (
+    <LoadingPage 
+      title="Loading Nerva..."
+      subtitle="Preparing your powerful script collection"
+    />
+  )
+}

@@ -53,20 +53,33 @@ export default function HomePage() {
         // Start preloading immediately for faster subsequent loads
         preloadScriptsData();
         
-        // Reduced minimum loading time for faster response
-        const [data] = await Promise.all([
-          fetchScriptsData(),
-          new Promise(resolve => setTimeout(resolve, 200)) // Reduced to 200ms
-        ])
-        setScriptsData(data)
+        // Remove artificial delay to prevent getting stuck on loading screen
+        const data = await fetchScriptsData();
+        setScriptsData(data);
+        
+        // Force set loading to false after 2 seconds maximum wait time
+        // This ensures we don't get stuck on loading screen even if something fails
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
       } catch (err) {
-        console.error('Error loading scripts:', err)
-      } finally {
-        setLoading(false)
+        console.error('Error loading scripts:', err);
+        // Set loading to false immediately on error
+        setLoading(false);
       }
     }
 
-    loadScriptsData()
+    loadScriptsData();
+    
+    // Fallback to ensure loading is set to false after 3 seconds no matter what
+    const timer = setTimeout(() => {
+      if (loading) {
+        console.log('Forcing loading state to false after timeout');
+        setLoading(false);
+      }
+    }, 3000);
+    
+    return () => clearTimeout(timer);
   }, [])
 
   const languages = useMemo(() => {

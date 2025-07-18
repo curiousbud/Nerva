@@ -22,8 +22,8 @@
  */
 
 // Cache version identifiers - increment when cache strategy changes
-const CACHE_NAME = 'nerva-cache-v1';           // Static assets (HTML, CSS, JS, images)
-const API_CACHE_NAME = 'nerva-api-cache-v1';   // Dynamic API responses (scripts.json)
+const CACHE_NAME = 'nerva-cache-v2';           // Static assets (HTML, CSS, JS, images)
+const API_CACHE_NAME = 'nerva-api-cache-v2';   // Dynamic API responses (scripts.json)
 
 /**
  * Static Assets to Aggressively Cache
@@ -35,7 +35,7 @@ const STATIC_ASSETS = [
   '/',                    // Homepage
   '/scripts',             // Scripts catalog page
   '/data/scripts.json',   // Scripts data API
-  '/favicon.ico',         // Site icon
+  '/favicon.svg',         // Site icon
   '/banner.jpeg'          // Header image
 ];
 
@@ -49,21 +49,31 @@ const STATIC_ASSETS = [
  * until all critical assets are cached, preventing broken offline experiences.
  */
 self.addEventListener('install', (event) => {
-  console.log('🚀 Service Worker: Installing and caching static assets...');
+  console.log('[SW] Service Worker: Installing and caching static assets...');
   
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('📦 Service Worker: Caching static assets');
-        return cache.addAll(STATIC_ASSETS);
-      })
-      .then(() => {
-        console.log('✅ Service Worker: Static assets cached successfully');
+      .then(async (cache) => {
+        console.log('[SW] Service Worker: Caching static assets');
+        
+        // Cache assets individually to handle failures gracefully
+        const cachePromises = STATIC_ASSETS.map(async (asset) => {
+          try {
+            await cache.add(asset);
+            console.log(`[SW] Successfully cached: ${asset}`);
+          } catch (error) {
+            console.warn(`[SW] Failed to cache asset: ${asset}`, error);
+          }
+        });
+        
+        await Promise.allSettled(cachePromises);
+        console.log('[SW] Service Worker: Static assets caching completed');
+        
         // Force this service worker to become active immediately
         return self.skipWaiting();
       })
       .catch((error) => {
-        console.error('❌ Service Worker: Failed to cache static assets', error);
+        console.error('[SW] Service Worker: Failed to open cache', error);
       })
   );
 });
@@ -78,7 +88,7 @@ self.addEventListener('install', (event) => {
  * get updated content when the application is updated.
  */
 self.addEventListener('activate', (event) => {
-  console.log('🔄 Service Worker: Activating and cleaning up old caches...');
+  console.log('[SW] Service Worker: Activating and cleaning up old caches...');
   
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -86,7 +96,7 @@ self.addEventListener('activate', (event) => {
         cacheNames.map((cacheName) => {
           // Delete caches that don't match current version
           if (cacheName !== CACHE_NAME && cacheName !== API_CACHE_NAME) {
-            console.log('🗑️ Service Worker: Deleting old cache', cacheName);
+            console.log('[SW] Service Worker: Deleting old cache', cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -100,6 +110,22 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
+  // Skip handling of Next.js files and JavaScript files
+  // This is critical to avoid interfering with the app's functionality
+  if (
+    url.pathname.includes('/_next/') || 
+    url.pathname.includes('/webpack') ||
+    url.pathname.endsWith('.js') ||
+    url.pathname.endsWith('.css')
+  ) {
+    return; // Don't intercept these requests - let browser handle them normally
+  }
+
+  // Only handle static assets that we explicitly want to cache
+  const isExplicitlyCached = STATIC_ASSETS.some(asset => 
+    url.pathname === asset || url.pathname.endsWith(asset)
+  );
+
   // Handle API requests with network-first strategy
   if (url.pathname.includes('/data/scripts.json')) {
     event.respondWith(
@@ -108,12 +134,13 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Handle static assets with cache-first strategy
-  if (request.method === 'GET') {
+  // Only apply cache-first strategy to GET requests for explicitly cached assets or root paths
+  if (request.method === 'GET' && (isExplicitlyCached || url.pathname === '/' || url.pathname === '/scripts')) {
     event.respondWith(
       cacheFirstStrategy(request, CACHE_NAME)
     );
   }
+  // For all other requests, let them pass through without service worker intervention
 });
 
 // Network-first strategy for API calls
@@ -126,17 +153,17 @@ async function networkFirstStrategy(request, cacheName) {
       // Update cache with fresh data
       const cache = await caches.open(cacheName);
       cache.put(request, networkResponse.clone());
-      console.log('🌐 Service Worker: API data fetched and cached');
+      console.log('[SW] Service Worker: API data fetched and cached');
     }
     
     return networkResponse;
   } catch (error) {
     // Network failed, try cache
-    console.log('📦 Service Worker: Network failed, trying cache');
+    console.log('[SW] Service Worker: Network failed, trying cache');
     const cachedResponse = await caches.match(request);
     
     if (cachedResponse) {
-      console.log('📦 Service Worker: Serving from cache');
+      console.log('[SW] Service Worker: Serving from cache');
       return cachedResponse;
     }
     
@@ -151,7 +178,7 @@ async function cacheFirstStrategy(request, cacheName) {
   const cachedResponse = await caches.match(request);
   
   if (cachedResponse) {
-    console.log('📦 Service Worker: Serving static asset from cache');
+    console.log('[SW] Service Worker: Serving static asset from cache');
     return cachedResponse;
   }
   
@@ -163,7 +190,7 @@ async function cacheFirstStrategy(request, cacheName) {
       // Cache the response
       const cache = await caches.open(cacheName);
       cache.put(request, networkResponse.clone());
-      console.log('🌐 Service Worker: Static asset fetched and cached');
+      console.log('[SW] Service Worker: Static asset fetched and cached');
     }
     
     return networkResponse;
