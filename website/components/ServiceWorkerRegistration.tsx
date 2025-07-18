@@ -2,6 +2,19 @@
 
 import { useEffect } from 'react'
 
+// Custom logger that only shows messages in development
+const logger = {
+  log: (message: string, ...args: any[]) => {
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(message, ...args);
+    }
+  },
+  error: (message: string, ...args: any[]) => {
+    // Always log errors, even in production
+    console.error(message, ...args);
+  }
+};
+
 export default function ServiceWorkerRegistration() {
   useEffect(() => {
     // For development, we'll unregister any existing service workers first
@@ -10,7 +23,7 @@ export default function ServiceWorkerRegistration() {
       // Force unregister any previous service workers to avoid stale caches
       navigator.serviceWorker.getRegistrations().then(registrations => {
         for (let registration of registrations) {
-          console.log('Unregistering previous service worker');
+          logger.log('Unregistering previous service worker');
           registration.unregister();
         }
         
@@ -21,10 +34,10 @@ export default function ServiceWorkerRegistration() {
             navigator.serviceWorker
               .register('/sw.js')
               .then((registration) => {
-                console.log('[SW] Service Worker registered successfully:', registration.scope);
+                logger.log('[SW] Service Worker registered successfully:', registration.scope);
               })
               .catch((error) => {
-                console.error('[SW] Service Worker registration failed:', error);
+                logger.error('[SW] Service Worker registration failed:', error);
               });
           }, 1000);
         }

@@ -9,6 +9,24 @@
  * The caching strategy ensures fast loading while keeping data fresh.
  */
 
+// Custom logger that only shows messages in development
+const logger = {
+  log: (message: string, ...args: any[]) => {
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(message, ...args);
+    }
+  },
+  warn: (message: string, ...args: any[]) => {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn(message, ...args);
+    }
+  },
+  error: (message: string, ...args: any[]) => {
+    // Always log errors, even in production
+    console.error(message, ...args);
+  }
+};
+
 // API utilities for static export deployment with advanced caching
 import { apiCache, CACHE_KEYS, CACHE_DURATION } from './cache';
 
@@ -69,7 +87,7 @@ export async function fetchScriptsData() {
     // Fastest access, but lost on page refresh
     const cachedData = apiCache.get(cacheKey);
     if (cachedData) {
-      console.log('[API] Scripts data loaded from memory cache');
+      logger.log('[API] Scripts data loaded from memory cache');
       return cachedData;
     }
 
@@ -77,13 +95,13 @@ export async function fetchScriptsData() {
     // Survives page refreshes, lost on tab close
     const sessionData = getSessionCache('scripts_data');
     if (sessionData) {
-      console.log('[API] Scripts data loaded from session cache');
+      logger.log('[API] Scripts data loaded from session cache');
       // Re-populate memory cache for faster subsequent access
       apiCache.set(cacheKey, sessionData, CACHE_DURATION.MEDIUM);
       return sessionData;
     }
 
-    console.log('[API] Fetching fresh scripts data...');
+    logger.log('[API] Fetching fresh scripts data...');
     
     // === TIER 3: NETWORK FETCH ===
     // Add a timeout to prevent hanging forever
@@ -102,7 +120,7 @@ export async function fetchScriptsData() {
       
       // Handle 304 Not Modified
       if (response.status === 304) {
-        console.log('[API] Scripts data not modified (304), using cached version');
+        logger.log('[API] Scripts data not modified (304), using cached version');
         const fallbackData = getSessionCache('scripts_data');
         if (fallbackData) {
           apiCache.set(cacheKey, fallbackData, CACHE_DURATION.MEDIUM);
@@ -122,28 +140,28 @@ export async function fetchScriptsData() {
       apiCache.set(cacheKey, data, CACHE_DURATION.MEDIUM);
       setSessionCache('scripts_data', data);
       
-      console.log('[API] Scripts data fetched and cached');
+      logger.log('[API] Scripts data fetched and cached');
       return data;
       
     } catch (fetchError) {
-      console.error('[API] Fetch error:', fetchError);
+      logger.error('[API] Fetch error:', fetchError);
       clearTimeout(timeoutId);
       throw fetchError;
     }
     
   } catch (error) {
-    console.error('[API] Error loading scripts:', error);
+    logger.error('[API] Error loading scripts:', error);
     
     // === FALLBACK: USE STALE CACHE ===
     // If all else fails, try to return any cached data (even if stale)
     const staleData = apiCache.get(cacheKey) || getSessionCache('scripts_data');
     if (staleData) {
-      console.warn('[API] Using stale cached data due to fetch error');
+      logger.warn('[API] Using stale cached data due to fetch error');
       return staleData;
     }
     
     // Last resort: return empty data structure
-    console.warn('[API] No cached data available, returning empty structure');
+    logger.warn('[API] No cached data available, returning empty structure');
     return {
       lastUpdated: "",
       totalScripts: 0,
@@ -220,7 +238,7 @@ function setSessionCache(key: string, data: any): void {
     sessionStorage.setItem(`nerva_${key}`, JSON.stringify(cacheData));
   } catch (error) {
     // Log warning but don't throw - caching is optional
-    console.warn('Failed to set session cache:', error);
+    logger.warn('Failed to set session cache:', error);
   }
 }
 
@@ -238,9 +256,9 @@ function setSessionCache(key: string, data: any): void {
 export async function preloadScriptsData(): Promise<void> {
   try {
     await fetchScriptsData();
-    console.log('🚀 Scripts data preloaded successfully');
+    logger.log('🚀 Scripts data preloaded successfully');
   } catch (error) {
     // Log warning but don't throw - preloading is optional
-    console.warn('⚠️ Failed to preload scripts data:', error);
+    logger.warn('⚠️ Failed to preload scripts data:', error);
   }
 }

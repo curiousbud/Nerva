@@ -11,7 +11,8 @@
     "start:next": "next start",
     "serve": "npx serve out",
     "preview": "npm run build; npm run serve",
-    "build:static": "next build"
+    "build:static": "next build",
+    "build:prod": "NODE_ENV=production next build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
