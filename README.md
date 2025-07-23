@@ -1,7 +1,7 @@
 # ✅ Nerva – Universal Script Repository
 
 <p align="center">
-  <img src="assets/banner.jpeg" 
+  <img src="assets/banner_v1.png" 
        alt="Nerva - Universal Script Repository" 
      />
 </p>
