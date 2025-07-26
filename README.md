@@ -135,5 +135,5 @@ This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for d
 
 <p align="center">
   🙌 Star this repo to support open-source scripting! <br>
-  <em>Browse all scripts and contribute at <a href="https://github.com/<your-username>/Nerva">github.com/<your-username>/Nerva</a></em>
+  <em>Browse all scripts and contribute at <a href="https://github.com/curiousbud/Nerva">github.com/curiousbud/Nerva</a></em>
 </p>
