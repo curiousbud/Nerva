@@ -24,6 +24,7 @@ import { Code, GitFork, Star, Search, AlertCircle, ArrowRight, Eye } from "lucid
 import ScriptCard from "@/components/ScriptCard"
 import LanguageCard from "@/components/LanguageCard"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { GITHUB_CONFIG } from "@/lib/github-config"
 import { NervaLogo } from "@/components/NervaLogo"
 import { fetchScriptsData, preloadScriptsData } from '@/lib/api'
 import { formatVersion } from '@/lib/version'
@@ -98,10 +99,10 @@ export default function HomePage() {
   const languages = useMemo(() => {
     if (!scriptsData) {
       return [
-        { name: "Python", count: 0, color: "bg-blue-500", repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/python" },
-        { name: "JavaScript", count: 0, color: "bg-yellow-500", repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/javascript" },
-        { name: "Bash", count: 0, color: "bg-green-500", repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/bash" },
-        { name: "PowerShell", count: 0, color: "bg-purple-500", repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/powershell" },
+        { name: "Python", count: 0, color: "bg-blue-500", repoPath: GITHUB_CONFIG.getLanguagePath("python") },
+        { name: "JavaScript", count: 0, color: "bg-yellow-500", repoPath: GITHUB_CONFIG.getLanguagePath("javascript") },
+        { name: "Bash", count: 0, color: "bg-green-500", repoPath: GITHUB_CONFIG.getLanguagePath("bash") },
+        { name: "PowerShell", count: 0, color: "bg-purple-500", repoPath: GITHUB_CONFIG.getLanguagePath("powershell") },
       ]
     }
 
@@ -110,25 +111,25 @@ export default function HomePage() {
         name: "Python", 
         count: scriptsData.languages.python?.count || 0, 
         color: "bg-blue-500",
-        repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/python"
+        repoPath: GITHUB_CONFIG.getLanguagePath("python")
       },
       { 
         name: "JavaScript", 
         count: scriptsData.languages.javascript?.count || 0, 
         color: "bg-yellow-500",
-        repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/javascript"
+        repoPath: GITHUB_CONFIG.getLanguagePath("javascript")
       },
       { 
         name: "Bash", 
         count: scriptsData.languages.bash?.count || 0, 
         color: "bg-green-500",
-        repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/bash"
+        repoPath: GITHUB_CONFIG.getLanguagePath("bash")
       },
       { 
         name: "PowerShell", 
         count: scriptsData.languages.powershell?.count || 0, 
         color: "bg-purple-500",
-        repoPath: "https://github.com/curiousbud/Nerva/tree/main/scripts/powershell"
+        repoPath: GITHUB_CONFIG.getLanguagePath("powershell")
       },
     ]
   }, [scriptsData])
@@ -206,7 +207,7 @@ export default function HomePage() {
                   variant="outline" 
                   size="sm" 
                   className="btn-purple-outline"
-                  onClick={() => window.open('https://github.com/curiousbud/Nerva', '_blank')}
+                  onClick={() => window.open(GITHUB_CONFIG.FORK_URL, '_blank')}
                 >
                   <GitFork className="h-4 w-4 mr-2" />
                   Fork
@@ -214,7 +215,7 @@ export default function HomePage() {
                 <Button 
                   size="sm"
                   className="btn-purple"
-                  onClick={() => window.open('https://github.com/curiousbud/Nerva', '_blank')}
+                  onClick={() => window.open(GITHUB_CONFIG.BASE_URL, '_blank')}
                 >
                   <Star className="h-4 w-4 mr-2" />
                   Star
@@ -267,7 +268,7 @@ export default function HomePage() {
               variant="outline" 
               size="lg" 
               className="btn-purple-outline px-8 py-4 text-lg font-semibold"
-              onClick={() => window.open('https://github.com/curiousbud/Nerva', '_blank')}
+              onClick={() => window.open(GITHUB_CONFIG.BASE_URL, '_blank')}
             >
               <GitFork className="mr-2 h-5 w-5" />
               Contribute
@@ -371,7 +372,7 @@ export default function HomePage() {
                   repoPath={script.path} // Add repo path for action buttons
                   onViewScript={() => {
                     if (script.path) {
-                      const fullUrl = `https://github.com/curiousbud/Nerva/tree/main/${script.path.replace(/\\/g, '/')}`;
+                      const fullUrl = GITHUB_CONFIG.getScriptPath(script.path.replace(/\\/g, '/'));
                       window.open(fullUrl, '_blank');
                     }
                   }}

@@ -14,6 +14,7 @@ import { fetchScriptsData, preloadScriptsData } from '@/lib/api'
 import { formatVersion } from '@/lib/version'
 import LoadingPage from '@/components/LoadingPage'
 import ErrorPage from '@/components/ErrorPage'
+import { GITHUB_CONFIG } from '@/lib/github-config'
 
 interface Script {
   name: string
@@ -157,7 +158,7 @@ export default function ScriptsPage() {
               </Button>
               <ThemeToggle />
               <Button variant="outline" size="sm" asChild>
-                <Link href="https://github.com/curiousbud/Nerva" target="_blank">
+                <Link href={GITHUB_CONFIG.BASE_URL} target="_blank">
                   <Github className="h-4 w-4 mr-2" />
                   GitHub
                 </Link>
@@ -266,7 +267,7 @@ export default function ScriptsPage() {
                 repoPath={script.path} // Add repo path for action buttons
                 onViewScript={() => {
                   if (script.path) {
-                    const fullUrl = `https://github.com/curiousbud/Nerva/tree/main/${script.path.replace(/\\/g, '/')}`;
+                    const fullUrl = GITHUB_CONFIG.getScriptPath(script.path.replace(/\\/g, '/'));
                     window.open(fullUrl, '_blank');
                   }
                 }}
@@ -285,7 +286,7 @@ export default function ScriptsPage() {
               Help us grow this collection by contributing your own scripts or improving existing ones.
             </p>
             <Button className="bg-primary hover:bg-primary/90" asChild>
-              <Link href="https://github.com/curiousbud/Nerva/blob/main/CONTRIBUTING.md" target="_blank">
+              <Link href={GITHUB_CONFIG.CONTRIBUTING_URL} target="_blank">
                 <GitFork className="h-4 w-4 mr-2" />
                 Contribute
               </Link>

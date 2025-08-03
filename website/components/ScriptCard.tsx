@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Code, Star, GitFork, ExternalLink } from 'lucide-react';
 import LanguageIcon from '@/components/LanguageIcon';
+import { GITHUB_CONFIG } from '@/lib/github-config';
 
 interface ScriptCardProps {
   name: string;
@@ -82,14 +83,14 @@ const ScriptCard: React.FC<ScriptCardProps> = ({
     
     const baseUrl = repoPath.includes('github.com') 
       ? repoPath 
-      : `https://github.com/areeburrub/Nerva/tree/main/${repoPath}`;
+      : GITHUB_CONFIG.getScriptPath(repoPath);
     
     switch (action) {
       case 'star':
-        window.open('https://github.com/areeburrub/Nerva', '_blank');
+        window.open(GITHUB_CONFIG.BASE_URL, '_blank');
         break;
       case 'fork':
-        window.open('https://github.com/areeburrub/Nerva/fork', '_blank');
+        window.open(GITHUB_CONFIG.FORK_URL, '_blank');
         break;
       case 'external':
         window.open(baseUrl, '_blank');
