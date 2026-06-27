@@ -34,6 +34,13 @@
   # ↑ Return 200 (not 301/302) so the URL stays the same
   # This allows React Router to handle the routing
 
+# Data files must always be revalidated so a new deploy is picked up
+# immediately (the site also cache-busts the request URL per release).
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
 # Performance: Cache Static Assets
 # Set aggressive caching for files that rarely change
 [[headers]]

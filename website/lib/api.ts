@@ -29,6 +29,10 @@ const logger = {
 
 // API utilities for static export deployment with advanced caching
 import { apiCache, CACHE_KEYS, CACHE_DURATION } from './cache';
+import { VERSION } from './version';
+
+// Versioned so a new release never reads a previous release's cached payload.
+const SESSION_CACHE_KEY = `scripts_data_${VERSION}`;
 
 /**
  * Get Base Path for API Requests
@@ -93,7 +97,7 @@ export async function fetchScriptsData() {
 
     // === TIER 2: SESSION STORAGE CACHE ===
     // Survives page refreshes, lost on tab close
-    const sessionData = getSessionCache('scripts_data');
+    const sessionData = getSessionCache(SESSION_CACHE_KEY);
     if (sessionData) {
       logger.log('[API] Scripts data loaded from session cache');
       // Re-populate memory cache for faster subsequent access
@@ -109,11 +113,12 @@ export async function fetchScriptsData() {
     const timeoutId = setTimeout(() => controller.abort(), 5000);
     
     try {
-      const response = await fetch(getApiUrl('/data/scripts.json'), {
+      // Cache-bust per release so a new deploy never serves a stale scripts.json
+      // from the browser or CDN. `no-store` skips the HTTP cache; our own
+      // memory/session layers (keyed by version below) provide in-session speed.
+      const response = await fetch(getApiUrl(`/data/scripts.json?v=${VERSION}`), {
         signal: controller.signal,
-        headers: {
-          'Cache-Control': 'public, max-age=300', // 5 minutes browser cache
-        }
+        cache: 'no-store',
       });
       
       clearTimeout(timeoutId);
@@ -121,7 +126,7 @@ export async function fetchScriptsData() {
       // Handle 304 Not Modified
       if (response.status === 304) {
         logger.log('[API] Scripts data not modified (304), using cached version');
-        const fallbackData = getSessionCache('scripts_data');
+        const fallbackData = getSessionCache(SESSION_CACHE_KEY);
         if (fallbackData) {
           apiCache.set(cacheKey, fallbackData, CACHE_DURATION.MEDIUM);
           return fallbackData;
@@ -138,7 +143,7 @@ export async function fetchScriptsData() {
       
       // Cache the fresh data
       apiCache.set(cacheKey, data, CACHE_DURATION.MEDIUM);
-      setSessionCache('scripts_data', data);
+      setSessionCache(SESSION_CACHE_KEY, data);
       
       logger.log('[API] Scripts data fetched and cached');
       return data;
@@ -154,7 +159,7 @@ export async function fetchScriptsData() {
     
     // === FALLBACK: USE STALE CACHE ===
     // If all else fails, try to return any cached data (even if stale)
-    const staleData = apiCache.get(cacheKey) || getSessionCache('scripts_data');
+    const staleData = apiCache.get(cacheKey) || getSessionCache(SESSION_CACHE_KEY);
     if (staleData) {
       logger.warn('[API] Using stale cached data due to fetch error');
       return staleData;

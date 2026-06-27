@@ -45,9 +45,11 @@ const error = (message, ...args) => {
   console.error(message, ...args);
 };
 
-// Cache version identifiers - increment when cache strategy changes
-const CACHE_NAME = 'nerva-cache-v2';           // Static assets (HTML, CSS, JS, images)
-const API_CACHE_NAME = 'nerva-api-cache-v2';   // Dynamic API responses (scripts.json)
+// Cache version identifiers - increment when cache strategy changes.
+// Bumping these purges every older cache on activate, so a deploy is never
+// blocked by a stale service-worker cache (e.g. an old scripts.json).
+const CACHE_NAME = 'nerva-cache-v3';           // Static assets (HTML, CSS, JS, images)
+const API_CACHE_NAME = 'nerva-api-cache-v3';   // Dynamic API responses (scripts.json)
 
 /**
  * Static Assets to Aggressively Cache
@@ -55,10 +57,12 @@ const API_CACHE_NAME = 'nerva-api-cache-v2';   // Dynamic API responses (scripts
  * These files are cached immediately when the service worker installs.
  * They represent the core application shell that enables offline functionality.
  */
+// NOTE: scripts.json is intentionally NOT pre-cached here. It is data, not a
+// static asset, and is handled by the network-first strategy below so a new
+// deploy is always reflected.
 const STATIC_ASSETS = [
   '/',                    // Homepage
   '/scripts',             // Scripts catalog page
-  '/data/scripts.json',   // Scripts data API
   '/favicon.svg',         // Site icon
   '/banner.jpeg'          // Header image
 ];

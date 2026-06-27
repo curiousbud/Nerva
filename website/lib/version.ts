@@ -1,7 +1,7 @@
 // Version utility to get current version info
-export const VERSION = "1.2.0";
-export const VERSION_NAME = "Performance Boost";
-export const RELEASE_DATE = "2025-06-27";
+export const VERSION = "1.3.0";
+export const VERSION_NAME = "Tool-First";
+export const RELEASE_DATE = "2026-06-27";
 
 export function getVersionInfo() {
   return {
