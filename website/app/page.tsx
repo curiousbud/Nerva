@@ -126,6 +126,7 @@ export default function HomePage() {
   }, [searchQuery, featuredTools])
 
   const totalScripts = scriptsData?.totalScripts || 0
+  const supportedLanguagesCount = languages.filter((l) => l.count > 0).length
 
   if (loading) {
     return (
@@ -238,7 +239,7 @@ export default function HomePage() {
               <Terminal className="h-4 w-4 text-primary" /> {totalScripts} ready-to-use scripts
             </span>
             <span className="inline-flex items-center gap-2">
-              <Code className="h-4 w-4 text-primary" /> 4 languages
+              <Code className="h-4 w-4 text-primary" /> {supportedLanguagesCount} languages
             </span>
             <span className="inline-flex items-center gap-2">
               <Star className="h-4 w-4 text-primary" /> MIT licensed
@@ -382,8 +383,8 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { value: totalScripts, label: "Available Scripts", sub: "Ready to use now" },
-              { value: 4, label: "Languages Supported", sub: "Cross-platform power" },
-              { value: 0, label: "In Development", sub: "Coming soon" },
+              { value: scriptsData?.totalTools ?? 0, label: "Unique Tools", sub: "Across all languages" },
+              { value: supportedLanguagesCount, label: "Languages Supported", sub: "Cross-platform power" },
             ].map((stat) => (
               <div
                 key={stat.label}
