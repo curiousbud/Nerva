@@ -108,58 +108,37 @@ const LanguageCard: React.FC<LanguageCardProps> = ({
           transformStyle: 'preserve-3d',
         }}
       >
-        {/* Icon container with hover effect */}
-        <div 
-          className="relative mb-6 flex flex-col items-center"
+        {/* Icon container */}
+        <div
+          className="relative mb-5 flex justify-center"
           style={{
             transform: isHovered ? 'translateZ(30px)' : 'translateZ(0px)',
             transition: isHovered ? 'none' : 'transform 0.5s ease'
           }}
         >
-          {/* Icon with theme-aware background */}
-          <div className="w-20 h-20 mx-auto mb-3 rounded-2xl flex items-center justify-center relative overflow-hidden group-hover:scale-110 transition-all duration-300 bg-background/60 backdrop-blur border border-border/30 group-hover:border-border/60 group-hover:bg-background/80">
-            <div 
-              className="relative z-10 flex items-center justify-center"
-              style={{
-                transform: isHovered ? 'translateZ(20px)' : 'translateZ(0px)',
-                transition: isHovered ? 'none' : 'transform 0.5s ease'
-              }}
-            >
-              {getLanguageIcon(name)}
-            </div>
-            
-            {/* Language name overlay on hover */}
-            <div 
-              className={`absolute inset-0 flex items-center justify-center bg-background/95 backdrop-blur-sm transition-all duration-300 ${
-                isHovered ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              <span className="text-sm font-semibold text-foreground">
-                {name}
-              </span>
-            </div>
+          {/* Soft glow behind the icon */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/15 to-accent/15 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+          <div className="w-20 h-20 rounded-2xl flex items-center justify-center relative group-hover:scale-110 transition-all duration-300 bg-background/60 backdrop-blur border border-border/40 group-hover:border-primary/40 group-hover:bg-background/80">
+            {getLanguageIcon(name)}
           </div>
-          
-          {/* Glow effect */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
 
-        {/* Script count with enhanced styling */}
-        <div 
+        {/* Language name + count */}
+        <div
           className="text-center"
           style={{
             transform: isHovered ? 'translateZ(25px)' : 'translateZ(0px)',
             transition: isHovered ? 'none' : 'transform 0.5s ease'
           }}
         >
-          <div className="mb-2">
-            <span className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              {count}
+          <h4 className="text-base font-semibold text-foreground mb-2">{name}</h4>
+          <div className="flex items-baseline justify-center gap-1.5">
+            <span className="text-3xl font-bold gradient-text leading-none">{count}</span>
+            <span className="text-muted-foreground font-medium text-sm">
+              {count === 1 ? 'script' : 'scripts'}
             </span>
           </div>
-          <p className="text-muted-foreground font-medium text-sm">
-            {count === 1 ? 'script' : 'scripts'}
-          </p>
         </div>
       </CardContent>
     </Card>

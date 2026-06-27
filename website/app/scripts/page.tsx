@@ -10,34 +10,20 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import ScriptCard from "@/components/ScriptCard"
 import { NervaLogo } from "@/components/NervaLogo"
 import Link from "next/link"
-import { fetchScriptsData, preloadScriptsData } from '@/lib/api'
+import { fetchScriptsData } from '@/lib/api'
 import { formatVersion } from '@/lib/version'
+import { variantsWithPrimary, type Tool } from '@/lib/group'
 import LoadingPage from '@/components/LoadingPage'
 import ErrorPage from '@/components/ErrorPage'
 import { GITHUB_CONFIG } from '@/lib/github-config'
 
-interface Script {
-  name: string
-  path: string
-  category: string
-  difficulty: string
-  description: string
-  features: string[]
-  requirements: string[]
-  usage: string
-  display_name: string
-  featured?: boolean
-  language?: string  // Make it optional since we add it later
-}
-
 interface ScriptsData {
   lastUpdated: string
+  totalTools: number
   totalScripts: number
+  tools: Tool[]
   languages: {
-    [key: string]: {
-      count: number
-      scripts: Script[]
-    }
+    [key: string]: { count: number }
   }
 }
 
@@ -51,69 +37,59 @@ export default function ScriptsPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    let cancelled = false
+
     async function loadScriptsData() {
       try {
-        // Start preloading for faster subsequent loads
-        preloadScriptsData();
-        
-        // Reduced minimum loading time for faster response
-        const [data] = await Promise.all([
-          fetchScriptsData(),
-          new Promise(resolve => setTimeout(resolve, 200)) // Reduced to 200ms
-        ])
-        setScriptsData(data)
+        const data = await fetchScriptsData()
+        if (!cancelled) setScriptsData(data)
       } catch (err) {
-        setError('Failed to load scripts. Please try again later.')
+        if (!cancelled) setError('Failed to load scripts. Please try again later.')
         console.error('Error loading scripts:', err)
       } finally {
-        setLoading(false)
+        if (!cancelled) setLoading(false)
       }
     }
 
     loadScriptsData()
+    return () => { cancelled = true }
   }, [])
 
-  const allScripts = useMemo(() => {
-    if (!scriptsData) return []
-    
-    const scripts: Script[] = []
-    Object.entries(scriptsData.languages).forEach(([language, data]) => {
-      data.scripts.forEach(script => {
-        scripts.push({ ...script, language })
-      })
-    })
-    return scripts
-  }, [scriptsData])
+  const allTools = useMemo(() => scriptsData?.tools ?? [], [scriptsData])
 
-  const filteredScripts = useMemo(() => {
-    return allScripts.filter(script => {
-      const matchesSearch = 
-        script.display_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        script.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        script.category.toLowerCase().includes(searchQuery.toLowerCase())
-      
-      const matchesLanguage = selectedLanguage === "all" || (script.language && script.language === selectedLanguage)
-      const matchesCategory = selectedCategory === "all" || script.category === selectedCategory
-      const matchesDifficulty = selectedDifficulty === "all" || script.difficulty === selectedDifficulty
-      
+  const filteredTools = useMemo(() => {
+    const query = searchQuery.toLowerCase()
+    return allTools.filter(tool => {
+      const matchesSearch =
+        tool.title.toLowerCase().includes(query) ||
+        tool.description.toLowerCase().includes(query) ||
+        tool.category.toLowerCase().includes(query) ||
+        tool.variants.some(v => v.language.toLowerCase().includes(query))
+
+      const matchesLanguage =
+        selectedLanguage === "all" ||
+        tool.variants.some(v => v.language === selectedLanguage)
+      const matchesCategory = selectedCategory === "all" || tool.category === selectedCategory
+      const matchesDifficulty = selectedDifficulty === "all" || tool.difficulty === selectedDifficulty
+
       return matchesSearch && matchesLanguage && matchesCategory && matchesDifficulty
     })
-  }, [allScripts, searchQuery, selectedLanguage, selectedCategory, selectedDifficulty])
+  }, [allTools, searchQuery, selectedLanguage, selectedCategory, selectedDifficulty])
 
   const availableLanguages = useMemo(() => {
     if (!scriptsData) return []
     return Object.keys(scriptsData.languages).filter(lang => scriptsData.languages[lang].count > 0)
   }, [scriptsData])
 
-  const availableCategories = useMemo(() => {
-    const categories = new Set(allScripts.map(script => script.category))
-    return Array.from(categories)
-  }, [allScripts])
+  const availableCategories = useMemo(
+    () => Array.from(new Set(allTools.map(tool => tool.category))),
+    [allTools]
+  )
 
-  const availableDifficulties = useMemo(() => {
-    const difficulties = new Set(allScripts.map(script => script.difficulty))
-    return Array.from(difficulties)
-  }, [allScripts])
+  const availableDifficulties = useMemo(
+    () => Array.from(new Set(allTools.map(tool => tool.difficulty))),
+    [allTools]
+  )
 
   if (loading) {
     return (
@@ -139,14 +115,14 @@ export default function ScriptsPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border">
-        <div className="container mx-auto px-4 py-4">
+      <header className="border-b border-border/60 bg-background/70 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-3.5">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-3">
-              <NervaLogo />
+            <Link href="/" className="flex items-center space-x-3 group">
+              <NervaLogo size={38} className="group-hover:scale-110 transition-transform duration-300" />
               <div>
-                <h1 className="text-2xl font-bold text-foreground">Nerva</h1>
-                <p className="text-sm text-muted-foreground">All Scripts</p>
+                <h1 className="text-xl font-bold tracking-tight text-foreground">Nerva</h1>
+                <p className="text-xs text-muted-foreground">All Scripts</p>
               </div>
             </Link>
             <div className="flex items-center space-x-4">
@@ -242,35 +218,29 @@ export default function ScriptsPage() {
 
           {/* Results Count */}
           <div className="text-muted-foreground text-sm">
-            Showing {filteredScripts.length} of {allScripts.length} scripts
+            Showing {filteredTools.length} of {allTools.length} tools
           </div>
         </div>
 
         {/* Scripts Grid */}
-        {filteredScripts.length === 0 ? (
+        {filteredTools.length === 0 ? (
           <div className="text-center py-12">
             <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-foreground mb-2">No scripts found</h3>
             <p className="text-muted-foreground">Try adjusting your search or filter criteria</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-8 2xl:gap-10">
-            {filteredScripts.map((script, index) => (
+          <div className="script-cards-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-8 2xl:gap-10 justify-items-center">
+            {filteredTools.map((tool) => (
               <ScriptCard
-                key={`${script.language}-${script.name}-${index}`}
-                name={script.display_name}
-                description={script.description}
-                language={script.language || 'unknown'}
-                tags={script.features || []} // Use features as tags
-                category={script.category}
-                status="available" // All our scripts are available
-                repoPath={script.path} // Add repo path for action buttons
-                onViewScript={() => {
-                  if (script.path) {
-                    const fullUrl = GITHUB_CONFIG.getScriptPath(script.path.replace(/\\/g, '/'));
-                    window.open(fullUrl, '_blank');
-                  }
-                }}
+                key={tool.key}
+                title={tool.title}
+                description={tool.description}
+                tags={tool.features}
+                category={tool.category}
+                status="available"
+                repoPath={tool.path}
+                variants={variantsWithPrimary(tool.variants, selectedLanguage)}
               />
             ))}
           </div>
