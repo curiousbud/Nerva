@@ -160,12 +160,17 @@ export async function fetchScriptsData() {
       return staleData;
     }
     
-    // Last resort: return empty data structure
+    // Last resort: return empty data structure (shape matches scripts.json so
+    // consumers never have to null-check the top-level keys)
     logger.warn('[API] No cached data available, returning empty structure');
     return {
       lastUpdated: "",
+      totalTools: 0,
       totalScripts: 0,
-      languages: {}
+      languages: {},
+      categories: {},
+      tools: [],
+      featured: []
     };
   }
 }

@@ -1,67 +1,58 @@
 import React, { useRef, useState } from 'react';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Code, Star, GitFork, ExternalLink } from 'lucide-react';
 import LanguageIcon from '@/components/LanguageIcon';
 import { GITHUB_CONFIG } from '@/lib/github-config';
+import type { ScriptVariant } from '@/lib/group';
 
 interface ScriptCardProps {
-  name: string;
+  title: string;
   description: string;
-  language: string;
   tags: string[];
   category: string;
-  status: 'available' | 'in-progress';
-  repoPath?: string;
-  onViewScript?: () => void;
+  status?: 'available' | 'in-progress';
+  /** Path to the tool folder (shows every language on GitHub). */
+  repoPath: string;
+  /** One entry per language this tool is available in (index 0 = primary). */
+  variants: ScriptVariant[];
 }
 
 const ScriptCard: React.FC<ScriptCardProps> = ({
-  name,
+  title,
   description,
-  language,
   tags,
   category,
-  status,
+  status = 'available',
   repoPath,
-  onViewScript
+  variants,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
-  const getLanguageColor = (lang: string) => {
-    switch (lang.toLowerCase()) {
-      case 'python': return '#3776ab';
-      case 'javascript': return '#f7df1e';
-      case 'bash': return '#4eaa25';
-      case 'powershell': return '#5391fe';
-      default: return '#8b5cf6';
-    }
+  const primary = variants[0];
+  const isMultiLanguage = variants.length > 1;
+
+  const resolveUrl = (path: string) =>
+    path.includes('github.com')
+      ? path
+      : GITHUB_CONFIG.getScriptPath(path.replace(/\\/g, '/'));
+
+  const openVariant = (e: React.MouseEvent, path: string) => {
+    e.stopPropagation();
+    window.open(resolveUrl(path), '_blank');
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
-
-    const card = cardRef.current;
-    const rect = card.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    
-    const mouseX = e.clientX - centerX;
-    const mouseY = e.clientY - centerY;
-    
-    const rotateXValue = (mouseY / rect.height) * -20;
-    const rotateYValue = (mouseX / rect.width) * 20;
-    
-    setRotateX(rotateXValue);
-    setRotateY(rotateYValue);
+    const rect = cardRef.current.getBoundingClientRect();
+    const mouseX = e.clientX - (rect.left + rect.width / 2);
+    const mouseY = e.clientY - (rect.top + rect.height / 2);
+    setRotateX((mouseY / rect.height) * -16);
+    setRotateY((mouseX / rect.width) * 16);
   };
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
+  const handleMouseEnter = () => setIsHovered(true);
 
   const handleMouseLeave = () => {
     setIsHovered(false);
@@ -69,45 +60,23 @@ const ScriptCard: React.FC<ScriptCardProps> = ({
     setRotateY(0);
   };
 
-  const handleButtonClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent card click when button is clicked
-    if (onViewScript && status === 'available') {
-      onViewScript();
-    }
-  };
-
-  const handleActionClick = (e: React.MouseEvent, action: string) => {
+  const handleAction = (e: React.MouseEvent, action: 'star' | 'fork' | 'external') => {
     e.stopPropagation();
-    
-    if (!repoPath) return;
-    
-    const baseUrl = repoPath.includes('github.com') 
-      ? repoPath 
-      : GITHUB_CONFIG.getScriptPath(repoPath);
-    
-    switch (action) {
-      case 'star':
-        window.open(GITHUB_CONFIG.BASE_URL, '_blank');
-        break;
-      case 'fork':
-        window.open(GITHUB_CONFIG.FORK_URL, '_blank');
-        break;
-      case 'external':
-        window.open(baseUrl, '_blank');
-        break;
-    }
+    if (action === 'star') window.open(GITHUB_CONFIG.BASE_URL, '_blank');
+    else if (action === 'fork') window.open(GITHUB_CONFIG.FORK_URL, '_blank');
+    else window.open(resolveUrl(repoPath), '_blank'); // open the tool folder
   };
 
   return (
-    <div 
+    <div
       ref={cardRef}
       className="script-card"
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
-        transform: isHovered 
-          ? `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)` 
+        transform: isHovered
+          ? `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(18px)`
           : 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)',
         transition: isHovered ? 'none' : 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
       }}
@@ -119,8 +88,8 @@ const ScriptCard: React.FC<ScriptCardProps> = ({
             <Code size={20} />
           </div>
           <div className="actions">
-            <div 
-              onClick={(e) => handleActionClick(e, 'star')}
+            <div
+              onClick={(e) => handleAction(e, 'star')}
               title="Star this repository"
               role="button"
               tabIndex={0}
@@ -129,8 +98,8 @@ const ScriptCard: React.FC<ScriptCardProps> = ({
             >
               <Star size={16} />
             </div>
-            <div 
-              onClick={(e) => handleActionClick(e, 'fork')}
+            <div
+              onClick={(e) => handleAction(e, 'fork')}
               title="Fork this repository"
               role="button"
               tabIndex={0}
@@ -139,8 +108,8 @@ const ScriptCard: React.FC<ScriptCardProps> = ({
             >
               <GitFork size={16} />
             </div>
-            <div 
-              onClick={(e) => handleActionClick(e, 'external')}
+            <div
+              onClick={(e) => handleAction(e, 'external')}
               title="View source code"
               role="button"
               tabIndex={0}
@@ -152,62 +121,62 @@ const ScriptCard: React.FC<ScriptCardProps> = ({
           </div>
         </div>
       </div>
-      
-      <div className="content-section" style={{
-        transform: isHovered ? 'translateZ(30px)' : 'translateZ(0px)',
-        transition: isHovered ? 'none' : 'transform 0.5s ease'
-      }}>
-        <span className="script-title">{name}</span>
+
+      <div
+        className="content-section"
+        style={{
+          transform: isHovered ? 'translateZ(28px)' : 'translateZ(0px)',
+          transition: isHovered ? 'none' : 'transform 0.5s ease',
+        }}
+      >
+        <span className="script-title">{title}</span>
         <p className="script-description">{description}</p>
-        
+
         <div className="script-tags">
-          {tags.slice(0, 3).map((tag, index) => (
-            <span 
-              key={index} 
-              className="script-tag"
-              style={{
-                transform: isHovered ? `translateZ(${20 + index * 5}px)` : 'translateZ(0px)',
-                transition: isHovered ? 'none' : 'transform 0.5s ease'
-              }}
-            >
+          {category && <span className="script-tag">{category}</span>}
+          {tags.slice(0, 2).map((tag, index) => (
+            <span key={index} className="script-tag">
               {tag}
             </span>
           ))}
-          {tags.length > 3 && (
-            <span 
-              className="script-tag"
-              style={{
-                transform: isHovered ? 'translateZ(35px)' : 'translateZ(0px)',
-                transition: isHovered ? 'none' : 'transform 0.5s ease'
-              }}
-            >
-              +{tags.length - 3}
-            </span>
-          )}
         </div>
       </div>
-      
-      <div className="bottom-section" style={{
-        transform: isHovered ? 'translateZ(25px)' : 'translateZ(0px)',
-        transition: isHovered ? 'none' : 'transform 0.5s ease'
-      }}>
+
+      <div
+        className="bottom-section"
+        style={{
+          transform: isHovered ? 'translateZ(24px)' : 'translateZ(0px)',
+          transition: isHovered ? 'none' : 'transform 0.5s ease',
+        }}
+      >
         <div className="language-info">
-          <LanguageIcon 
-            language={language} 
-            size="md"
-            className="mr-1"
-          />
-          {/* Language name only visible on hover or larger screens */}
-          <span className="language-name hidden sm:inline-block">{language}</span>
+          {/* Language tray: primary on top, the rest fan out on hover */}
+          <div className="lang-tray" aria-label={`Available in ${variants.length} language(s)`}>
+            {variants.map((variant, index) => (
+              <button
+                key={`${variant.language}-${index}`}
+                className="lang-chip"
+                style={{ zIndex: variants.length - index }}
+                onClick={(e) => openVariant(e, variant.path)}
+                title={`Open the ${variant.language} version`}
+                aria-label={`Open the ${variant.language} version`}
+              >
+                <LanguageIcon language={variant.language} size="sm" />
+              </button>
+            ))}
+          </div>
+          <span className="language-name">
+            {isMultiLanguage ? `${variants.length} languages` : primary.language}
+          </span>
         </div>
-        
-        <button 
+
+        <button
           className="view-button"
-          onClick={handleButtonClick}
+          onClick={(e) => openVariant(e, repoPath)}
           disabled={status === 'in-progress'}
           style={{
-            transform: isHovered ? 'translateZ(40px)' : 'translateZ(0px)',
-            transition: isHovered ? 'none' : 'transform 0.5s ease'
+            transform: isHovered ? 'translateZ(38px)' : 'translateZ(0px)',
+            transition: isHovered ? 'none' : 'transform 0.5s ease',
           }}
         >
           {status === 'available' ? 'View Script' : 'Coming Soon'}

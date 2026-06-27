@@ -1,0 +1,5 @@
+{
+  "name": "nerva-root",
+  "private": true,
+  "description": "Repository root. The Node/Next.js project lives in ./website."
+}

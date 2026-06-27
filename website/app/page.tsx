@@ -20,39 +20,25 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Code, GitFork, Star, Search, AlertCircle, ArrowRight, Eye } from "lucide-react"
+import { Code, GitFork, Star, Search, AlertCircle, ArrowRight, Eye, Sparkles, Terminal } from "lucide-react"
 import ScriptCard from "@/components/ScriptCard"
 import LanguageCard from "@/components/LanguageCard"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { GITHUB_CONFIG } from "@/lib/github-config"
 import { NervaLogo } from "@/components/NervaLogo"
-import { fetchScriptsData, preloadScriptsData } from '@/lib/api'
+import { fetchScriptsData } from '@/lib/api'
 import { formatVersion } from '@/lib/version'
+import type { Tool } from '@/lib/group'
 import LoadingPage from '@/components/LoadingPage'
-
-interface Script {
-  name: string
-  path: string
-  category: string
-  difficulty: string
-  description: string
-  features: string[]
-  requirements: string[]
-  usage: string
-  display_name: string
-  featured?: boolean
-  language?: string
-}
 
 interface ScriptsData {
   lastUpdated: string
+  totalTools: number
   totalScripts: number
-  featured?: (Script & { language: string })[]
+  featured: Tool[]
+  tools: Tool[]
   languages: {
-    [key: string]: {
-      count: number
-      scripts: Script[]
-    }
+    [key: string]: { count: number }
   }
 }
 
@@ -62,38 +48,24 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let cancelled = false
+
     async function loadScriptsData() {
       try {
-        // Start preloading immediately for faster subsequent loads
-        preloadScriptsData();
-        
-        // Remove artificial delay to prevent getting stuck on loading screen
-        const data = await fetchScriptsData();
-        setScriptsData(data);
-        
-        // Force set loading to false after 2 seconds maximum wait time
-        // This ensures we don't get stuck on loading screen even if something fails
-        setTimeout(() => {
-          setLoading(false);
-        }, 2000);
+        const data = await fetchScriptsData()
+        if (!cancelled) setScriptsData(data)
       } catch (err) {
-        logger.error('Error loading scripts:', err);
-        // Set loading to false immediately on error
-        setLoading(false);
+        logger.error('Error loading scripts:', err)
+      } finally {
+        // Always reveal the page as soon as the fetch settles — the api layer
+        // already times out and falls back to cached/empty data, so there is
+        // no need for an artificial delay here.
+        if (!cancelled) setLoading(false)
       }
     }
 
-    loadScriptsData();
-    
-    // Fallback to ensure loading is set to false after 3 seconds no matter what
-    const timer = setTimeout(() => {
-      if (loading) {
-        logger.log('Forcing loading state to false after timeout');
-        setLoading(false);
-      }
-    }, 3000);
-    
-    return () => clearTimeout(timer);
+    loadScriptsData()
+    return () => { cancelled = true }
   }, [])
 
   const languages = useMemo(() => {
@@ -134,37 +106,24 @@ export default function HomePage() {
     ]
   }, [scriptsData])
 
-  const featuredScripts = useMemo(() => {
+  const featuredTools = useMemo(() => {
     if (!scriptsData) return []
-    
-    // Use the featured scripts from the API if available
-    if (scriptsData.featured && scriptsData.featured.length > 0) {
-      return scriptsData.featured
-    }
-    
-    // Fallback: get all scripts and return first 6
-    const allScripts: (Script & { language: string })[] = []
-    Object.entries(scriptsData.languages).forEach(([language, data]) => {
-      data.scripts.forEach(script => {
-        allScripts.push({ ...script, language })
-      })
-    })
-    
-    return allScripts.slice(0, 6)
+    if (scriptsData.featured?.length) return scriptsData.featured
+    return (scriptsData.tools ?? []).slice(0, 6)
   }, [scriptsData])
 
-  const filteredScripts = useMemo(() => {
-    if (!searchQuery.trim()) return featuredScripts // Show featured scripts by default
+  const filteredTools = useMemo(() => {
+    if (!searchQuery.trim()) return featuredTools
 
     const query = searchQuery.toLowerCase()
-    return featuredScripts.filter(
-      (script) =>
-        script.display_name.toLowerCase().includes(query) ||
-        script.description.toLowerCase().includes(query) ||
-        script.language.toLowerCase().includes(query) ||
-        script.category.toLowerCase().includes(query)
+    return featuredTools.filter(
+      (tool) =>
+        tool.title.toLowerCase().includes(query) ||
+        tool.description.toLowerCase().includes(query) ||
+        tool.category.toLowerCase().includes(query) ||
+        tool.variants.some((v) => v.language.toLowerCase().includes(query))
     )
-  }, [searchQuery, featuredScripts])
+  }, [searchQuery, featuredTools])
 
   const totalScripts = scriptsData?.totalScripts || 0
 
@@ -180,39 +139,39 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border bg-background/80 backdrop-blur-xl sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+      <header className="border-b border-border/60 bg-background/70 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-3.5">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3 group">
+            <Link href="/" className="flex items-center space-x-3 group">
               <div className="relative">
-                <NervaLogo size={40} className="group-hover:scale-110 transition-transform duration-300" />
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300 rounded-full"></div>
+                <NervaLogo size={38} className="group-hover:scale-110 transition-transform duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent blur-lg opacity-25 group-hover:opacity-45 transition-opacity duration-300 rounded-full"></div>
               </div>
-              <h1 className="text-2xl font-bold text-foreground">
+              <h1 className="text-xl font-bold tracking-tight text-foreground">
                 Nerva
               </h1>
-            </div>
-            <div className="flex items-center space-x-6">
-              <nav className="hidden md:flex items-center space-x-6">
-                <Link href="/" className="text-foreground hover:text-primary transition-colors">
+            </Link>
+            <div className="flex items-center space-x-2 md:space-x-5">
+              <nav className="hidden md:flex items-center space-x-1">
+                <Link href="/" className="px-3 py-2 rounded-lg text-sm font-medium text-foreground/90 hover:text-primary hover:bg-primary/5 transition-colors">
                   Home
                 </Link>
-                <Link href="/scripts" className="text-foreground hover:text-primary transition-colors">
+                <Link href="/scripts" className="px-3 py-2 rounded-lg text-sm font-medium text-foreground/90 hover:text-primary hover:bg-primary/5 transition-colors">
                   All Scripts
                 </Link>
               </nav>
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2 md:space-x-3">
                 <ThemeToggle />
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="btn-purple-outline"
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="btn-purple-outline hidden sm:inline-flex"
                   onClick={() => window.open(GITHUB_CONFIG.FORK_URL, '_blank')}
                 >
                   <GitFork className="h-4 w-4 mr-2" />
                   Fork
                 </Button>
-                <Button 
+                <Button
                   size="sm"
                   className="btn-purple"
                   onClick={() => window.open(GITHUB_CONFIG.BASE_URL, '_blank')}
@@ -227,59 +186,63 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative py-32 overflow-hidden bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10">
-        {/* Animated Background */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background/40 to-secondary/20"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent"></div>
-          
-          {/* Floating geometric shapes */}
-          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-xl animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-48 h-48 bg-gradient-to-br from-accent/15 to-primary/15 rounded-full blur-2xl animate-bounce" style={{animationDuration: "3s"}}></div>
-          <div className="absolute bottom-20 left-1/3 w-24 h-24 bg-gradient-to-br from-secondary/25 to-accent/25 rounded-full blur-lg animate-pulse" style={{animationDelay: "1s"}}></div>
+      <section className="relative py-28 md:py-36 overflow-hidden">
+        {/* Layered ambient background */}
+        <div className="absolute inset-0 grid-backdrop"></div>
+        <div className="absolute inset-0 -z-0">
+          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[42rem] h-[42rem] bg-primary/15 rounded-full blur-[120px]"></div>
+          <div className="absolute top-32 -right-20 w-[28rem] h-[28rem] bg-accent/10 rounded-full blur-[110px]"></div>
+          <div className="absolute -bottom-32 left-0 w-[26rem] h-[26rem] bg-secondary/10 rounded-full blur-[110px]"></div>
         </div>
-        
+
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4 text-center">
-          <div className="transform hover:scale-105 transition-all duration-700">
-            <h2 className="text-7xl font-black bg-gradient-to-r from-foreground via-primary to-secondary bg-clip-text text-transparent mb-8 drop-shadow-2xl leading-tight">
-              A Collection of<br />
-              <span className="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent animate-pulse">
-                Powerful Scripts
-              </span>
-            </h2>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border border-primary/25 bg-primary/5 backdrop-blur-sm text-sm font-medium text-primary">
+            <Sparkles className="h-3.5 w-3.5" />
+            Open-source script library
           </div>
-          
-          <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto drop-shadow-lg leading-relaxed font-light">
-            Discover, share, and contribute cutting-edge scripts across multiple programming languages. 
-            From automation to security tools, unlock the power of code.
+
+          <h2 className="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-[1.05]">
+            <span className="text-foreground">A Collection of</span><br />
+            <span className="gradient-text">Powerful Scripts</span>
+          </h2>
+
+          <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
+            Discover, share, and contribute production-ready scripts across multiple
+            programming languages — from automation to security tooling.
           </p>
-          
-          <div className="flex justify-center space-x-6">
-            <Button 
-              size="lg" 
-              className="btn-purple px-8 py-4 text-lg font-bold"
+
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Button
+              size="lg"
+              className="btn-purple px-8 py-4 text-base font-semibold"
               onClick={() => document.getElementById('scripts-section')?.scrollIntoView({ behavior: 'smooth' })}
             >
               <Search className="mr-2 h-5 w-5" />
               Explore Scripts
             </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="btn-purple-outline px-8 py-4 text-lg font-semibold"
+            <Button
+              variant="outline"
+              size="lg"
+              className="btn-purple-outline px-8 py-4 text-base font-semibold"
               onClick={() => window.open(GITHUB_CONFIG.BASE_URL, '_blank')}
             >
               <GitFork className="mr-2 h-5 w-5" />
               Contribute
             </Button>
           </div>
-        </div>
-        
-        {/* Scrolling indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-muted-foreground/60 rounded-full mt-2 animate-pulse"></div>
+
+          {/* Trust strip */}
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-muted-foreground">
+            <span className="inline-flex items-center gap-2">
+              <Terminal className="h-4 w-4 text-primary" /> {totalScripts} ready-to-use scripts
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <Code className="h-4 w-4 text-primary" /> 4 languages
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <Star className="h-4 w-4 text-primary" /> MIT licensed
+            </span>
           </div>
         </div>
       </section>
@@ -346,10 +309,10 @@ export default function HomePage() {
             {searchQuery ? "Search Results" : "Featured Scripts"}
           </h3>
 
-          {filteredScripts.length === 0 ? (
+          {filteredTools.length === 0 ? (
             <div className="text-center py-20">
               <div className="relative inline-block mb-8">
-                <AlertCircle className="h-20 w-20 text-muted-foreground mx-auto animate-pulse" />
+                <AlertCircle className="h-20 w-20 text-muted-foreground mx-auto" />
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full blur-xl"></div>
               </div>
               <h4 className="text-2xl font-bold text-foreground mb-4">No scripts found</h4>
@@ -360,22 +323,16 @@ export default function HomePage() {
             </div>
           ) : (
             <div className="script-cards-grid grid md:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-8 2xl:gap-10 justify-items-center">
-              {filteredScripts.map((script, index) => (
+              {filteredTools.map((tool) => (
                 <ScriptCard
-                  key={`${script.language}-${script.name}-${index}`}
-                  name={script.display_name}
-                  description={script.description}
-                  language={script.language}
-                  tags={script.features || []} // Use features as tags
-                  category={script.category}
-                  status="available" // All our scripts are available
-                  repoPath={script.path} // Add repo path for action buttons
-                  onViewScript={() => {
-                    if (script.path) {
-                      const fullUrl = GITHUB_CONFIG.getScriptPath(script.path.replace(/\\/g, '/'));
-                      window.open(fullUrl, '_blank');
-                    }
-                  }}
+                  key={tool.key}
+                  title={tool.title}
+                  description={tool.description}
+                  tags={tool.features}
+                  category={tool.category}
+                  status="available"
+                  repoPath={tool.path}
+                  variants={tool.variants}
                 />
               ))}
             </div>
@@ -384,9 +341,9 @@ export default function HomePage() {
           {/* View All Scripts Button */}
           {!searchQuery && (
             <div className="text-center mt-12">
-              <Button 
-                size="lg" 
-                className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3"
+              <Button
+                size="lg"
+                className="btn-purple px-8 py-3"
                 asChild
               >
                 <Link href="/scripts">
@@ -401,7 +358,7 @@ export default function HomePage() {
           {searchQuery && (
             <div className="text-center mt-12">
               <p className="text-xl font-medium text-foreground">
-                Found <span className="text-primary font-bold">{filteredScripts.length}</span> script{filteredScripts.length !== 1 ? "s" : ""} matching 
+                Found <span className="text-primary font-bold">{filteredTools.length}</span> tool{filteredTools.length !== 1 ? "s" : ""} matching
                 <span className="text-secondary font-bold"> "{searchQuery}"</span>
               </p>
             </div>
@@ -410,48 +367,35 @@ export default function HomePage() {
       </section>
 
       {/* Stats */}
-      <section className="py-20 bg-gradient-to-b from-background via-muted/5 to-background relative overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-accent/10 to-primary/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: "2s"}}></div>
+      <section className="py-24 bg-gradient-to-b from-background via-muted/5 to-background relative overflow-hidden">
+        <div className="absolute inset-0 -z-0">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/8 rounded-full blur-[120px]"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/8 rounded-full blur-[120px]"></div>
         </div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <h3 className="text-4xl font-bold text-center mb-16 text-foreground">
+
+        <div className="container mx-auto px-4 relative z-10 max-w-5xl">
+          <h3 className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">
             Nerva by the Numbers
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-            <div className="group hover:scale-110 transition-transform duration-500">
-              <div className="relative">
-                <div className="text-6xl font-black mb-4 bg-gradient-to-br from-primary via-secondary to-accent bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
-                  {totalScripts}
+          <p className="text-center text-muted-foreground mb-14">A growing, community-driven collection</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { value: totalScripts, label: "Available Scripts", sub: "Ready to use now" },
+              { value: 4, label: "Languages Supported", sub: "Cross-platform power" },
+              { value: 0, label: "In Development", sub: "Coming soon" },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className="glassmorphism rounded-2xl p-8 text-center hover-lift"
+              >
+                <div className="text-5xl md:text-6xl font-black mb-3 gradient-text">
+                  {stat.value}
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="text-foreground text-lg font-semibold">{stat.label}</div>
+                <div className="text-muted-foreground text-sm mt-1">{stat.sub}</div>
               </div>
-              <div className="text-foreground text-lg font-medium">Available Scripts</div>
-              <div className="text-muted-foreground text-sm mt-2">Ready to use now</div>
-            </div>
-            <div className="group hover:scale-110 transition-transform duration-500">
-              <div className="relative">
-                <div className="text-6xl font-black mb-4 bg-gradient-to-br from-secondary via-accent to-primary bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
-                  4
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-secondary/20 to-primary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              </div>
-              <div className="text-foreground text-lg font-medium">Languages Supported</div>
-              <div className="text-muted-foreground text-sm mt-2">Cross-platform power</div>
-            </div>
-            <div className="group hover:scale-110 transition-transform duration-500">
-              <div className="relative">
-                <div className="text-6xl font-black mb-4 bg-gradient-to-br from-accent via-primary to-secondary bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
-                  0
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-secondary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              </div>
-              <div className="text-foreground text-lg font-medium">In Development</div>
-              <div className="text-muted-foreground text-sm mt-2">Coming soon</div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
