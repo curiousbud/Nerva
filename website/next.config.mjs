@@ -54,10 +54,28 @@ const nextConfig = {
   // basePath: '/your-subdirectory',
   // assetPrefix: '/your-subdirectory/',
   
-  // Output Directory
-  distDir: 'out',
-  // ↑ Directory where static files are generated
-  // This is where 'npm run build' puts the exportable files
+  // NOTE: distDir is intentionally left at the default ('.next'). With
+  // `output: 'export'`, `next build` already emits the static site to `out/`,
+  // so overriding distDir to 'out' was redundant — and it made the dev server
+  // write its build artifacts into a folder it also watches, causing an endless
+  // recompile loop. Netlify still publishes `out/`.
+
+  // Keep the dev file-watcher from reacting to generated/output folders.
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.watchOptions = {
+        ...config.watchOptions,
+        ignored: [
+          '**/node_modules/**',
+          '**/.git/**',
+          '**/.next/**',
+          '**/out/**',
+        ],
+        aggregateTimeout: 300,
+      }
+    }
+    return config
+  },
 }
 
 export default nextConfig
