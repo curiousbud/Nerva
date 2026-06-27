@@ -34,20 +34,19 @@ All scripts are organized by programming language and come with documentation to
 
 ## 📚 Available Scripts
 
-| Language       | Script Name                      | Description                              | Location                                                              |
-| -------------- | -------------------------------- | ---------------------------------------- | --------------------------------------------------------------------- |
-| **Python**     | 🤖 Script Manager                | Manage this repo & generate web views    | [python/script-manager](scripts/python/script-manager/)               |
-|                | 🔒 FTP Scanner                   | Scan for anonymous FTP logins            | [python/ftp-scanner](scripts/python/ftp-scanner/)                     |
-|                | 🛡️ SHADOW Vulnerability Scanner | Scan websites using template-based rules | [python/vulnerability-scanner](scripts/python/vulnerability-scanner/) |
-|                | 🌐 URL Status Checker            | Check availability of multiple URLs      | [python/url-status-checker](scripts/python/url-status-checker/)       |
-|                | 📁 File Organizer                | Organize files by type and date          | [python/file-organizer](scripts/python/file-organizer/)               |
-|                | 🔍 Duplicate Finder              | Find and handle duplicate files easily   | [python/duplicate-finder](scripts/python/duplicate-finder/)           |
-|                | 📧 Email Automation              | Send automated emails using templates    | [python/email-automation](scripts/python/email-automation/)           |
-|                | 🔐 Password Generator            | Create strong, random passwords          | [python/password-generator](scripts/python/password-generator/)       |
-|                | 📶 Auto WiFi Check               | Reconnect WiFi automatically             | [python/auto-wifi-check](scripts/python/auto-wifi-check/)             |
-| **JavaScript** | *(Empty)*                        | Add your script!                         | [javascript](scripts/javascript/)                                     |
-| **Bash**       | *(Empty)*                        | Add your script!                         | [bash](scripts/bash/)                                                 |
-| **PowerShell** | *(Empty)*                        | Add your script!                         | [powershell](scripts/powershell/)                                     |
+Scripts are organized **by category, then by tool, then by language** under
+[`scripts/`](scripts/). A tool that exists in several languages lives in one
+folder, so you can see every implementation side by side:
+
+```
+scripts/<category>/<tool>/README.md      # one README for the tool
+scripts/<category>/<tool>/<language>/     # the source for each language
+```
+
+Current categories: **security**, **networking**, **file-management**,
+**automation**, **utility**. Browse everything (with search and filters) on the
+[Nerva website](https://github.com/curiousbud/Nerva), or run
+`python script_manager.py list` to print the full index.
 
 > 💡 **Want to contribute?** Just fork the repo and open a PR. It’s that easy!
 
@@ -58,13 +57,19 @@ All scripts are organized by programming language and come with documentation to
 ```
 Nerva/
 ├── scripts/
-│   ├── python/
-│   │   ├── ftp-scanner/
-│   │   ├── vulnerability-scanner/
-│   │   └── url-status-checker/
-│   ├── javascript/
-│   ├── bash/
-│   └── powershell/
+│   ├── security/
+│   │   ├── password-generator/      # one tool…
+│   │   │   ├── README.md
+│   │   │   ├── python/              # …with several language variants
+│   │   │   ├── bash/
+│   │   │   └── powershell/
+│   │   └── port-scanner/
+│   │       ├── README.md
+│   │       └── python/
+│   ├── utility/
+│   ├── networking/
+│   ├── automation/
+│   └── file-management/
 ├── assets/
 ├── script_manager.py
 └── README.md
@@ -83,9 +88,14 @@ Nerva/
 ### To Add a Script:
 
 1. **Fork this repo**
-2. **Create a new script** inside the appropriate folder
-3. **Add a README** using our [template](scripts/python/script-manager/README.md)
-4. Run this command:
+2. **Scaffold the tool** (creates the folder, a README, and a starter file):
+
+   ```bash
+   python script_manager.py add my-tool python --category utility
+   ```
+3. **Fill in** the generated `README.md` and source file. To offer the same tool
+   in another language, run `python script_manager.py add my-tool bash`.
+4. **Regenerate** the registry and website data:
 
    ```bash
    python script_manager.py build
@@ -110,9 +120,12 @@ Our **Script Manager** automates the entire process of:
 | -------------------------------------------- | ------------------------------- | ----------------------------- |
 | `python script_manager.py build`             | 🔄 Rebuild everything           | After adding/changing scripts |
 | `python script_manager.py scan`              | 📋 List existing scripts        | To preview structure          |
-| `python script_manager.py add <lang> <name>` | 🆕 Create a new script template | Starting from scratch         |
+| `python script_manager.py add <tool> <lang>` | 🆕 Scaffold a tool / add a variant | Starting a new script      |
+| `python script_manager.py list`              | 📜 Summary of indexed tools     | Quick inventory check         |
 
-> 💡 **The manager is beginner-friendly** and includes inline help.
+> 💡 **The manager is beginner-friendly** and includes inline help — run `python script_manager.py --help`.
+>
+> 📖 Full command reference: [`docs/SCRIPT_MANAGER.md`](docs/SCRIPT_MANAGER.md)
 
 ---
 
