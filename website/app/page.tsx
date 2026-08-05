@@ -71,10 +71,10 @@ export default function HomePage() {
   const languages = useMemo(() => {
     if (!scriptsData) {
       return [
-        { name: "Python", count: 0, color: "bg-blue-500", repoPath: GITHUB_CONFIG.getLanguagePath("python") },
-        { name: "JavaScript", count: 0, color: "bg-yellow-500", repoPath: GITHUB_CONFIG.getLanguagePath("javascript") },
-        { name: "Bash", count: 0, color: "bg-green-500", repoPath: GITHUB_CONFIG.getLanguagePath("bash") },
-        { name: "PowerShell", count: 0, color: "bg-purple-500", repoPath: GITHUB_CONFIG.getLanguagePath("powershell") },
+        { name: "Python", count: 0, color: "bg-blue-500" },
+        { name: "JavaScript", count: 0, color: "bg-yellow-500" },
+        { name: "Bash", count: 0, color: "bg-green-500" },
+        { name: "PowerShell", count: 0, color: "bg-purple-500" },
       ]
     }
 
@@ -83,25 +83,21 @@ export default function HomePage() {
         name: "Python", 
         count: scriptsData.languages.python?.count || 0, 
         color: "bg-blue-500",
-        repoPath: GITHUB_CONFIG.getLanguagePath("python")
       },
       { 
         name: "JavaScript", 
         count: scriptsData.languages.javascript?.count || 0, 
         color: "bg-yellow-500",
-        repoPath: GITHUB_CONFIG.getLanguagePath("javascript")
       },
       { 
         name: "Bash", 
         count: scriptsData.languages.bash?.count || 0, 
         color: "bg-green-500",
-        repoPath: GITHUB_CONFIG.getLanguagePath("bash")
       },
       { 
         name: "PowerShell", 
         count: scriptsData.languages.powershell?.count || 0, 
         color: "bg-purple-500",
-        repoPath: GITHUB_CONFIG.getLanguagePath("powershell")
       },
     ]
   }, [scriptsData])
@@ -269,7 +265,6 @@ export default function HomePage() {
                 name={lang.name}
                 count={lang.count}
                 color={lang.color}
-                repoPath={lang.repoPath}
                 index={index}
               />
             ))}
