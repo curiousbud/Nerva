@@ -112,6 +112,28 @@
       ]
     },
     {
+      "key": "downloads-sorter",
+      "title": "📂 Downloads Folder Sorter",
+      "description": "A zero-config Python script that automatically sorts your Downloads folder into subfolders named after each file extension (PDF, JPG, EXE, ...) so you never have to clean it manually.",
+      "category": "File Management",
+      "difficulty": "Beginner",
+      "features": [
+        "One-click sorting",
+        "Extension groups",
+        "Cross-platform",
+        "Zero dependencies",
+        "Safe defaults"
+      ],
+      "featured": false,
+      "path": "scripts/file-management/downloads-sorter",
+      "variants": [
+        {
+          "language": "python",
+          "path": "scripts/file-management/downloads-sorter/python"
+        }
+      ]
+    },
+    {
       "key": "duplicate-finder",
       "title": "🔍 Advanced Duplicate File Finder",
       "description": "A powerful Python script that efficiently finds and manages duplicate files using MD5 hashing. Perfect for cleaning up storage, organizing files, and identifying redundant content across your filesystem.",
@@ -392,6 +414,53 @@
         {
           "language": "javascript",
           "path": "scripts/utility/uuid-generator/javascript"
+        }
+      ]
+    },
+    {
+      "key": "video-downloader",
+      "title": "🎬 Bulk Video Downloader",
+      "description": "Reads a column of video URLs (YouTube, Instagram, TikTok, Facebook and hundreds of other sites) from an Excel file and downloads each one with yt-dlp, organized into tidy per-platform folders.",
+      "category": "Utility",
+      "difficulty": "Intermediate",
+      "features": [
+        "Excel-driven",
+        "De-duplication",
+        "Per-platform folders",
+        "Quality selection",
+        "Retry & polite delays",
+        "Cookies support",
+        "Download report"
+      ],
+      "featured": false,
+      "path": "scripts/utility/video-downloader",
+      "variants": [
+        {
+          "language": "python",
+          "path": "scripts/utility/video-downloader/python"
+        }
+      ]
+    },
+    {
+      "key": "excel-pdf-verifier",
+      "title": "📄 Excel–PDF Proofreading Verifier",
+      "description": "Compares every row of an Excel file against the extracted text of a PDF (for example name tent cards) using fuzzy string similarity, and produces a color-highlighted proofreading report of matches, near-misses and mismatches.",
+      "category": "Utility",
+      "difficulty": "Intermediate",
+      "features": [
+        "Multi-sheet Excel support",
+        "PDF text extraction",
+        "Fuzzy matching",
+        "Status classification",
+        "Excel report",
+        "Color highlighting"
+      ],
+      "featured": false,
+      "path": "scripts/utility/excel-pdf-verifier",
+      "variants": [
+        {
+          "language": "python",
+          "path": "scripts/utility/excel-pdf-verifier/python"
         }
       ]
     }
