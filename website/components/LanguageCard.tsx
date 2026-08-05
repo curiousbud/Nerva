@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Card, CardContent } from '@/components/ui/card';
 import { 
   SiPython, 
@@ -11,7 +12,6 @@ interface LanguageCardProps {
   name: string;
   count: number;
   color: string;
-  repoPath: string;
   index: number;
 }
 
@@ -19,9 +19,9 @@ const LanguageCard: React.FC<LanguageCardProps> = ({
   name,
   count,
   color,
-  repoPath,
   index
 }) => {
+  const router = useRouter();
   const cardRef = useRef<HTMLDivElement>(null);
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
@@ -79,7 +79,7 @@ const LanguageCard: React.FC<LanguageCardProps> = ({
   };
 
   const handleClick = () => {
-    window.open(repoPath, '_blank');
+    router.push(`/scripts?language=${name.toLowerCase()}`);
   };
 
   return (

@@ -37,6 +37,12 @@ export default function ScriptsPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const lang = params.get("language")
+    if (lang) setSelectedLanguage(lang.toLowerCase())
+  }, [])
+
+  useEffect(() => {
     let cancelled = false
 
     async function loadScriptsData() {
