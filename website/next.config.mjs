@@ -22,12 +22,10 @@ const nextConfig = {
   // Helps with static hosting compatibility and SEO
   
   // Build Configuration
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  // ↑ Skip ESLint during builds to prevent deployment failures
-  // Run 'npm run lint' separately for code quality checks
-  
+  // NOTE: the `eslint.ignoreDuringBuilds` and `eslint` keys were removed in
+  // Next.js 16. `next lint` no longer exists; run `tsc --noEmit` (npm run
+  // lint) for type checking instead.
+
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -60,22 +58,10 @@ const nextConfig = {
   // write its build artifacts into a folder it also watches, causing an endless
   // recompile loop. Netlify still publishes `out/`.
 
-  // Keep the dev file-watcher from reacting to generated/output folders.
-  webpack: (config, { dev }) => {
-    if (dev) {
-      config.watchOptions = {
-        ...config.watchOptions,
-        ignored: [
-          '**/node_modules/**',
-          '**/.git/**',
-          '**/.next/**',
-          '**/out/**',
-        ],
-        aggregateTimeout: 300,
-      }
-    }
-    return config
-  },
+  // NOTE: the `webpack` watchOptions block below was removed for Next.js 16,
+  // where Turbopack is the default bundler and a `webpack` config without a
+  // `turbopack` config is a hard build error. Turbopack ignores generated
+  // folders (node_modules, .git, .next, out) by default.
 }
 
 export default nextConfig

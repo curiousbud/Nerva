@@ -17,9 +17,9 @@
   
 [build.environment]
   # Node.js Environment
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
   # ↑ Specify Node.js version for consistent builds
-  # Nerva requires Node.js 18+ for all dependencies to work properly
+  # Nerva requires Node.js 20.9+ (Next.js 16 requirement)
 
 # URL Redirect Rules
 # Handle client-side routing for single-page application (SPA)
